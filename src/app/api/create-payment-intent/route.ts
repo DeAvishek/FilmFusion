@@ -1,12 +1,13 @@
-import { NextRequest, NextResponse } from "next/server"
+import {  NextResponse } from "next/server"
+import Stripe from "stripe"
 
-const stripe=require('stripe')(process.env.STRIPE_SECRET_KEY)  //todo to remove
-export async function POST(req:NextRequest) {
+const stripe=new Stripe(process.env.STRIPE_SECRET_KEY!) 
+export async function POST() {
     try {
         const paymentIntent=await stripe.paymentIntents.create({
             amount:50*100,  //convert to paisa 
             currency:"INR",
-            // payment_method_types: ["card", "upi", "netbanking"],
+            // payment_method_types: ["card"],
             automatic_payment_methods: {
                 enabled: true,
               },
