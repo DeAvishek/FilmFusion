@@ -7,11 +7,11 @@ export interface IMovie extends Document{
     title:string,
     duration:number,
     language:string,
-    descriptions: [IMovieDescription],
+    descriptions: IMovieDescription,
     posterUrl:string,
     trailerUrl?:string,
     releaseDate:Date,
-    showtimes:[IShowtime]
+    showtimes:IShowtime[]
 
 }
 export const MovieSchema:Schema<IMovie>=new Schema({
@@ -27,9 +27,7 @@ export const MovieSchema:Schema<IMovie>=new Schema({
         type:String,
         required:true
     },
-    descriptions:[
-        MovieDescSchema
-    ],
+    descriptions:MovieDescSchema,
     posterUrl:{
         type:String,
         required:true,
@@ -41,9 +39,11 @@ export const MovieSchema:Schema<IMovie>=new Schema({
         type:Date,
         required:true
     },
-    showtimes:[
-        ShowtimeSchema
-    ]
+    showtimes:{
+        type:[ShowtimeSchema],
+        default:[]
+        
+    }
 })
 
 const MovieModel=(mongoose.models.Movie as mongoose.Model<IMovie>) || (mongoose.model<IMovie>("Movie",MovieSchema))
