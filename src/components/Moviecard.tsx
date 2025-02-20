@@ -25,7 +25,7 @@ const Moviecard = ({movieId,movieTitle,movieLanguage,moviePosterUrl}:dMovieProps
                 width={300}
                 height={300}
                 className="w-full h-64 object-cover rounded-lg"              
-                src={`${moviePosterUrl}`} 
+                src={moviePosterUrl} 
                 alt={movieTitle}/>
             </CardContent>
             <CardFooter>

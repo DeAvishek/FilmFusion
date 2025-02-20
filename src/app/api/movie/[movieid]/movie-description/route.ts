@@ -30,6 +30,8 @@ export async function GET(req: Request, { params }: { params: { movieid: string 
         return NextResponse.json({
             message:"Movie found",
             content:movie.descriptions,
+            posterUrl:movie.posterUrl,
+            movieTitle:movie.title,
             success:true
         },{
             status:200
