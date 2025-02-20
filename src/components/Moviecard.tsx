@@ -16,15 +16,20 @@ type dMovieProps={
 
 const Moviecard = ({movieId,movieTitle,movieLanguage,moviePosterUrl}:dMovieProps) => {
     return (
-        <Link href={`/${movieId}/description`}><Card className="bg-red-500"style={{ width: '230px', height: '300px' }}>
+        <Link href={`/${movieId}/description`}><Card className="bg-red-500 text-white">
             <CardHeader>
-                <CardTitle>{movieTitle}</CardTitle>
+                <CardTitle><b style={{fontSize:'20px'}}>{movieTitle}</b></CardTitle>
             </CardHeader>
             <CardContent>
-                <img src={`${moviePosterUrl}`} alt='poster'/>
+                <img 
+                width={300}
+                height={300}
+                className="w-full h-64 object-cover rounded-lg"              
+                src={`${moviePosterUrl}`} 
+                alt={movieTitle}/>
             </CardContent>
             <CardFooter>
-                <p>{movieLanguage}</p>
+                <b>{movieLanguage}</b>
             </CardFooter>
         </Card></Link>
 
