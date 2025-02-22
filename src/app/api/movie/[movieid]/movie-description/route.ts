@@ -32,6 +32,7 @@ export async function GET(req: Request, { params }: { params: { movieid: string 
             content:movie.descriptions,
             posterUrl:movie.posterUrl,
             movieTitle:movie.title,
+            rating:movie.rating,
             success:true
         },{
             status:200

@@ -11,7 +11,8 @@ export interface IMovie extends Document{
     posterUrl:string,
     trailerUrl?:string,
     releaseDate:Date,
-    showtimes:IShowtime[]
+    showtimes:IShowtime[],
+    rating:number[],
 
 }
 export const MovieSchema:Schema<IMovie>=new Schema({
@@ -43,6 +44,12 @@ export const MovieSchema:Schema<IMovie>=new Schema({
         type:[ShowtimeSchema],
         default:[]
         
+    },
+    rating:{
+        type:[Number],
+        default:[2],
+        min:1,
+        max:5
     }
 })
 
