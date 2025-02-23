@@ -14,17 +14,18 @@ import { Input } from "@/components/ui/input"
 import { imdbRatingValidation } from "@/app/schema/ratingvalidation";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod"
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import React from 'react'
 type props = {
     movieID: string
 }
+const formSchem = z.object({
+    'imdbRating': z.preprocess((val)=>Number(val),imdbRatingValidation)
+})
 
-const Ratingform = ({ movieID }: props) => {
-    const formSchem = z.object({
-        'imdbRating': imdbRatingValidation
-    })
+const Ratingform = ({ movieID, }: props) => {
+    
     const [isSubmitForm, setisSubmitForm] = useState(false)
     const [responseMessage, setresponseMessage] = useState('')
     const form = useForm<z.infer<typeof formSchem>>({
@@ -43,7 +44,6 @@ const Ratingform = ({ movieID }: props) => {
             })
             if (response.status === 200) {
                 setresponseMessage(response.data.message)
-                console.log(responseMessage)
             }
         } catch (error) {
             if (axios.isAxiosError(error)) {
@@ -56,6 +56,9 @@ const Ratingform = ({ movieID }: props) => {
             setisSubmitForm(false)
         }
     }
+    useEffect(() => {
+        if (responseMessage) console.log(responseMessage);
+    }, [responseMessage]);
     return (
         <div>
             <Form {...form}>
@@ -67,7 +70,11 @@ const Ratingform = ({ movieID }: props) => {
                             <FormItem>
                                 <FormLabel>Rating</FormLabel>
                                 <FormControl>
-                                    <Input placeholder="Rating" {...field} />
+                                    <Input placeholder="Rating" {...field}
+                                     min="1" 
+                                     max="5" 
+                                     type="number"
+                                     value={field.value ?? ""}/>
                                 </FormControl>
                                 <FormMessage />
                             </FormItem>

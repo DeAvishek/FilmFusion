@@ -5,6 +5,7 @@ import { NextResponse } from "next/server";
 export async function POST(req: Request, { params }: { params: { movieid: string } }) {
     const body=await req.json();
     const rating=body['imdbRating']
+
     const movieId = params.movieid
     console.log("movie id", movieId) 
     if (!movieId) {
@@ -26,7 +27,7 @@ export async function POST(req: Request, { params }: { params: { movieid: string
             )
         }
          const prefixSumRating=movie.rating.length>0?movie.rating.at(-1):0
-         const newRating=prefixSumRating+rating
+         const newRating=prefixSumRating as number+rating
          movie.rating.push(newRating)
          await movie.save()
          return NextResponse.json({

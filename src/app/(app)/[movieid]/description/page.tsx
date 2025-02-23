@@ -1,14 +1,15 @@
 'use client'
-import React, { useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import { useRouter, useParams } from 'next/navigation'
 import axios from 'axios'
 import { Card } from "@/components/ui/card"
 import { Button } from '@/components/ui/button'
+import Ratingform from '@/components/Ratingform'
 
 const Page = () => {
     const router = useRouter()
     const params = useParams()
-    const movieId = params.movieid
+    const movieId = params.movieid as string
 
     const [loading, setLoading] = useState(false)
     const [responseMessage, setResponseMessage] = useState('')
@@ -20,7 +21,7 @@ const Page = () => {
     const [moviePoster, setMoviePoster] = useState<string | null>(null)
     const [movieTitle, setMovieTitle] = useState('')
     const [movieRating, setMovieRating] = useState<number[]>([])
-
+    const [ratingFormEnable, setratingFormEanble] = useState<boolean>(false)
     useEffect(() => {
         const getDesc = async () => {
             try {
@@ -53,11 +54,17 @@ const Page = () => {
 
     // Calculate the average rating
     const getAverageRating = () => {
-        let length=movieRating.length
-        if ( length=== 0) return "No ratings yet"
+        let length = movieRating.length
+        if (length === 0) return "No ratings yet"
         if (length === 1) return movieRating[0].toFixed(1)
-        let lastElement=movieRating.at(-1)
-        return (lastElement as number / length).toFixed(1) 
+        let lastElement = movieRating.at(-1)
+        return (lastElement as number / length).toFixed(1)
+    }
+    useEffect(() => {
+        getAverageRating()
+    }, [movieRating])
+    const handleRatingForm = () => {
+        setratingFormEanble((prev) => !prev)
     }
 
     return (
@@ -109,9 +116,10 @@ const Page = () => {
                                 <span className="ml-2 text-lg font-semibold">{getAverageRating()}</span>
 
                                 {/* 🎬 IMDb Rating Button */}
-                                <Button className="ml-4 bg-yellow-500 hover:bg-yellow-600">
-                                    Rate now
+                                <Button onClick={handleRatingForm as () => boolean} className="ml-4 bg-yellow-500 hover:bg-yellow-600">
+                                    {ratingFormEnable ? "Close Form" : "Rate Now"}
                                 </Button>
+                                {ratingFormEnable && <Ratingform movieID={movieId} />}
                             </div>
                             <p className="mt-2 text-gray-300">{description.descTitle}</p>
                             <div className="mb-3">
