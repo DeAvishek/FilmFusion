@@ -1,13 +1,32 @@
 import dbConnect from "@/app/lib/db";
 import MovieModel from "@/app/Model/movie";
 import { NextResponse } from "next/server";
+import UserModel from "@/app/Model/user";
+import { getServerSession } from "next-auth/next"
+import { AuthOptions } from "@/app/api/auth/[...nextauth]/provider";
 
+
+    // if (!session) {
+    //     return NextResponse.json({message:"U r not authorized",success:false},{
+    //         status:401
+    //     })
+    // }
+   
+    interface Interaction {
+        movieId: string | number;  // Adjust based on actual type
+        rating: number;
+        timestamp: number;
+    }
 export async function POST(req: Request, { params }: { params: { movieid: string } }) {
-    const body=await req.json();
-    const rating=body['imdbRating']
+    const session = await getServerSession(AuthOptions )
+    const userId=session?.user._id
+    // console.log("user id from rating api",session)
+
+    const body = await req.json();
+    const rating = body['imdbRating']
 
     const movieId = params.movieid
-    console.log("movie id", movieId) 
+    console.log("movie id from movie rating api", movieId)
     if (!movieId) {
         return NextResponse.json({
             message: "Not found",
@@ -18,7 +37,7 @@ export async function POST(req: Request, { params }: { params: { movieid: string
     }
     try {
         await dbConnect()
-        const movie = await MovieModel.findById( movieId )
+        const movie = await MovieModel.findById(movieId)
         if (!movie) {
             return NextResponse.json({ message: "Content not found", success: true },
                 {
@@ -26,22 +45,31 @@ export async function POST(req: Request, { params }: { params: { movieid: string
                 }
             )
         }
-         const prefixSumRating=movie.rating.length>0?movie.rating.at(-1):0
-         const newRating=prefixSumRating as number+rating
-         movie.rating.push(newRating)
-         await movie.save()
-         return NextResponse.json({
-            message:"Rating submit successfully",
-            success:true,
-         },{
-            status:200
-         })
+        const prefixSumRating = movie.rating.length > 0 ? movie.rating.at(-1) : 0
+        const newRating = prefixSumRating as number + rating
+        movie.rating.push(newRating)
+        await movie.save()
+
+        const user=await UserModel.findById({_id:userId})
+        const interactionObject={
+            movieId:movieId,
+            rating:rating,
+            timestamp:Date.now()
+        }
+        user?.interactions.push(interactionObject)
+        await user?.save()
+        return NextResponse.json({
+            message: "Rating submit successfully",
+            success: true,
+        }, {
+            status: 200
+        })
     } catch (error) {
         return NextResponse.json({
-            message:error instanceof Error ? error.message: "Rating submit error",
-            success:false
-        },{
-            status:500
+            message: error instanceof Error ? error.message : "Rating submit error",
+            success: false
+        }, {
+            status: 500
         })
     }
 }

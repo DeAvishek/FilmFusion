@@ -1,18 +1,16 @@
 import CredentialsProvider from "next-auth/providers/credentials"
-import GoogleProvider from "next-auth/providers/google";
-import GitHubProvider from "next-auth/providers/github"
+// import GoogleProvider from "next-auth/providers/google";
+// import GitHubProvider from "next-auth/providers/github"
 import type { NextAuthOptions, User } from "next-auth"
 import dbConnect from "@/app/lib/db";
 import UserModel from "@/app/Model/user";
 
 export const AuthOptions: NextAuthOptions = {
     providers: [
-        GitHubProvider({
-            clientId: process.env.GITHUB_CLIENT_ID!,
-            clientSecret: process.env.GITHUB_CLIENT_SECRET!
-          }),
+      
         CredentialsProvider({
             name: 'Credentials',
+            id:'credentials',
             credentials: {
                 email: { label: "Email", type: "email" }
             },
@@ -22,13 +20,17 @@ export const AuthOptions: NextAuthOptions = {
                 }
                 try {
                     await dbConnect()
-                    const user = await UserModel.findOne({ email: credentials.email })
-                    if (!user) {
+                    const userDoc = await UserModel.findOne({ email: credentials.email })
+                    if (!userDoc) {
                         throw new Error("User not found")
                     }
+                    const user = userDoc.toObject();
                     console.log("✅ User authenticated:", user.email); //todo to temove
-
-                    return user as User
+                    if(userDoc){
+                        return user as User
+                    }
+                    return null
+                    
 
                 } catch (error) {
                     console.error("Authorization error:", error);
@@ -40,16 +42,19 @@ export const AuthOptions: NextAuthOptions = {
     ],
     callbacks: {
         async jwt({ token, user }) {
-            if (user) {
-                token._id = user._id?.toString()
+            if (user && user._id) {
+                token._id = user._id?.toString(),
                 token.email = user.email
             }
+            // console.log("my token is",token) //todo to remove just for debugging
             return token
         },
         async session({ session, token }) {
             if (token) {
-                session.user._id = token._id as string
-                session.user.email = token.email
+                session.user={
+                    _id:token._id as string,
+                    email:token.email as string
+                }
             }
             return session
         },
@@ -63,5 +68,6 @@ export const AuthOptions: NextAuthOptions = {
         maxAge: 30 * 24 * 60 * 60
     },
     secret: process.env.NEXTAUTH_SECRET
+
 
 }

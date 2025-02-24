@@ -5,7 +5,7 @@ import axios from 'axios'
 import { Card } from "@/components/ui/card"
 import { Button } from '@/components/ui/button'
 import Ratingform from '@/components/Ratingform'
-
+import Home from '@/app/page'
 const Page = () => {
     const router = useRouter()
     const params = useParams()
@@ -111,16 +111,18 @@ const Page = () => {
                         {/* 🎥 Movie Details */}
                         <div className="text-white max-w-lg relative z-10">
                             <h2 className="text-3xl font-bold">{movieTitle}</h2>
-                            <div className="text-white">
-                                <b className="text-yellow-300">IMDb Rating:</b>
-                                <span className="ml-2 text-lg font-semibold">{getAverageRating()}</span>
+                            <div style={{height:"50px"}}className="text-white bg-gray-600 rounded flex items-center w-full">
+                                
+                                <b className="text-yellow-300 ml-3">IMDb Rating:</b>
+                                <span className="ml-2 text-lg font-semibold">{getAverageRating()}/5</span>
 
                                 {/* 🎬 IMDb Rating Button */}
-                                <Button onClick={handleRatingForm as () => boolean} className="ml-4 bg-yellow-500 hover:bg-yellow-600">
+                                <Button onClick={handleRatingForm as () => boolean} className="ml-10 bg-yellow-500 hover:bg-yellow-600">
                                     {ratingFormEnable ? "Close Form" : "Rate Now"}
                                 </Button>
-                                {ratingFormEnable && <Ratingform movieID={movieId} />}
+                                
                             </div>
+                            {ratingFormEnable && <Ratingform movieID={movieId} />}
                             <p className="mt-2 text-gray-300">{description.descTitle}</p>
                             <div className="mb-3">
                                 <b className="text-yellow-300">Cast:</b>
@@ -142,7 +144,9 @@ const Page = () => {
                     <p>Getting...</p>
                 )}
             </section>
+            <Home/>
         </div>
+        
     )
 }
 
