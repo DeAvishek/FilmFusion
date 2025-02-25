@@ -1,26 +1,31 @@
 'use client'
-import React, { useCallback, useEffect, useState } from 'react'
+import React, { useCallback, useContext, useEffect, useState } from 'react'
 import { useRouter, useParams } from 'next/navigation'
 import axios from 'axios'
 import { Card } from "@/components/ui/card"
 import { Button } from '@/components/ui/button'
 import Ratingform from '@/components/Ratingform'
 import Home from '@/app/page'
+import { ValueContext } from '@/app/context/optionsvalueprovider'
+
 const Page = () => {
     const router = useRouter()
     const params = useParams()
     const movieId = params.movieid as string
+    const {optionsValue} =useContext(ValueContext)
 
     const [loading, setLoading] = useState(false)
     const [responseMessage, setResponseMessage] = useState('')
-    const [description, setDescription] = useState({
+    const [mdescription, setmDescription] = useState({
         descTitle: '',
         cast: [],
-        genre: []
+        genre: [],
     })
     const [moviePoster, setMoviePoster] = useState<string | null>(null)
     const [movieTitle, setMovieTitle] = useState('')
     const [movieRating, setMovieRating] = useState<number[]>([])
+    const [duration, setduration] = useState<number>(0);
+    const [language, setlanguage] = useState<string>('')
     const [ratingFormEnable, setratingFormEanble] = useState<boolean>(false)
     useEffect(() => {
         const getDesc = async () => {
@@ -29,15 +34,18 @@ const Page = () => {
                 const response = await axios.get(`/api/movie/${movieId}/movie-description`)
                 if (response.status === 200) {
                     setResponseMessage(response.data.message)
-                    setDescription({
-                        descTitle: response.data.content.descTitle || '',
-                        cast: response.data.content.cast || [],
-                        genre: response.data.content.genre || []
+                    setmDescription({
+                        descTitle: response.data.content.descriptions.descTitle || '',
+                        cast: response.data.content.descriptions.cast || [],
+                        genre: response.data.content.descriptions.genre || []
                     })
-                    setMoviePoster(response.data.posterUrl || null)
-                    setMovieTitle(response.data.movieTitle || '')
-                    setMovieRating(response.data.rating || [])
+                    setMoviePoster(response.data.content.posterUrl || null)
+                    setMovieTitle(response.data.content.movieTitle || '')
+                    setMovieRating(response.data.content.rating || [])
+                    setduration(response.data.content.duration)
+                    setlanguage(response.data.content.language)
                     console.log(responseMessage) //todo to remove
+
                 }
             } catch (error) {
                 if (axios.isAxiosError(error)) {
@@ -68,7 +76,7 @@ const Page = () => {
     }
 
     return (
-        <div className="w-full h-full mt-10">
+        <div className="w-full h-full mt-0">
             <section className="bg-black flex items-center justify-center gap-8 p-8 relative">
                 {!loading ? (
                     <>
@@ -111,8 +119,8 @@ const Page = () => {
                         {/* 🎥 Movie Details */}
                         <div className="text-white max-w-lg relative z-10">
                             <h2 className="text-3xl font-bold">{movieTitle}</h2>
-                            <div style={{height:"50px"}}className="text-white bg-gray-600 rounded flex items-center w-full">
-                                
+                            <div style={{ height: "50px" }} className="text-white bg-gray-600 rounded flex items-center w-full">
+
                                 <b className="text-yellow-300 ml-3">IMDb Rating:</b>
                                 <span className="ml-2 text-lg font-semibold">{getAverageRating()}/5</span>
 
@@ -120,22 +128,13 @@ const Page = () => {
                                 <Button onClick={handleRatingForm as () => boolean} className="ml-10 bg-yellow-500 hover:bg-yellow-600">
                                     {ratingFormEnable ? "Close Form" : "Rate Now"}
                                 </Button>
+                                {optionsValue}
                                 
                             </div>
+                            <a href='#'>{language}</a>
+                            <p>{duration} Minutes</p>
                             {ratingFormEnable && <Ratingform movieID={movieId} />}
-                            <p className="mt-2 text-gray-300">{description.descTitle}</p>
-                            <div className="mb-3">
-                                <b className="text-yellow-300">Cast:</b>
-                                <p className="text-gray-400">{description.cast.join(", ")}</p>
-                            </div>
-
-                            {/* Genre Details */}
-                            <div className="mb-4">
-                                <b className="text-yellow-300">Genre:</b>
-                                <p className="text-gray-400">{description.genre.join(", ")}</p>
-                            </div>
-
-                            <Button variant="destructive" onClick={() => router.push('/success-payment')}>
+                            <Button className="mt-5" variant="destructive" onClick={() => router.push('/success-payment')}>
                                 Book now
                             </Button>
                         </div>
@@ -144,9 +143,21 @@ const Page = () => {
                     <p>Getting...</p>
                 )}
             </section>
-            <Home/>
+            <div className='bg-gray-900'>
+                <p className="mt-2 text-gray-300">{mdescription.descTitle}</p>
+                <div className="mb-3">
+                    <b className="text-yellow-300">Cast:</b>
+                    <p className="text-gray-400">{mdescription.cast.join(", ")}</p>
+                </div>
+                {/* Genre Details */}
+                <div className="mb-4">
+                    <b className="text-yellow-300">Genre:</b>
+                    <p className="text-gray-400">{mdescription.genre.join(", ")}</p>
+                </div>
+            </div>
+            <Home />
         </div>
-        
+
     )
 }
 

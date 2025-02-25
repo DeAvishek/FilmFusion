@@ -9,12 +9,19 @@ import {
 } from "@/components/ui/card"
 type dMovieProps={
     movieId:string,
-    movieTitle:string,
-    movieLanguage:string,
-    moviePosterUrl:string
+    movieTitle:string
+    moviePosterUrl:string,
+    rating:number[]
 }
 
-const Moviecard = ({movieId,movieTitle,movieLanguage,moviePosterUrl}:dMovieProps) => {
+const Moviecard = ({movieId,movieTitle,moviePosterUrl,rating}:dMovieProps) => {
+     const getAverageRating = () => {
+        let length = rating.length
+        if (length=== 0) return "No ratings yet"
+        if (length === 1) return rating[0].toFixed(1)
+        let lastElement = rating.at(-1)
+        return (lastElement as number / length).toFixed(1)
+    }
     return (
         <Link href={`/${movieId}/description`}><Card className="bg-red-500 text-white">
             <CardHeader>
@@ -29,7 +36,7 @@ const Moviecard = ({movieId,movieTitle,movieLanguage,moviePosterUrl}:dMovieProps
                 alt={movieTitle}/>
             </CardContent>
             <CardFooter>
-                <b>{movieLanguage}</b>
+                <b>{getAverageRating()}/5</b>
             </CardFooter>
         </Card></Link>
 

@@ -4,6 +4,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
 import AuthProvider from "./context/sessionprovider";
+import ValueSelectionProvider from "./context/optionsvalueprovider";
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
@@ -26,15 +27,16 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+
       <AuthProvider>
-        <body
-          className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-        >
-          <Navbar/>
-          {children}
-          
-        </body>
+        <ValueSelectionProvider>
+          <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
+            <Navbar />
+            {children}
+          </body>
+        </ValueSelectionProvider>
       </AuthProvider>
+
     </html>
   );
 }

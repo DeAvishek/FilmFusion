@@ -1,18 +1,20 @@
 "use client";
 
 import { useSession, signIn, signOut } from "next-auth/react";
-import { useState } from "react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import { useContext } from "react";
 import Link from "next/link";
-
+import { ValueContext } from "@/app/context/optionsvalueprovider";
 const Navbar = () => {
     const { data: session } = useSession();
     const email = session?.user?.email;
-    const [searchTerm, setSearchTerm] = useState("");
-
+    const {setoptionsValue}=useContext(ValueContext) 
+    const options=[
+        "all","kolkata","mumbai","dellhi","guragon","pune","kharagpur",""
+    ]
     return (
-        <nav className="flex items-center justify-between px-6 py-4 bg-gray-900 text-white">
+        <nav className="flex items-center justify-between px-6 py-4 bg-gray-800 text-white">
             {/* Left - Logo */}
             <Link href="/" className="text-2xl font-bold">
                 🎬 MovieApp
@@ -26,9 +28,15 @@ const Navbar = () => {
                     // value={searchTerm}
                     defaultValue="HareKrishna"
                     // onChange={handleSearch}
-                    className="bg-transparent border-none focus:ring-0 text-white placeholder-gray-400"
+                    className="bg-transparent border-none focus:ring-0 text-black placeholder-gray-400 bg-white" 
                 />
             </div>
+            <select style={{width:"100px", height:"30px"}}className="text-black rounded"id="ddlViewBy"
+            onChange={(e)=>setoptionsValue(e.target.value)} > 
+                {options.map((option,index)=>(
+                    <option key={index}value={option}>{option}</option>
+                ))}
+            </select>
 
             {/* Right - Auth Buttons */}
             <div>

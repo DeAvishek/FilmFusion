@@ -29,11 +29,9 @@ export async function GET(req: Request, { params }: { params: { movieid: string 
         }
         return NextResponse.json({
             message:"Movie found",
-            content:movie.descriptions,
-            posterUrl:movie.posterUrl,
-            movieTitle:movie.title,
-            rating:movie.rating,
+            content:movie,
             success:true
+
         },{
             status:200
         })

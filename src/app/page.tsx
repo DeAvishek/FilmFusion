@@ -3,6 +3,8 @@ import { IShowtime } from "./Model/showtime";
 import axios from "axios";
 import Moviecard from "@/components/Moviecard";
 import { useState,useEffect } from "react";
+import { useContext } from "react";
+import { ValueContext } from "./context/optionsvalueprovider";
 export default function Home() {
   type MovieProps={
     _id:string,
@@ -14,10 +16,12 @@ export default function Home() {
     trailerUrl:string,
     releaseDate:Date,
     showtimes:IShowtime[]
+    rating:number[]
   }
   const [movies, setmovies] = useState<MovieProps[]>([])
   const [responseMessage,setresponseMessage]=useState('');
   const [loading,setloading]=useState(false)
+  const {optionsValue}=useContext(ValueContext)
   const getMovies=async()=>{
     try {
       setloading(true)
@@ -39,24 +43,33 @@ export default function Home() {
       setloading(false);
     }
   }
+ 
 
   useEffect(()=>{
+    
     getMovies()
   },[])
   return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center  min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-wrap gap-8 row-start-2  sm:items-start justify-center">
-        {loading ?(<p>Getting best Movies for you</p>):
-        (movies.map((movie)=>(
-          <Moviecard
+    <div className="bg-pink-200 mt-10 flex flex-col items-center">
+  <span className="text-xl font-bold text-gray-800 w-full text-center mt-4">
+    Movies that you may like{optionsValue}
+  </span>
+  <div className="mt-5 mb-5 flex flex-wrap gap-8 sm:items-start justify-center rounded">
+    {loading ? (
+      <p className="text-lg font-semibold text-gray-700 animate-pulse">Getting best Movies for you...</p>
+    ) : (
+      movies.map((movie) => (
+        <Moviecard
           key={movie._id}
           movieId={movie._id}
-          movieTitle={movie.title} 
-          movieLanguage={movie.language}
-          moviePosterUrl={movie.posterUrl}/>
-        )))
-        }
-      </main>
-    </div>
+          movieTitle={movie.title}
+          moviePosterUrl={movie.posterUrl}
+          rating={movie.rating}
+        />
+      ))
+    )}
+  </div>
+</div>
+
   );
 }
