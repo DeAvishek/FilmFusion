@@ -12,9 +12,9 @@ const ValueSelectionProvider = ({children}: Readonly<{
   
     children: React.ReactNode;
   }>) => {
-    const [optionsValue,setoptionsValue]=useState<string |null>('')
+    const [cityValue,setcityValue]=useState<string |null>('')
   return (
-      <ValueContext.Provider value ={{optionsValue,setoptionsValue}} >
+      <ValueContext.Provider value ={{cityValue,setcityValue}} >
       {children}
       </ValueContext.Provider>
   )

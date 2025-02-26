@@ -9,7 +9,7 @@ import { ValueContext } from "@/app/context/optionsvalueprovider";
 const Navbar = () => {
     const { data: session } = useSession();
     const email = session?.user?.email;
-    const {setoptionsValue}=useContext(ValueContext) 
+    const {setcityValue}=useContext(ValueContext) 
     const options=[
         "all","kolkata","mumbai","dellhi","guragon","pune","kharagpur",""
     ]
@@ -32,7 +32,7 @@ const Navbar = () => {
                 />
             </div>
             <select style={{width:"100px", height:"30px"}}className="text-black rounded"id="ddlViewBy"
-            onChange={(e)=>setoptionsValue(e.target.value)} > 
+            onChange={(e)=>setcityValue(e.target.value)} > 
                 {options.map((option,index)=>(
                     <option key={index}value={option}>{option}</option>
                 ))}
