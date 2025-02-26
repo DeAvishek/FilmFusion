@@ -22,13 +22,10 @@ export default function Home() {
   const [responseMessage, setresponseMessage] = useState('');
   const [loading, setloading] = useState(false)
   const { cityValue } = useContext(ValueContext)
-  type cityProp = {
-    cityValue: string
-  }
   const getMovies = async () => {
     try {
-      setloading(true)
-      if (cityValue === "all") {
+      setloading(true) 
+      if (!cityValue) {
         const response = await axios.get('/api/movie/get-movies')
         if (response.status === 200) {
           setmovies(response.data.movies)
@@ -60,11 +57,11 @@ export default function Home() {
     getMovies()
   }, [cityValue])
   return (
-    <div className="bg-pink-200 mt-10 flex flex-col items-center">
+    <div className="bg-pink-200  flex flex-col items-center min-h-screen">
       <span className="text-xl font-bold text-gray-800 w-full text-center mt-4">
         Movies that you may like{cityValue}
       </span>
-      <div className="mt-5 mb-5 flex flex-wrap gap-8 sm:items-start justify-center rounded">
+      <div className=" mb-5 flex flex-wrap gap-8 sm:items-start justify-center rounded">
         {loading ? (
           <p className="text-lg font-semibold text-gray-700 animate-pulse">Getting best Movies for you...</p>
         ) :movies.length===0 ?(<p>No movies found</p>):(
