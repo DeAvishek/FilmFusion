@@ -5,6 +5,7 @@ import Navbar from "@/components/Navbar";
 import AuthProvider from "./context/sessionprovider";
 import ValueSelectionProvider from "./context/optionsvalueprovider";
 import Footer from "@/components/Footer";
+import { ApolloWrapper } from "./ApolloWrapper"
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
@@ -27,16 +28,20 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-
-      <AuthProvider>
-        <ValueSelectionProvider>
-          <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
+      <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
+      <ApolloWrapper>
+        <AuthProvider>
+          <ValueSelectionProvider>
+            
             <Navbar />
             {children}
-            <Footer/>
-          </body>
-        </ValueSelectionProvider>
-      </AuthProvider>
+            <Footer />
+            
+          </ValueSelectionProvider>
+        </AuthProvider>
+        </ApolloWrapper>
+      </body>
+
 
     </html>
   );

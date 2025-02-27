@@ -1,18 +1,29 @@
 "use client";
-
 import { useSession, signIn, signOut } from "next-auth/react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import Link from "next/link";
 import { ValueContext } from "@/app/context/optionsvalueprovider";
+import {gql} from "graphql-tag"
+import {useQuery} from "@apollo/client"
+import { useState } from "react";
+
+const GET_MOVIES=gql`
+query GetMovies{
+  movies{
+  title
+  }
+}`
 const Navbar = () => {
     const { data: session } = useSession();
     const email = session?.user?.email;
     const {setcityValue}=useContext(ValueContext) 
-    const options=[
-        ,"kolkata","mumbai","dellhi","guragon","pune","kharagpur",""
-    ]
+    const [moviesName,setMoviesName]=useState([])
+    const { data } = useQuery(GET_MOVIES);
+    useEffect(() => {
+        setMoviesName(data.movies)
+      }, [data]);
     return (
         <nav className="flex items-center justify-between px-6 py-4 bg-gray-800 text-white">
             {/* Left - Logo */}
@@ -33,8 +44,8 @@ const Navbar = () => {
             </div>
             <select style={{width:"100px", height:"30px"}} defaultValue="city"className="text-black rounded"id="ddlViewBy"
             onChange={(e)=>setcityValue(e.target.value)} > 
-                {options.map((option,index)=>(
-                    <option key={index}value={option}>{option}</option>
+                {moviesName.map((option,index)=>(
+                    <option key={index}value={option}>{option.title}</option>
                 ))}
             </select>
 

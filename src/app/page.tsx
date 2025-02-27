@@ -59,7 +59,7 @@ export default function Home() {
   return (
     <div className="bg-pink-200  flex flex-col items-center min-h-screen">
       <span className="text-xl font-bold text-gray-800 w-full text-center mt-4">
-        Movies that you may like{cityValue}
+        Movies that you may like in .. {cityValue}
       </span>
       <div className=" mb-5 flex flex-wrap gap-8 sm:items-start justify-center rounded">
         {loading ? (
