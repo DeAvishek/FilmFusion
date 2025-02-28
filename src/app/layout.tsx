@@ -32,11 +32,9 @@ export default function RootLayout({
       <ApolloWrapper>
         <AuthProvider>
           <ValueSelectionProvider>
-            
             <Navbar />
             {children}
             <Footer />
-            
           </ValueSelectionProvider>
         </AuthProvider>
         </ApolloWrapper>

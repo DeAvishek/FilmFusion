@@ -22,14 +22,16 @@ export async function POST(req: Request) {
         })
 
         await newUser.save()
-        console.log("User reated") //todo to remove
+        console.log("User created") //todo to remove
         return NextResponse.json({
-            message: "User created",
+            message: "User created successfully",
             success: true,
+        },{
+            status:201
         })
     } catch (error: unknown) {
         return NextResponse.json({
-            message: error instanceof Error ? error.message : "Movies getting error",
+            message: error instanceof Error ? error.message : "Sign up error",
             success: false
         }, {
             status: 500

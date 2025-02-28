@@ -1,22 +1,24 @@
-"use client"
-import { createContext,useState} from 'react';
-import React from 'react'
+"use client";
+import { Dispatch, SetStateAction, ReactNode, createContext, useState } from "react";
 interface ValueContextType {
-  optionsValue: string;
-  setoptionsvalue: React.Dispatch<React.SetStateAction<string>>;
+  cityValue: string | null;
+  setcityValue: Dispatch<SetStateAction<string | null>>;
 }
 
-export const ValueContext=createContext(null)
 
-const ValueSelectionProvider = ({children}: Readonly<{
-  
-    children: React.ReactNode;
-  }>) => {
-    const [cityValue,setcityValue]=useState<string |null>('')
+export const ValueContext = createContext<ValueContextType>({
+  cityValue: null, 
+  setcityValue: () => {},
+});
+
+const ValueSelectionProvider = ({ children }: Readonly<{ children: ReactNode }>) => {
+  const [cityValue, setcityValue] = useState<string | null>(null); // Initialize state
+
   return (
-      <ValueContext.Provider value ={{cityValue,setcityValue}} >
+    <ValueContext.Provider value={{ cityValue, setcityValue }}>
       {children}
-      </ValueContext.Provider>
-  )
-}
-export default ValueSelectionProvider
+    </ValueContext.Provider>
+  );
+};
+
+export default ValueSelectionProvider;
