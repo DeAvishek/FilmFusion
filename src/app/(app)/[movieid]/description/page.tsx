@@ -1,18 +1,16 @@
 'use client'
-import React, { useCallback, useContext, useEffect, useState } from 'react'
+import React, {useEffect, useState } from 'react'
 import { useRouter, useParams } from 'next/navigation'
 import axios from 'axios'
 import { Card } from "@/components/ui/card"
 import { Button } from '@/components/ui/button'
 import Ratingform from '@/components/Ratingform'
 import Home from '@/app/page'
-import { ValueContext } from '@/app/context/optionsvalueprovider'
 
 const Page = () => {
     const router = useRouter()
     const params = useParams()
     const movieId = params.movieid as string
-    const {optionsValue} =useContext(ValueContext)
 
     const [loading, setLoading] = useState(false)
     const [responseMessage, setResponseMessage] = useState('')
@@ -128,7 +126,7 @@ const Page = () => {
                                 <Button onClick={handleRatingForm as () => boolean} className="ml-10 bg-yellow-500 hover:bg-yellow-600">
                                     {ratingFormEnable ? "Close Form" : "Rate Now"}
                                 </Button>
-                                {optionsValue}
+    
                                 
                             </div>
                             <a href='#'>{language}</a>
