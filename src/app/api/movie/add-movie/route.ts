@@ -4,7 +4,7 @@ import dbConnect from "@/app/lib/db";
 
 export async function POST(req: Request, res: NextResponse) {
     const reqBody = await req.json()
-    const { title, duration, language, descriptions, posterUrl, trailerUrl, releaseDate, showtimes } = reqBody
+    const { title, duration, language, posterUrl, trailerUrl, releaseDate } = reqBody
 
     try {
          await dbConnect()
@@ -12,11 +12,9 @@ export async function POST(req: Request, res: NextResponse) {
             title,
             duration,
             language,
-            descriptions,
             posterUrl,
             trailerUrl,
-            releaseDate,
-            showtimes
+            releaseDate
         })
         await movie.save();
         console.log("Movie added successfully")  //todo remove

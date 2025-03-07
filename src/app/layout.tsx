@@ -6,6 +6,7 @@ import AuthProvider from "./context/sessionprovider";
 import ValueSelectionProvider from "./context/optionsvalueprovider";
 import Footer from "@/components/Footer";
 import { ApolloWrapper } from "./ApolloWrapper"
+import {MenubarDemo} from "@/components/Menubar";
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
@@ -35,6 +36,7 @@ export default function RootLayout({
             <Navbar />
             {children}
             <Footer />
+            <MenubarDemo/>
           </ValueSelectionProvider>
         </AuthProvider>
         </ApolloWrapper>

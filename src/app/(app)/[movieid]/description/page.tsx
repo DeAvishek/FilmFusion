@@ -10,7 +10,7 @@ import Home from '@/app/page'
 const Page = () => {
     const router = useRouter()
     const params = useParams()
-    const movieId = params.movieid as string
+    const movieId = params?.movieid as string
 
     const [loading, setLoading] = useState(false)
     const [responseMessage, setResponseMessage] = useState('')
@@ -38,7 +38,8 @@ const Page = () => {
                         genre: response.data.content.descriptions.genre || []
                     })
                     setMoviePoster(response.data.content.posterUrl || null)
-                    setMovieTitle(response.data.content.movieTitle || '')
+                    console.log(response.data.content.posterUrl || "not availabel")
+                    setMovieTitle(response.data.content.movieTitle ||"")
                     setMovieRating(response.data.content.rating || [])
                     setduration(response.data.content.duration)
                     setlanguage(response.data.content.language)
@@ -82,7 +83,7 @@ const Page = () => {
                         {moviePoster && (
                             <div
                                 className="absolute inset-0 w-full h-full bg-cover bg-center blur-md opacity-30"
-                                style={{ backgroundImage: `url(${moviePoster})` }}
+                                style={{ backgroundImage: "https://www.themoviedb.org/t/p/original/mWP5IFio47JwPD6hExWwK9EcREd.jpg" }}
                             ></div>
                         )}
 
@@ -123,7 +124,7 @@ const Page = () => {
                                 <span className="ml-2 text-lg font-semibold">{getAverageRating()}/5</span>
 
                                 {/* 🎬 IMDb Rating Button */}
-                                <Button onClick={handleRatingForm as () => boolean} className="ml-10 bg-yellow-500 hover:bg-yellow-600">
+                                <Button onClick={handleRatingForm} className="ml-10 bg-yellow-500 hover:bg-yellow-600">
                                     {ratingFormEnable ? "Close Form" : "Rate Now"}
                                 </Button>
     

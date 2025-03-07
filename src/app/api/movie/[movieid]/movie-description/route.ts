@@ -5,11 +5,11 @@ import mongoose from 'mongoose'
 import { NextResponse } from "next/server";
 
 export async function GET(req: Request, { params }: { params: { movieid: string } }) {
-     
-    // const movieObjId=new mongoose.Types.ObjectId( )
-    const movieId=params.movieid
-    console.log("movie id",movieId)
-    if (!movieId) {
+    const movieId=await params?.movieid
+    const movieObjId=new mongoose.Types.ObjectId(movieId )
+    
+    console.log("movie id",movieObjId) //todo remove
+    if (!movieObjId) {
         return NextResponse.json({
             message: "Not found",
             success: false
@@ -19,7 +19,7 @@ export async function GET(req: Request, { params }: { params: { movieid: string 
     }
     try {
         await dbConnect()
-        const movie = await MovieModel.findById( movieId )
+        const movie = await MovieModel.findById( movieObjId )
         if (!movie) {
             return NextResponse.json({ message: "Content not found", success: true },
                 {
@@ -27,9 +27,11 @@ export async function GET(req: Request, { params }: { params: { movieid: string 
                 }
             )
         }
+        
         return NextResponse.json({
             message:"Movie found",
             content:movie,
+            poster:movie.posterUrl,
             success:true
 
         },{

@@ -5,6 +5,7 @@ import Moviecard from "@/components/Moviecard";
 import { useState, useEffect } from "react";
 import { useContext } from "react";
 import { ValueContext } from "./context/optionsvalueprovider";
+
 export default function Home() {
   type MovieProps = {
     _id: string,

@@ -45,6 +45,7 @@ export const AuthOptions: NextAuthOptions = {
             if (user && user._id) {
                 token._id = user._id?.toString(),
                 token.email = user.email
+                token.role = user.role 
             }
             // console.log("my token is",token) //todo to remove just for debugging
             return token
@@ -53,7 +54,8 @@ export const AuthOptions: NextAuthOptions = {
             if (token) {
                 session.user={
                     _id:token._id as string,
-                    email:token.email as string
+                    email:token.email as string,
+                    role:token.role as string
                 }
             }
             return session

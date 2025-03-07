@@ -3,6 +3,7 @@ import mongoose,{Schema,Document} from "mongoose";
 export interface IUser extends Document{
     username:string,
     email:string,
+    role:string
     latentVector:number[],
     interactions:Interaction[]
 }interface Interaction {
@@ -21,6 +22,10 @@ const UserSchema:Schema<IUser>=new Schema({
         type:String,
         required:true,
         unique:true
+    },
+    role:{
+        type:String,
+        default:"user"
     },
     latentVector:{
         type:[Number],

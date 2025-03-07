@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import React from 'react'
+import React, { use } from 'react'
 import {
     Card,
     CardContent,
@@ -7,14 +7,17 @@ import {
     CardHeader,
     CardTitle,
 } from "@/components/ui/card"
+import { useSession } from 'next-auth/react'
+import { Button } from './ui/button'
 type dMovieProps={
     movieId:string,
     movieTitle:string
     moviePosterUrl:string,
     rating:number[]
-}
-
+} 
 const Moviecard = ({movieId,movieTitle,moviePosterUrl,rating}:dMovieProps) => {
+     const {data:session}=useSession();
+     const user=session?.user
      const getAverageRating = () => {
         let length = rating.length
         if (length=== 0) return "No ratings yet"
@@ -23,6 +26,7 @@ const Moviecard = ({movieId,movieTitle,moviePosterUrl,rating}:dMovieProps) => {
         return (lastElement as number / length).toFixed(1)
     }
     return (
+        <div>
         <Link href={`/${movieId}/description`}><Card className="bg-red-500 text-white">
             <CardHeader>
                 <CardTitle><b style={{fontSize:'20px'}}>{movieTitle}</b></CardTitle>
@@ -39,6 +43,14 @@ const Moviecard = ({movieId,movieTitle,moviePosterUrl,rating}:dMovieProps) => {
                 <b>{getAverageRating()}/5</b>
             </CardFooter>
         </Card></Link>
+        {user?.role==="admin" &&
+        (
+            <>
+            <Button>Edit show time</Button>
+            <Button className="ml-3"variant="destructive">Delete</Button>
+            </>
+        )}
+        </div>
 
     )
 }

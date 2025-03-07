@@ -10,7 +10,7 @@ import { useQuery } from "@apollo/client"
 import { useState } from "react";
 import axios from "axios";
 import { useRouter } from "next/navigation"
-import { useForm, SubmitHandler } from "react-hook-form"
+import { useForm } from "react-hook-form"
 const options = [
     "kolkata", "mumbai", "pune", "kharagpur"
 ]
@@ -29,9 +29,9 @@ const Navbar = () => {
     const email = session?.user?.email;
     const { setcityValue } = useContext(ValueContext)
     const [moviesName, setMoviesName] = useState([])
-    const { data } = useQuery(GET_MOVIES);
     const [filteredMovies, setfilteredMovies] = useState<string[]>([]);
-    const [searchMovie, setsearchMovie] = useState<{ _id: string } | null>(null)
+
+    const { data } = useQuery(GET_MOVIES);
     useEffect(() => {
         if (data && data?.movies) {
             setMoviesName(data.movies.map((movie: { title: string }) => movie.title)); // Set movie names
@@ -43,23 +43,19 @@ const Navbar = () => {
         const value = event.target.value
         setinputSearch(value)
         if (value?.length) {
-            const result = moviesName.filter((keyword, index) => {
-                return keyword.toLowerCase().includes(value.toLowerCase())
+            const result = moviesName.filter((keyword) => {
+                return keyword!.toLowerCase().includes(value.toLowerCase())
             })
             setfilteredMovies(result)
         }
-        console.log(filteredMovies)
 
     }
+
     const handleInput = async () => {
         try {
             const response = await axios.get(`/api/movie/search-movie?search=${inputSearch}`)
             if (response.status === 200) {
-                setsearchMovie(response.data.movie)
                 router.push(`/${response.data.content._id}/description`)
-            }
-            else {
-                setsearchMovie(null);
             }
         } catch (error) {
             if (axios.isAxiosError(error)) {
@@ -88,8 +84,8 @@ const Navbar = () => {
                     <form className="flex flex-row gap-2" onSubmit={handleSubmit(handleInput)} >
                         <Input className="text-white"
                             placeholder="search movies..."
-                            value={inputSearch}
                             {...register("search")}
+                            value={inputSearch!}
                             onChange={handleOnChange}
                         />
                         <Button type="submit">Search</Button>
@@ -114,6 +110,10 @@ const Navbar = () => {
                         <option key={index} value={option}>{option}</option>
                     ))}
                 </select>
+
+                {session?.user.role ==="admin" && (
+                    <Button className="bg-blue-400" onClick={()=>router.push("/addmovie")}>Add Movie</Button>
+                )}
 
 
                 {/* Right - Auth Buttons */}
