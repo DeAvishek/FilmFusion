@@ -83,7 +83,7 @@ const Page = () => {
                         {moviePoster && (
                             <div
                                 className="absolute inset-0 w-full h-full bg-cover bg-center blur-md opacity-30"
-                                style={{ backgroundImage: "https://www.themoviedb.org/t/p/original/mWP5IFio47JwPD6hExWwK9EcREd.jpg" }}
+                                style={{ backgroundImage:`${moviePoster}` }}
                             ></div>
                         )}
 

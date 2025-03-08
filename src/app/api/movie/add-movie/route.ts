@@ -14,7 +14,7 @@ export async function POST(req: Request, res: NextResponse) {
             language,
             posterUrl,
             trailerUrl,
-            releaseDate
+            releaseDate,
         })
         await movie.save();
         console.log("Movie added successfully")  //todo remove

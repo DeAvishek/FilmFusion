@@ -1,152 +1,137 @@
-"use client"
+"use client";
 import axios from "axios";
-import { useForm } from "react-hook-form"
-import { zodResolver } from "@hookform/resolvers/zod";
-import React, { useState } from 'react'
-import { Button } from "@/components/ui/button"
-import {
-    Form,
-    FormControl,
-    FormField,
-    FormItem,
-    FormLabel
-} from "@/components/ui/form"
-import { z } from "zod";
-import { Input } from "@/components/ui/input"
-import { useRouter } from 'next/navigation'
-import { movieValidationSchema } from "@/app/schema/movievalidation";
+import { useForm } from "react-hook-form";
+import React, { useState } from "react";
+import { useRouter } from "next/navigation";
 
-const page = () => {
-    const router = useRouter()
-    const [isSubmit, setisSubmit] = React.useState<boolean>(false)
-    const [responseMessage, setresponseMessage] = useState<string>("")
+const Page = () => {
+    const router = useRouter();
+    const [isSubmit, setIsSubmit] = useState<boolean>(false);
+    const [responseMessage, setResponseMessage] = useState<string>("");
 
-
-    const form = useForm<z.infer<typeof movieValidationSchema>>({
-        resolver: zodResolver(movieValidationSchema),
+    const { register, handleSubmit, formState: { errors } } = useForm({
         defaultValues: {
             title: "",
             duration: "",
             language: "",
             posterUrl: "",
             trailerUrl: "",
-
+            releaseDate: ""
         }
-    })
-    const handleAddMovie = async (data: z.infer<typeof movieValidationSchema>) => {
+    });
+
+    const handleAddMovie = async (data: any) => {
         console.log("Submitting data:", data);
         try {
-            setisSubmit(true)
-            const response = await axios.post("/api/movie/add-movie", data)
+            setIsSubmit(true);
+            const response = await axios.post("/api/movie/add-movie", data);
             if (response.status === 200) {
-                setresponseMessage(response.data.message)
-                router.push(`/${data.title}/adddescp`)
+                setResponseMessage(response.data.message);
+                router.push(`/${data.title}/client-movie-desc`);
             }
         } catch (error) {
             if (axios.isAxiosError(error)) {
-                setresponseMessage(error?.response?.data.error)
+                setResponseMessage(error?.response?.data.error);
             } else {
-                setresponseMessage("error occur during add of movie")
+                setResponseMessage("An error occurred during the addition of the movie");
             }
         } finally {
-            setisSubmit(false)
+            setIsSubmit(false);
         }
+    };
 
-    }
     return (
-        <div className="flex justify-center items-center min-h-screen bg-gradient-to-r from-gray-900 to-gray-800 text-white px-4">
-            <div className="w-full max-w-2xl p-10 bg-gray-900 shadow-lg rounded-xl border border-gray-700">
-                <div className="text-center">
-                    <h1 className="text-4xl font-extrabold tracking-tight lg:text-5xl mb-6 text-white">
-                        Join Now
-                    </h1>
-                    <p className="mb-4 text-white">Sign up in to start your movie adventure</p>
-                </div>
-                <Form {...form}>
-                    <form onSubmit={form.handleSubmit(handleAddMovie)} className="space-y-8">
-                        <FormField
-                            control={form.control}
-                            name="title"
-                            render={({ field }) => (
-                                <FormItem>
-                                    <FormLabel>Title</FormLabel>
-                                    <FormControl>
-                                        <Input placeholder="title"
-                                        className="bg-gray-800 text-white border-gray-600 focus:border-sky-400 focus:ring-sky-400"
-                                        {...field} />
-                                    </FormControl>
-                                   
-                                </FormItem>
-                            )}
-                        />
-                        <FormField
-                            control={form.control}
-                            name="duration"
-                            render={({ field }) => (
-                                <FormItem>
-                                    <FormLabel>Duration</FormLabel>
-                                    <FormControl>
-                                        <Input placeholder="duration"
-                                        className="bg-gray-800 text-white border-gray-600 focus:border-sky-400 focus:ring-sky-400"
-                                        {...field} />
-                                    </FormControl>
-                                   
-                                </FormItem>
-                            )}
-                        />
-                        <FormField
-                            control={form.control}
-                            name="language"
-                            render={({ field }) => (
-                                <FormItem>
-                                    <FormLabel>Language</FormLabel>
-                                    <FormControl>
-                                        <Input placeholder="language" 
-                                        className="bg-gray-800 text-white border-gray-600 focus:border-sky-400 focus:ring-sky-400"
-                                        {...field} />
-                                    </FormControl>
-                                   
-                                </FormItem>
-                            )}
-                        />
-                        <FormField
-                            control={form.control}
-                            name="posterUrl"
-                            render={({ field }) => (
-                                <FormItem>
-                                    <FormLabel>PosterUrl</FormLabel>
-                                    <FormControl>
-                                        <Input placeholder="posterUrl" 
-                                        className="bg-gray-800 text-white border-gray-600 focus:border-sky-400 focus:ring-sky-400"
-                                        {...field} />
-                                    </FormControl>
-                                   
-                                </FormItem>
-                            )}
-                        />
-                        <FormField
-                            control={form.control}  
-                            name="trailerUrl"
-                            render={({ field }) => (
-                                <FormItem>
-                                    <FormLabel>TrailerUrl</FormLabel>
-                                    <FormControl>
-                                        <Input placeholder="trailerUrl"
-                                        className="bg-gray-800 text-white border-gray-600 focus:border-sky-400 focus:ring-sky-400"
-                                         {...field} />
-                                    </FormControl>
-                                
-                                </FormItem>
-                            )}
-                        />
+        <div className="flex justify-center items-center min-h-screen bg-gradient-to-r from-blue-500 to-purple-600 p-6">
+            <div className="w-full max-w-lg p-8 bg-white/30 backdrop-blur-lg rounded-2xl shadow-lg">
+                <h1 className="text-3xl font-extrabold text-center text-white mb-6">🎬 Add Movie</h1>
 
-                        <Button type="submit">Submit</Button>
-                    </form>
-                </Form>
+                {responseMessage && (
+                    <p className="text-center text-red-500">{responseMessage}</p>
+                )}
+
+                <form onSubmit={handleSubmit(handleAddMovie)} className="space-y-5">
+                    {/* Title */}
+                    <div>
+                        <label className="block text-sm font-semibold text-white">Title</label>
+                        <input
+                            type="text"
+                            {...register("title", { required: "Title is required" })}
+                            className="w-full p-3 mt-1 border border-white/30 bg-white/20 text-white placeholder-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-white"
+                            placeholder="Enter movie title"
+                        />
+                        {errors.title && <p className="text-red-300 text-sm">{errors.title.message}</p>}
+                    </div>
+
+                    {/* Duration */}
+                    <div>
+                        <label className="block text-sm font-semibold text-white">Duration (minutes)</label>
+                        <input
+                            type="number"
+                            {...register("duration", { required: "Duration is required" })}
+                            className="w-full p-3 mt-1 border border-white/30 bg-white/20 text-white placeholder-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-white"
+                            placeholder="Enter duration"
+                        />
+                        {errors.duration && <p className="text-red-300 text-sm">{errors.duration.message}</p>}
+                    </div>
+
+                    {/* Language */}
+                    <div>
+                        <label className="block text-sm font-semibold text-white">Language</label>
+                        <input
+                            type="text"
+                            {...register("language", { required: "Language is required" })}
+                            className="w-full p-3 mt-1 border border-white/30 bg-white/20 text-white placeholder-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-white"
+                            placeholder="Enter language"
+                        />
+                        {errors.language && <p className="text-red-300 text-sm">{errors.language.message}</p>}
+                    </div>
+
+                    {/* Poster URL */}
+                    <div>
+                        <label className="block text-sm font-semibold text-white">Poster URL</label>
+                        <input
+                            type="text"
+                            {...register("posterUrl", { required: "Poster URL is required" })}
+                            className="w-full p-3 mt-1 border border-white/30 bg-white/20 text-white placeholder-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-white"
+                            placeholder="Enter poster URL"
+                        />
+                        {errors.posterUrl && <p className="text-red-300 text-sm">{errors.posterUrl.message}</p>}
+                    </div>
+
+                    {/* Trailer URL */}
+                    <div>
+                        <label className="block text-sm font-semibold text-white">Trailer URL</label>
+                        <input
+                            type="text"
+                            {...register("trailerUrl")}
+                            className="w-full p-3 mt-1 border border-white/30 bg-white/20 text-white placeholder-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-white"
+                            placeholder="Enter trailer URL (optional)"
+                        />
+                    </div>
+
+                    {/* Release Date */}
+                    <div>
+                        <label className="block text-sm font-semibold text-white">Release Date</label>
+                        <input
+                            type="date"
+                            {...register("releaseDate")}
+                            className="w-full p-3 mt-1 border border-white/30 bg-white/20 text-white placeholder-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-white"
+                        />
+                    </div>
+
+                    {/* Submit Button */}
+                    <button
+                        type="submit"
+                        className="w-full py-3 mt-4 font-semibold text-lg text-white bg-gradient-to-r from-green-400 to-blue-500 rounded-lg hover:from-green-500 hover:to-blue-600 transition-all duration-300 disabled:opacity-50"
+                        disabled={isSubmit}
+                    >
+                        {isSubmit ? "Submitting..." : "Submit 🎥"}
+                    </button>
+                </form>
             </div>
-        </div> 
+        </div>
 
-    )
-}
+    );
+};
 
-export default page
+export default Page;

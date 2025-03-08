@@ -35,7 +35,7 @@ export default function RootLayout({
           <ValueSelectionProvider>
             <Navbar />
             {children}
-            <Footer />
+            {/* <Footer /> */}
             <MenubarDemo/>
           </ValueSelectionProvider>
         </AuthProvider>

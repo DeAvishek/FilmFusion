@@ -13,7 +13,6 @@ export interface IMovie extends Document{
     releaseDate:Date,
     showtimes:IShowtime[],
     rating:number[],
-
 }
 export const MovieSchema:Schema<IMovie>=new Schema({
     title:{

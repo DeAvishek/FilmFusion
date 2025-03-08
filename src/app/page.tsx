@@ -58,7 +58,7 @@ export default function Home() {
     getMovies()
   }, [cityValue])
   return (
-    <div className="bg-pink-200  flex flex-col items-center min-h-screen">
+    <div className="bg-gradient-to-r from-red-400 to-blue-500  flex flex-col items-center min-h-screen">
       <span className="text-xl font-bold text-gray-800 w-full text-center mt-4">
         Movies that you may like in .. {cityValue}
       </span>
