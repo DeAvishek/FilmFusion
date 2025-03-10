@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import React, { use } from 'react'
+import React from 'react'
 import {
     Card,
     CardContent,
@@ -15,7 +15,24 @@ type dMovieProps={
     moviePosterUrl:string,
     rating:number[]
 } 
+import axios from 'axios'
+
 const Moviecard = ({movieId,movieTitle,moviePosterUrl,rating}:dMovieProps) => {
+    //delete the movie
+    const handleDeleteMovie=async()=>{
+        try {
+            const response=await axios.delete(`/api/movie/${movieId}/delete-movie`)
+            if (response.status===200){
+                console.log(response.data.message);
+            }
+        } catch (error) {
+            if(axios.isAxiosError(error)){
+                console.log(error.response?.data.error)
+            }else{
+                console.log("adjust this")
+            }
+        }
+    }
      const {data:session}=useSession();
      const user=session?.user
      const getAverageRating = () => {
@@ -47,7 +64,7 @@ const Moviecard = ({movieId,movieTitle,moviePosterUrl,rating}:dMovieProps) => {
         (
             <>
             <Button>Edit show time</Button>
-            <Button className="ml-3"variant="destructive">Delete</Button>
+            <Button className="ml-3"variant="destructive" onClick={handleDeleteMovie}>Delete</Button>
             </>
         )}
         </div>
