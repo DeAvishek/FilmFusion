@@ -4,13 +4,15 @@ import { useParams } from 'next/navigation'
 import { useForm, useFieldArray } from "react-hook-form"
 import axios from 'axios'
 import { useState } from 'react'
-import {Button} from "@/components/ui/button"
+import { Button } from "@/components/ui/button"
+import { useRouter } from 'next/navigation'
 type formvalue = {
     descTitle: string,
     cast: string[],
     genre: string[]
 }
 const page = () => {
+    const router = useRouter();
     const [loading, setloading] = useState(false)
     const [responseMessage, setResponseMessage] = useState("")
     const { movieid } = useParams()  //movie id is here movie title 
@@ -34,17 +36,20 @@ const page = () => {
     const handleAddDesc = async (data: formvalue) => {
         try {
             setloading(true)
-            const response=await axios.post(`/api/movie/${movieid}/add-desc-server`,data)
-            if(response.status===200){
+            const response = await axios.post(`/api/movie/${movieid}/add-desc-server`, data)
+            if (response.status === 200) {
                 setResponseMessage(response.data.message)
+                console.log(responseMessage)  //todo to remove
+                router.push(`/${movieid}/add-showtime-client`)
+
             }
         } catch (error) {
-            if(axios.isAxiosError(error)){
+            if (axios.isAxiosError(error)) {
                 setResponseMessage(error?.response?.data.error)
-            }else{
+            } else {
                 setResponseMessage("Add description error");
             }
-        }finally{
+        } finally {
             setloading(false);
 
         }

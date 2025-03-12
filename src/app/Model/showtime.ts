@@ -26,9 +26,10 @@ export const ShowtimeSchema:Schema<IShowtime>=new Schema({
         type:Number,
         required:true
     },
-    theaters:[
-        TheaterSchema
-    ]
+    theaters:{
+        type:[TheaterSchema],
+        default:[]
+    }
 })
 
 const ShowtimeModel=(mongoose.models.Showtime as mongoose.Model<IShowtime>) || (mongoose.model<IShowtime>("Showtime",ShowtimeSchema))
