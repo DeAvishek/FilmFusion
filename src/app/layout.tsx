@@ -33,9 +33,7 @@ export default function RootLayout({
       <ApolloWrapper>
         <AuthProvider>
           <ValueSelectionProvider>
-            <Navbar />
             {children}
-            {/* <Footer /> */}
             <MenubarDemo/>
           </ValueSelectionProvider>
         </AuthProvider>

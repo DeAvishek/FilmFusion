@@ -47,7 +47,7 @@ const page = () => {
                 setResponseMessage(response.data.message)
                 reset()  //resest the form
                 console.log(responseMessage) //todo to remove
-                router.push("/hii") //todo to modify
+                router.push("/") //todo to modify
             }
         } catch (error) {
             if (axios.isAxiosError(error)) {
@@ -103,7 +103,7 @@ const page = () => {
                         </div>
                         {/* for theaters */}
                         <div>
-                            <h2 className="text-lg font-semibold text-gray-800">Enter Theater</h2>
+                            <h2 className="text-lg font-semibold text-gray-800">Add Theater collection for {movieid}</h2>
                             {theatersFields.map((theater, index) => (
                                 <div key={theater.id}>
                                     <input

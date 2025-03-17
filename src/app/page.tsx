@@ -5,8 +5,11 @@ import Moviecard from "@/components/Moviecard";
 import { useState, useEffect } from "react";
 import { useContext } from "react";
 import { ValueContext } from "./context/optionsvalueprovider";
+import Navbar from "@/components/Navbar";
+import Footer from "@/components/Footer";
 
 export default function Home() {
+
   type MovieProps = {
     _id: string,
     title: string,
@@ -19,13 +22,16 @@ export default function Home() {
     showtimes: IShowtime[]
     rating: number[]
   }
+  const [baseurl,setBaseUrl]=useState<string>("")
+  const [fullurl,setfullurl]=useState<string>("")
   const [movies, setmovies] = useState<MovieProps[]>([])
   const [responseMessage, setresponseMessage] = useState('');
   const [loading, setloading] = useState(false)
   const { cityValue } = useContext(ValueContext)
+  
   const getMovies = async () => {
     try {
-      setloading(true) 
+      setloading(true)
       if (!cityValue) {
         const response = await axios.get('/api/movie/get-movies')
         if (response.status === 200) {
@@ -57,29 +63,41 @@ export default function Home() {
   useEffect(() => {
     getMovies()
   }, [cityValue])
+  //getting the full url
+   // Getting full URL and base URL on client-side only
+   useEffect(() => {
+    if (typeof window !== "undefined") {
+      setfullurl(window.location.href);
+      setBaseUrl(`${window.location.protocol}//${window.location.host}/`);
+    }
+  }, []);
   return (
-    <div className="bg-gradient-to-r from-red-400 to-blue-500  flex flex-col items-center min-h-screen">
-      <span className="text-xl font-bold text-gray-800 w-full text-center mt-4">
-        Movies that you may like in .. {cityValue}
-      </span>
-      <div className=" mb-5 flex flex-wrap gap-8 sm:items-start justify-center rounded">
-        {loading ? (
-          <p className="text-lg font-semibold text-gray-700 animate-pulse">Getting best Movies for you...</p>
-        ) :movies.length===0 ?(<p>No movies found</p>):(
-          (
-            movies.map((movie) => (
-              <Moviecard
-                key={movie._id}
-                movieId={movie._id}
-                movieTitle={movie.title}
-                moviePosterUrl={movie.posterUrl}
-                rating={movie.rating}
-              />
-            ))
-          )
-        )}
+    <>
+    {fullurl===baseurl &&  <Navbar/> }
+      <div className="bg-gradient-to-r from-red-400 to-blue-500  flex flex-col items-center min-h-screen">
+        <span className="text-xl font-bold text-gray-800 w-full text-center mt-4">
+          Movies that you may like in .. {cityValue}
+        </span>
+        <div className=" mb-5 flex flex-wrap gap-8 sm:items-start justify-center rounded">
+          {loading ? (
+            <p className="text-lg font-semibold text-gray-700 animate-pulse">Getting best Movies for you...</p>
+          ) : movies.length === 0 ? (<p>No movies found</p>) : (
+            (
+              movies.map((movie) => (
+                <Moviecard
+                  key={movie._id}
+                  movieId={movie._id}
+                  movieTitle={movie.title}
+                  moviePosterUrl={movie.posterUrl}
+                  rating={movie.rating}
+                />
+              ))
+            )
+          )}
+        </div>
       </div>
-    </div>
+      {fullurl===baseurl && <Footer/>}
+    </>
 
   );
 }
