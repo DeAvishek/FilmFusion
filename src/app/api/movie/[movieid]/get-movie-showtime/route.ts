@@ -17,6 +17,8 @@ export async function GET(req:Request,{params}:{params:{movieid:string}}){
         return NextResponse.json({
             success:true,
             showtimes:movie.showtimes
+        },{
+            status:200
         })
     } catch (error) {
         return NextResponse.json({

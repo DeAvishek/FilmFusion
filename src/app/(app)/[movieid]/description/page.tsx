@@ -134,7 +134,7 @@ const Page = () => {
                             <a href='#'>{language}</a>
                             <p>{duration} Minutes</p>
                             {ratingFormEnable && <Ratingform movieID={movieId} />}
-                            <Link href="booked-theater-movie"><Button className="mt-5" variant="destructive">
+                            <Link href="get-showtimes"><Button className="mt-5" variant="destructive">
                                 Book now
                             </Button></Link>
 
