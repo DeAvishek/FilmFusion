@@ -7,7 +7,7 @@ import TheaterModel from '@/app/Model/theater'
 
 export async function POST(req: Request, { params }: { params: { movieid: string } }) {
     const reqBody = await req.json();
-    const {screen,time,seatAvailable,price,theaters}=reqBody
+    const {screen,time,price,theaters}=reqBody
     const movieTitle = await params?.movieid
     if (!movieTitle) {
         console.log("i am from Movie title required") 
@@ -33,7 +33,6 @@ export async function POST(req: Request, { params }: { params: { movieid: string
         const newShowtime = new ShowtimeModel({
             screen:screen,
             time:time,
-            seatAvailable:seatAvailable,
             price:price
         })
         // Save all theaters and store 

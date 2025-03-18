@@ -6,6 +6,7 @@ import { Card } from "@/components/ui/card"
 import { Button } from '@/components/ui/button'
 import Ratingform from '@/components/Ratingform'
 import Home from '@/app/page'
+import Link from 'next/link'
 
 const Page = () => {
     const router = useRouter()
@@ -133,9 +134,10 @@ const Page = () => {
                             <a href='#'>{language}</a>
                             <p>{duration} Minutes</p>
                             {ratingFormEnable && <Ratingform movieID={movieId} />}
-                            <Button className="mt-5" variant="destructive" onClick={() => router.push('/success-payment')}>
+                            <Link href="booked-theater-movie"><Button className="mt-5" variant="destructive">
                                 Book now
-                            </Button>
+                            </Button></Link>
+
                         </div>
                     </>
                 ) : (

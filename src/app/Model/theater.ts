@@ -1,9 +1,17 @@
 import mongoose,{Document,Schema} from "mongoose";
+import { ISeat } from "./seats"
+import { SeatSchema } from "./seats"
 
+const generateSeats= () : ISeat[]=>{
+    return Array.from({length:50},(_,i)=>({
+        seatnumber:`A${i+1}`,
+        status:"available",
+    }));
+};
 export interface ITheater extends Document{
     name:string,
     location:string,
-    totalseats:number
+    totalseats:ISeat[]
 }
 
 export const TheaterSchema:Schema<ITheater> =new Schema({
@@ -16,8 +24,8 @@ export const TheaterSchema:Schema<ITheater> =new Schema({
         required:true
     },
     totalseats:{
-        type:Number,
-        required:true
+        type: [SeatSchema],
+        default: generateSeats
     }
 })
 

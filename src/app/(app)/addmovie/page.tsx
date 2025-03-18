@@ -27,7 +27,7 @@ const Page = () => {
             const response = await axios.post("/api/movie/add-movie", data);
             if (response.status === 200) {
                 setResponseMessage(response.data.message);
-                router.push(`/${data.title}/client-movie-desc`);
+                router.push(`/${data.title}/add-desc-client`);
             }
         } catch (error) {
             if (axios.isAxiosError(error)) {

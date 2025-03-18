@@ -13,12 +13,10 @@ const page = () => {
     type theater = {
         name: string,
         location: string,
-        totalseats: number
     }
     type formValue = {
         screen: number,
         time: string,
-        seatAvailable: number,
         price: number,
         theaters: theater[],
     }
@@ -28,7 +26,6 @@ const page = () => {
         defaultValues: {
             screen: 0,
             time: "",
-            seatAvailable: 0,
             price: 0,
             theaters: []
         }
@@ -84,15 +81,6 @@ const page = () => {
                             {errors.time && <p className="text-red-300 text-sm">{errors.time.message}</p>}
                         </div>
                         <div>
-                            <label className="block text-sm font-semibold text-white">SeatAvailable:</label>
-                            <input type="number"
-                                placeholder="Available seat.."
-                                {...register("seatAvailable", { required: "This filed is required" })}
-                                className="w-full p-3 mt-1 border border-white/30 bg-white/20 text-white placeholder-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-white"
-                            />
-                            {errors.seatAvailable && <p className="text-red-300 text-sm">{errors.seatAvailable.message}</p>}
-                        </div>
-                        <div>
                             <label className="block text-sm font-semibold text-white">Price:</label>
                             <input type="number"
                                 placeholder="Enter Price"
@@ -117,11 +105,6 @@ const page = () => {
                                         placeholder="Enter loacation"
                                         className="w-full p-2 mt-1 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                                     />
-                                    <input type="number"
-                                        {...register(`theaters.${index}.totalseats`)}
-                                        placeholder="Enter Available seat"
-                                        className="w-full p-2 mt-1 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                                    />
                                     <Button
                                         type="button"
                                         onClick={() => theatersRemove(index)}
@@ -133,7 +116,7 @@ const page = () => {
                             ))}
                             <Button
                                 type="button"
-                                onClick={() => theatersAppend({name:"",location:"",totalseats:0})}
+                                onClick={() => theatersAppend({name:"",location:""})}
                                 className="mt-2 px-4 py-2 text-white bg-blue-600 rounded-md hover:bg-blue-700"
                             >
                                 Add Theater Collection
