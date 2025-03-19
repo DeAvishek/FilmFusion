@@ -17,6 +17,7 @@ import {
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 import Link from 'next/link'
+import Toastalert from '@/components/Toastalert'
 
 const Signin = () => {
     const [isSubmit, setisSumbmit] = useState<boolean>(false)
@@ -30,6 +31,7 @@ const Signin = () => {
     })
     const handleSignIn = async (data: z.infer<typeof signInValidationScheam>) => {
         try {
+            setisSumbmit(true)
             const response = await signIn('credentials', {
                 redirect:false,
                 email:data.email,
@@ -38,7 +40,12 @@ const Signin = () => {
                 setresponseMessage(response.error);
             } else {
                 setresponseMessage("Logged in successfully");
-                router.push('/');
+                
+                setTimeout(() => {
+                    router.push('/');
+                }, 3000);
+                
+               
             }
 
         } catch (error) {
@@ -52,6 +59,7 @@ const Signin = () => {
     }
     return (
         <div className="flex justify-center items-center min-h-screen bg-grey-100 text-white">
+            {responseMessage &&<Toastalert alert_message="Logged in successfully"/>}
             <div className="w-full max-w-md p-8 space-y-8 bg-red-800 rounded-lg shadow-md">
                 <div className="text-center">
                     <h1 className="text-4xl font-extrabold tracking-tight lg:text-5xl mb-6 text-white">
