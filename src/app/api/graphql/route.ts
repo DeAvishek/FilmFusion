@@ -6,12 +6,21 @@ import { NextApiRequest } from "next";
 import { startServerAndCreateNextHandler } from "@as-integrations/next";
 import UserModel from "@/app/Model/user";
 import ShowtimeModel from "@/app/Model/showtime";
+import TheaterModel from "@/app/Model/theater";
 interface InteractionofUser {
   movieId: string;
   rating: number;
 }
 // GraphQL Schema
 const typeDefs = gql`
+  input ShowtimeSearch{
+    _id:ID!
+  }
+
+  input TheaterSearch{
+    _id:ID!
+  }
+
   type Movie {
     _id: String!
     title: String
@@ -22,19 +31,23 @@ const typeDefs = gql`
     movieId: String!
     rating: Int!
   }
-  input ShowtimeSearch{
-    _id:ID!
-  }
+  
   type User {
     _id: ID!
     username: String!
     email: String
     interactions: [Interactionofuser]
   }
+  type Seat{
+    _id:ID!
+    seatnumber:String
+    status:String
+  }
   type Theater{
     _id:ID!
     name:String
     location:String
+    totalseats:[Seat]
   }
   type Showtime{
    _id:ID!
@@ -46,7 +59,7 @@ const typeDefs = gql`
     users: [User]
     interactionsofuser: [Interactionofuser]
     showtime(search: ShowtimeSearch): Showtime!
-    showtimes: [Showtime!]!
+    theater(search:TheaterSearch):Theater!
   }
 `;
 
@@ -81,11 +94,21 @@ const resolvers = {
         throw new Error("Failed to fetch showtimes");
       }
     },
+    theater:async(_: any, { search }: { search: { _id: string } })=>{
+      try {
+        await dbConnect()
+        const theater = await TheaterModel.findById(search._id)
+        return theater
+      } catch (error) {
+        console.error("Error fetching Theater:", error);
+        throw new Error("Failed to fetch Theaters");
+      }
+    },
     interactionsofuser: async () => {
       try {
         await dbConnect();
         const users = await UserModel.find();
-        let interactions: InteractionofUser[]= [];
+        let interactions: InteractionofUser[] = [];
 
         users.forEach((user) => {
           if (user.interactions && user.interactions.length > 0) {
@@ -99,7 +122,7 @@ const resolvers = {
         throw new Error("Failed to fetch interactions");
       }
     },
-    
+
   },
 };
 
