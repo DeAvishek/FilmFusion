@@ -5,7 +5,11 @@ import { gql } from "graphql-tag";
 import { NextApiRequest } from "next";
 import { startServerAndCreateNextHandler } from "@as-integrations/next";
 import UserModel from "@/app/Model/user";
-
+import ShowtimeModel from "@/app/Model/showtime";
+interface InteractionofUser {
+  movieId: string;
+  rating: number;
+}
 // GraphQL Schema
 const typeDefs = gql`
   type Movie {
@@ -18,18 +22,31 @@ const typeDefs = gql`
     movieId: String!
     rating: Int!
   }
-
+  input ShowtimeSearch{
+    _id:ID!
+  }
   type User {
     _id: ID!
     username: String!
     email: String
     interactions: [Interactionofuser]
   }
-
+  type Theater{
+    _id:ID!
+    name:String
+    location:String
+  }
+  type Showtime{
+   _id:ID!
+   screen:Int!
+   theaters:[Theater]
+  }
   type Query {
     movies: [Movie]
     users: [User]
     interactionsofuser: [Interactionofuser]
+    showtime(search: ShowtimeSearch): Showtime!
+    showtimes: [Showtime!]!
   }
 `;
 
@@ -54,11 +71,21 @@ const resolvers = {
         throw new Error("Failed to fetch users");
       }
     },
+    showtime: async (_: any, { search }: { search: { _id: string } }) => {
+      try {
+        await dbConnect();
+        const showtime = await ShowtimeModel.findById(search._id);
+        return showtime
+      } catch (error) {
+        console.error("Error fetching showtimes:", error);
+        throw new Error("Failed to fetch showtimes");
+      }
+    },
     interactionsofuser: async () => {
       try {
         await dbConnect();
         const users = await UserModel.find();
-        let interactions: Interactionofuser[] = [];
+        let interactions: InteractionofUser[]= [];
 
         users.forEach((user) => {
           if (user.interactions && user.interactions.length > 0) {
@@ -72,6 +99,7 @@ const resolvers = {
         throw new Error("Failed to fetch interactions");
       }
     },
+    
   },
 };
 

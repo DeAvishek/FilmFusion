@@ -43,7 +43,7 @@ const Signin = () => {
                 
                 setTimeout(() => {
                     router.push('/');
-                }, 3000);
+                }, 3500);
                 
                
             }
@@ -59,8 +59,8 @@ const Signin = () => {
     }
     return (
         <div className="flex justify-center items-center min-h-screen bg-grey-100 text-white">
-            {responseMessage &&<Toastalert alert_message="Logged in successfully"/>}
-            <div className="w-full max-w-md p-8 space-y-8 bg-red-800 rounded-lg shadow-md">
+            {responseMessage?.includes("success") &&<Toastalert alert_message="Logged in successfully"/>}
+            <div className="w-full max-w-md p-8 space-y-8 bg-sky-600 rounded-lg shadow-md">
                 <div className="text-center">
                     <h1 className="text-4xl font-extrabold tracking-tight lg:text-5xl mb-6 text-white">
                         Join Now
@@ -101,7 +101,7 @@ const Signin = () => {
                 </Form>
 
                 <div className="text-center">
-                    <p>Dont have an account? <Link href='/sign-up' className="text-blue-500">Sign Up</Link></p>
+                    <p>Dont have an account? <Link href='/sign-up' className="text-yellow-200">Sign Up</Link></p>
                 </div>
             </div>
         </div>

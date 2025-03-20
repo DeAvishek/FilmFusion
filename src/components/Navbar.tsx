@@ -11,6 +11,7 @@ import { useState } from "react";
 import axios from "axios";
 import { useRouter } from "next/navigation"
 import { useForm } from "react-hook-form"
+import Toastalert from "./Toastalert";
 const options = [
     "kolkata", "mumbai", "pune", "kharagpur"
 ]
@@ -30,7 +31,7 @@ const Navbar = () => {
     const { setcityValue } = useContext(ValueContext)
     const [moviesName, setMoviesName] = useState([])
     const [filteredMovies, setfilteredMovies] = useState<string[]>([]);
-
+    const [isSignout,setisSignout] = useState<boolean>(false)
     const { data } = useQuery(GET_MOVIES);
     useEffect(() => {
         if (data && data?.movies) {
@@ -44,7 +45,7 @@ const Navbar = () => {
         setinputSearch(value)
         if (value?.length) {
             const result = moviesName.filter((keyword) => {
-                return keyword!.toLowerCase().includes(value.toLowerCase())
+                return (keyword as string).toLowerCase().includes(value.toLowerCase())
             })
             setfilteredMovies(result)
         }
@@ -70,9 +71,14 @@ const Navbar = () => {
         setinputSearch(movie)
         setfilteredMovies([])
     }
+    const handlSignout=()=>{
+        signOut()
+        setisSignout(true)
+    }
     return (
         <>
             <nav className="flex items-center justify-between px-6 py-4 bg-gray-800 text-white">
+                {!email && <Toastalert alert_message="Sign out Successfully"/>}
                 {/* Left - Logo */}
                 <Link href="/" className="text-2xl font-bold">
                     🎬 MovieApp
@@ -121,7 +127,7 @@ const Navbar = () => {
                     {email ? (
                         <div className="flex items-center gap-4">
                             <span className="hidden sm:block">{email}</span>
-                            <Button onClick={() => signOut()} className="bg-red-500 hover:bg-red-600">
+                            <Button onClick={handlSignout} className="bg-red-500 hover:bg-red-600">
                                 Sign Out
                             </Button>
                         </div>
