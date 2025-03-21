@@ -87,7 +87,7 @@ const resolvers = {
     showtime: async (_: any, { search }: { search: { _id: string } }) => {
       try {
         await dbConnect();
-        const showtime = await ShowtimeModel.findById(search._id);
+        const showtime = await ShowtimeModel.findById(search._id).populate('theaters');
         return showtime
       } catch (error) {
         console.error("Error fetching showtimes:", error);

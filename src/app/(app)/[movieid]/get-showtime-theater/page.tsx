@@ -3,39 +3,59 @@ import { useParams } from 'next/navigation'
 import React from 'react'
 import { gql } from "graphql-tag"
 import { useQuery } from "@apollo/client"
-const GET_THEATER_TITLE=gql`
+import Seastui from '@/components/Seastui'
+//type define
+type seat_prop={
+  _id:string,
+  seatnumber:string,
+  status:string
+}
+type itemprop = {
+  _id: string
+  location:string
+  name:string
+  totalseats:seat_prop[]
+}
+
+// Queries
+const GET_THEATER_ID = gql`
 query ExampleQuery($search: ShowtimeSearch) {
   showtime(search: $search) {
     theaters {
-      name
       _id
+      location
+      name
     }
   }
 }
 `
-type itemprop={
-  name:string,
-  _id:string
-}
+
 const page = () => {
-  const params=useParams()
-  const {data,loading,error} = useQuery(GET_THEATER_TITLE,{
-    variables:{
-      search:{
-        _id:params?.movieid
+  const params = useParams()
+  const { data, loading, error } = useQuery(GET_THEATER_ID, {
+    variables: {
+      search: {
+        _id: params?.movieid
       }
     }
   })
-  console.log(data?.showtime?.theaters)
   return (
-    <div className='content-center items-center'>
+    <div className='flex justify-center'>
       {error && <p>{error.message}</p>}
-      
-      (<ul>
-        {data?.showtime?.theaters.map((item:itemprop)=>{
-          return <li className= "text-white" key={item._id}>{typeof item.name==='string' ? item.name:'Invalid'}</li>
+
+      <div>
+        {data?.showtime?.theaters.map((item: itemprop) => {
+          return (
+            <ul key={item._id}>
+              <Seastui _id={item._id} name={item.name} location={item.location}/>
+            </ul>
+          )
         })}
-       </ul>)
+        
+      </div>
+      {/* MOST IMPORTANT SEAT ALLOCATION */}
+      
+
     </div>
   )
 }

@@ -4,7 +4,6 @@ import axios from 'axios'
 import { useState ,useEffect} from 'react'
 import { useParams } from 'next/navigation'
 import Showtimecard from '@/components/Showtimecard'
-import { number } from 'zod'
 type showTimes={
   _id:string,
   screen:number,
@@ -35,7 +34,7 @@ const page = () => {
   },[])
   return (
     <div className='flex flex-row flex-wrap  mb-10 gap-0'>
-      {showTimes.map((showtime,index)=>(
+      {showTimes.map((showtime)=>(
           <Showtimecard 
           key={showtime._id} 
           screen={showtime.screen}

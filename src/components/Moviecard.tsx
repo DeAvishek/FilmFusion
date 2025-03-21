@@ -44,10 +44,10 @@ const Moviecard = ({movieId,movieTitle,moviePosterUrl,rating}:dMovieProps) => {
     }
     return (
         <div>
-        <Link href={`/${movieId}/description`}><Card className="bg-red-500 text-white">
-            <CardHeader>
+        <Link href={`/${movieId}/description`}>
+           
                 <CardTitle><b style={{fontSize:'20px'}}>{movieTitle}</b></CardTitle>
-            </CardHeader>
+           
             <CardContent>
                 <img 
                 width={300}
@@ -55,11 +55,10 @@ const Moviecard = ({movieId,movieTitle,moviePosterUrl,rating}:dMovieProps) => {
                 className="w-full h-64 object-cover rounded-lg"              
                 src={moviePosterUrl} 
                 alt={movieTitle}/>
-            </CardContent>
-            <CardFooter>
                 <b>{getAverageRating()}/5</b>
-            </CardFooter>
-        </Card></Link>
+            </CardContent>
+            
+        </Link>
         {user?.role==="admin" &&
         (
             <>
