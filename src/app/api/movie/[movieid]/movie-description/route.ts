@@ -3,6 +3,7 @@ import MovieModel from "@/app/Model/movie";
 import dbConnect from "@/app/lib/db";
 import mongoose from 'mongoose'
 import { NextResponse } from "next/server";
+import MovieDescModel from "@/app/Model/moviedescription";
 
 export async function GET(req: Request, { params }: { params: { movieid: string } }) {
     const movieId=await params?.movieid
@@ -27,6 +28,7 @@ export async function GET(req: Request, { params }: { params: { movieid: string 
                 }
             )
         }
+        
         
         return NextResponse.json({
             message:"Movie found",

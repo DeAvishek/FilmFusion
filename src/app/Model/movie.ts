@@ -1,8 +1,5 @@
 import mongoose,{Schema,Document} from "mongoose";
-import { IShowtime } from "./showtime";
-import { IMovieDescription } from "./moviedescription";
-import { MovieDescSchema } from "./moviedescription";
-import { ShowtimeSchema } from "./showtime";
+import { IMovieDescription ,MovieDescSchema} from "./moviedescription";
 export interface IMovie extends Document{
     title:string,
     duration:number,
@@ -11,7 +8,7 @@ export interface IMovie extends Document{
     posterUrl:string,
     trailerUrl?:string,
     releaseDate:Date,
-    showtimes:IShowtime[],
+    showtimes:mongoose.Types.ObjectId[],
     rating:number[],
 }
 export const MovieSchema:Schema<IMovie>=new Schema({
@@ -27,20 +24,23 @@ export const MovieSchema:Schema<IMovie>=new Schema({
         type:String,
         required:true
     },
-    descriptions:MovieDescSchema,
+    descriptions:{
+        type:MovieDescSchema
+    },
     posterUrl:{
         type:String,
         required:true,
     },
     trailerUrl:{
         type:String,
+        default:null
     },
     releaseDate:{
         type:Date,
         required:true
     },
     showtimes:{
-        type:[ShowtimeSchema],
+        type:[{type:Schema.Types.ObjectId,ref:'Showtime'}],
         default:[]
         
     },

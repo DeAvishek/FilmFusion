@@ -1,12 +1,10 @@
 import mongoose, { Document, Schema } from "mongoose"
-import { TheaterSchema } from "./theater"
-import { ITheater } from "./theater"
 
 export interface IShowtime extends Document {
     screen: number,
     time: Date,
     price: number,
-    theaters: ITheater[]
+    theaters: mongoose.Types.ObjectId[]
 }
 
 export const ShowtimeSchema: Schema<IShowtime> = new Schema({
@@ -23,7 +21,7 @@ export const ShowtimeSchema: Schema<IShowtime> = new Schema({
         required: true
     },
     theaters: {
-        type: [TheaterSchema],
+        type: [{type:Schema.Types.ObjectId ,ref:'Theater'}],
         default: []
     }
 })

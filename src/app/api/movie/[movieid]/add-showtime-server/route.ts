@@ -3,8 +3,8 @@ import dbConnect from '@/app/lib/db'
 import ShowtimeModel from '@/app/Model/showtime'
 import MovieModel from '@/app/Model/movie'
 import { NextResponse } from 'next/server'
-import TheaterModel from '@/app/Model/theater'
-
+import TheaterModel, { ITheater } from '@/app/Model/theater'
+import mongoose from 'mongoose';
 export async function POST(req: Request, { params }: { params: { movieid: string } }) {
     const reqBody = await req.json();
     const {screen,time,price,theaters}=reqBody
@@ -36,18 +36,18 @@ export async function POST(req: Request, { params }: { params: { movieid: string
             price:price
         })
         // Save all theaters and store 
-        const theater= await Promise.all(theaters.map(async(theaterdata:unknown)=>{
+        const theaterIds= await Promise.all(theaters.map(async(theaterdata:Partial<ITheater>)=>{
             const newTheater =  new TheaterModel(
                 theaterdata
             )
             await newTheater.save()
-            return newTheater
+            return newTheater._id
 
         }))
-        newShowtime.theaters=theater
+        newShowtime.theaters=theaterIds
         await newShowtime.save();
-        movieFormMovieDb.showtimes.push(newShowtime)
-        // newShowtime.theaters=newTheater
+        const showtimeId: mongoose.Types.ObjectId = newShowtime._id as mongoose.Types.ObjectId;
+        movieFormMovieDb.showtimes=movieFormMovieDb.showtimes.concat(showtimeId)
         await movieFormMovieDb.save()
         return NextResponse.json({ message: "showtime added successfully", success: true }, { status: 200 });
     } catch (error) {

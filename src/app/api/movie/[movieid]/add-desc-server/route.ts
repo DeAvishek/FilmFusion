@@ -28,6 +28,7 @@ export async function  POST(req:Request,{params}:{params:{movieid:string}}){
             reqBody
         )
         await newDesc.save()
+
         movie.descriptions=newDesc
         await movie.save()
         return NextResponse.json({ message: "Description added successfully", success: true }, { status: 200 });

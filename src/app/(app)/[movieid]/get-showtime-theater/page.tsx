@@ -3,7 +3,6 @@ import { useParams } from 'next/navigation'
 import React from 'react'
 import { gql } from "graphql-tag"
 import { useQuery } from "@apollo/client"
-import ProgressDemo from '@/components/Progressbar'
 const GET_THEATER_TITLE=gql`
 query ExampleQuery($search: ShowtimeSearch) {
   showtime(search: $search) {
