@@ -3,16 +3,11 @@ import React from "react";
 import { Button } from "@/components/ui/button";
 import { gql, useQuery } from "@apollo/client";
 import { useState } from "react";
+import Theaterhall from "./Theaterhall";
 type TheaterID = {
   _id: string;
   name: string;
   location: string;
-};
-
-type SeatProp = {
-  _id: string;
-  seatnumber: string;
-  status: string;
 };
 
 // GraphQL Query
@@ -29,7 +24,7 @@ const GET_THEATER = gql`
   }
 `;
 
-const Seastui = ({ _id, name, location }: TheaterID) => {
+const Theatername = ({ _id, name, location }: TheaterID) => {
   const [check,setcheck] = useState<boolean>(false)
   const { data, loading, error } = useQuery(GET_THEATER, {
     variables: {
@@ -50,16 +45,10 @@ const Seastui = ({ _id, name, location }: TheaterID) => {
       {name} ({location})
     </Button>
     {check && (
-        <div className="grid grid-cols-5 md:grid-cols-10 gap-4 mt-7">
-          {data?.theater?.totalseats?.map((item: SeatProp) => (
-            <Button key={item._id} className={`${item.status==="available"?'bg-green-500':'bg-red-400'}      p-2`}>
-              {item.seatnumber}
-            </Button>
-          ))}
-        </div>
+            <Theaterhall theaterId={_id} seats={data?.theater?.totalseats} />
       )}
     </div>
   );
 };
 
-export default Seastui;
+export default Theatername;

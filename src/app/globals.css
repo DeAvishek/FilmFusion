@@ -148,3 +148,6 @@ footer {
 body{
   background-color: rgb(56, 54, 93);
 }
+.clip-trapezium {
+  clip-path: polygon(0% 0%, 100% 0, 90% 100%, 10% 100%);
+}

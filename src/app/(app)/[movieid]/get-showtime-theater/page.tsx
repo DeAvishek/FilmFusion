@@ -3,7 +3,7 @@ import { useParams } from 'next/navigation'
 import React from 'react'
 import { gql } from "graphql-tag"
 import { useQuery } from "@apollo/client"
-import Seastui from '@/components/Seastui'
+import Theatername from '@/components/Theatername'
 //type define
 type seat_prop={
   _id:string,
@@ -47,15 +47,12 @@ const page = () => {
         {data?.showtime?.theaters.map((item: itemprop) => {
           return (
             <ul key={item._id}>
-              <Seastui _id={item._id} name={item.name} location={item.location}/>
+              <Theatername _id={item._id} name={item.name} location={item.location}/>
             </ul>
           )
         })}
         
       </div>
-      {/* MOST IMPORTANT SEAT ALLOCATION */}
-      
-
     </div>
   )
 }
