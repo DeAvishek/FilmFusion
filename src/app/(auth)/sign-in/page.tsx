@@ -33,19 +33,19 @@ const Signin = () => {
         try {
             setisSumbmit(true)
             const response = await signIn('credentials', {
-                redirect:false,
-                email:data.email,
+                redirect: false,
+                email: data.email,
             })
             if (response?.error) {
                 setresponseMessage(response.error);
             } else {
                 setresponseMessage("Logged in successfully");
-                
+
                 setTimeout(() => {
                     router.push('/');
                 }, 3500);
-                
-               
+
+
             }
 
         } catch (error) {
@@ -58,53 +58,54 @@ const Signin = () => {
 
     }
     return (
-        <div className="flex justify-center items-center min-h-screen bg-grey-100 text-white">
-            {responseMessage?.includes("success") &&<Toastalert alert_message="Logged in successfully"/>}
-            <div className="w-full max-w-md p-8 space-y-8 bg-sky-600 rounded-lg shadow-md">
-                <div className="text-center">
-                    <h1 className="text-4xl font-extrabold tracking-tight lg:text-5xl mb-6 text-white">
-                        Join Now
-                    </h1>
-                    <p className="mb-4 text-white">Sign in to start your movie adventure</p>
+
+        <>
+            <div className="flex h-screen">
+                {/* Left Side - Sign In Form */}
+
+                <div className="w-1/2 flex flex-col justify-center items-center bg-white">
+                    
+                    <img src="/FilmFusion2.jpg" alt="BookMyShow Logo" className="w-32 mb-8" />
+                    <h2 className="text-2xl font-bold mb-4">Log in to your account</h2>
+                    <h1 className="mb-4 text-3xl">
+                        Don't have an account? <a href="/sign-up" className="text-red-500">Sign Up</a>
+                    </h1>   
+                    {responseMessage?.includes("success") && (<Toastalert alert_message="Logged in successfully" />)}          
+                     <Form {...form}>
+                        <form onSubmit={form.handleSubmit(handleSignIn)} className="space-y-8">
+                            <FormField
+                                name="email"
+                                control={form.control}
+                                render={({ field }) => (
+                                    <FormItem>
+                                        <FormLabel>Email</FormLabel>
+                                        <FormControl>
+                                            <Input className="bg-white-400 text-black" style={{width:'400px'}} type="email" placeholder="Email" {...field} />
+                                        </FormControl>
+                                        <FormMessage />
+                                    </FormItem>
+                                )}
+                            />
+
+                            <Button
+                                type="submit"
+                                className="border-purple-200 text-purple-600 hover:border-transparent hover:bg-purple-600 hover:text-white active:bg-purple-700"
+                                disabled={isSubmit}
+                            >
+                                {isSubmit ? "Signing in..." : "Sign In"}
+                            </Button>
+                        </form>
+                    </Form>
                 </div>
 
-                {responseMessage && (
-                    <p className={`text-sm ${responseMessage.includes("success") ? "text-yellow-500" : "text-yellow-500"}`}>
-                        {responseMessage}
-                    </p>
-                )}
-
-                <Form {...form}>
-                    <form onSubmit={form.handleSubmit(handleSignIn)} className="space-y-8">
-                        <FormField
-                            name="email"
-                            control={form.control}
-                            render={({ field }) => (
-                                <FormItem>
-                                    <FormLabel>Email</FormLabel>
-                                    <FormControl>
-                                        <Input className="bg-white-500 text-black"type="email" placeholder="Email" {...field} />
-                                    </FormControl>
-                                    <FormMessage />
-                                </FormItem>
-                            )}
-                        />
-
-                        <Button
-                            type="submit"
-                            className="border-purple-200 text-purple-600 hover:border-transparent hover:bg-purple-600 hover:text-white active:bg-purple-700"
-                            disabled={isSubmit}
-                        >
-                            {isSubmit ? "Signing in..." : "Sign In"}
-                        </Button>
-                    </form>
-                </Form>
-
-                <div className="text-center">
-                    <p>Dont have an account? <Link href='/sign-up' className="text-yellow-200">Sign Up</Link></p>
+                {/* Right Side - Visuals */}
+                <div className="w-1/2 bg-grey-900 text-white flex flex-col justify-center items-center">
+                    <h1 className="text-4xl font-bold mb-4">FilmFusion 1.0 is here</h1>
+                    <p className="mb-8 text-center">Experience seamless booking with improved performance and new features.</p>
+                    <img src="/filmfusion1.png" alt="BookMyShow Visual" className="w-3/4 rounded-lg" />
                 </div>
             </div>
-        </div>
+        </>
     )
 }
 

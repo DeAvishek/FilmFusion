@@ -28,7 +28,7 @@ export default function RootLayout({
             <Navbar />
             {children}
             <MenubarDemo/>
-            <Footer />
+            {/* <Footer /> */}
         </div>
     );
 }

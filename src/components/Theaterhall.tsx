@@ -9,23 +9,21 @@ type SeatProp = {
     status: string;
 };
 
-
 type TheaterProps = {
     seats: SeatProp[];
-    theaterId:string
+    theaterId: string
 };
 
+const Theaterhall = ({ seats, theaterId }: TheaterProps) => {
+    //handle toggle
+    const [PendingSeats, setPendingSeats] = useState<string[]>([])
+    const handle_Seat_ToggleToyellow_Green = (seatnumber: string) => {
+        if (PendingSeats.includes(seatnumber)) {
 
-const Theaterhall = ({ seats,theaterId }: TheaterProps) => {
-        //handle toggle
-    const [PendingSeats,setPendingSeats] =useState<string[]>([])
-    const handle_Seat_ToggleToyellow_Green=(seatnumber:string)=>{
-        if(PendingSeats.includes(seatnumber)){
-          
-            setPendingSeats((prev)=>prev.filter(item=> item !== seatnumber))
-        }else{
-        
-            setPendingSeats((prev)=>[...prev,seatnumber])
+            setPendingSeats((prev) => prev.filter(item => item !== seatnumber))
+        } else {
+
+            setPendingSeats((prev) => [...prev, seatnumber])
         }
     }
     return (
@@ -33,29 +31,32 @@ const Theaterhall = ({ seats,theaterId }: TheaterProps) => {
             {/* Single Screen Display */}
             <div className="relative w-full max-w-4xl h-32 mb-12">
                 <div className="absolute inset-0 bg-white clip-trapezium shadow-2xl flex items-center justify-center">
-                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSaV6xwbZTbQJAWiW2-PHa0vqaij6qnls7mYQ&s" alt="" />
                 </div>
             </div>
 
 
             {/* Seat Layout */}
-            <div className="grid grid-cols-5 md:grid-cols-10 gap-4">
-                {seats.map(({ _id, seatnumber, status }) => (
-                    <Button
-                        key={_id}
-                        className={`w-14 h-14 flex items-center justify-center text-white font-bold
-                        ${status === "booked" ? 
-                        'bg-red-500': 
-                        PendingSeats.includes(seatnumber)?"bg-yellow-500":"bg-green-500"}`}
-                        onClick={()=>handle_Seat_ToggleToyellow_Green(seatnumber)}
-                    >
-                        {seatnumber}
-                    </Button>
-                ))}
+            <div className="seats-trapezium">
+                {seats.map(({ _id, seatnumber, status }, index) => {
+                    const rowIndex = Math.floor(index / 10); // Assuming 10 seats per row
+                    return (
+                        <Button
+                            key={_id}
+                            className={`w-14 h-14 flex items-center justify-center text-white font-bold seat-row
+                            ${status === "booked" ? 'bg-red-700 cursor-not-allowed' : PendingSeats.includes(seatnumber) ? 'bg-yellow-500' : 'bg-green-500'}`}
+                            style={{ '--row-index': rowIndex } as React.CSSProperties}
+                            disabled={status === "booked"}
+                            onClick={() => handle_Seat_ToggleToyellow_Green(seatnumber)}
+                        >
+                            {seatnumber}
+                        </Button>
+                    );
+                })}
             </div>
+
             <Button className="bg-sky-400 mt-4">Book seats</Button>
             <div>
-            <p className="text-red-500">{PendingSeats.join(',')}</p>
+                <p className="text-red-500">{PendingSeats.sort().join(',')}</p>
             </div>
         </div>
     );

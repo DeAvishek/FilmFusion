@@ -151,3 +151,29 @@ body{
 .clip-trapezium {
   clip-path: polygon(0% 0%, 100% 0, 90% 100%, 10% 100%);
 }
+.seats-trapezium {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 12px;
+  perspective: 1200px;
+  background: radial-gradient(ellipse at center, #1e293b, #0f172a); /* Dark gradient for depth */
+  padding: 20px;
+  border-radius: 20px;
+}
+
+@media (min-width: 768px) {
+  .seats-trapezium {
+    grid-template-columns: repeat(10, 1fr);
+  }
+}
+
+/* Creating the elevation effect */
+
+
+/* Apply incremental elevation to each row using nth-child */
+.seats-trapezium > .seat-row:nth-child(n) { transform: translateY(calc(var(--row-index) * -12px)) scale(calc(1 - var(--row-index) * 0.03)); }
+
+.seat-row {
+  transform-origin: center;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.5); /* Adding a slight shadow for more realism */
+}
