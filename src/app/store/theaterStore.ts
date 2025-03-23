@@ -6,15 +6,15 @@ type TheaterState={
 }
 
 type Actions={
-    setTheatreData:(seats:string[],theaterId:string)=>void
-    clearTheatreData:()=>void
+    setTheaterData:(seats:string[],theaterId:string)=>void
+    clearTheaterData:()=>void
 }
 
 const TheaterDataStore=create<TheaterState & Actions>((set)=>({
     seats:[],
     theaterId:'',
-    setTheatreData:(seats, theaterId)=>set({seats,theaterId}),
-    clearTheatreData:()=>set({seats:[],theaterId:''})
+    setTheaterData:(seats, theaterId)=>set({seats,theaterId}),
+    clearTheaterData:()=>set({seats:[],theaterId:''})
     
 }))
 

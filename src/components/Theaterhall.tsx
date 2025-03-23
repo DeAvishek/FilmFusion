@@ -1,7 +1,8 @@
 "use client"
 import { Button } from "@/components/ui/button";
 import React, { useState } from 'react';
-import { useEffect } from "react";
+import TheaterDataStore from "@/app/store/theaterStore";
+import { useRouter } from "next/navigation";
 
 type SeatProp = {
     _id: string;
@@ -15,6 +16,8 @@ type TheaterProps = {
 };
 
 const Theaterhall = ({ seats, theaterId }: TheaterProps) => {
+    const router=useRouter()
+    const set_Theater_Data=TheaterDataStore((state)=>state.setTheaterData)
     //handle toggle
     const [PendingSeats, setPendingSeats] = useState<string[]>([])
     const handle_Seat_ToggleToyellow_Green = (seatnumber: string) => {
@@ -25,6 +28,12 @@ const Theaterhall = ({ seats, theaterId }: TheaterProps) => {
 
             setPendingSeats((prev) => [...prev, seatnumber])
         }
+    }
+    //state management of
+    const handle_SetTheater_data=()=>{
+        set_Theater_Data(PendingSeats,theaterId)
+        router.push(`/${theaterId}/payment_check`)
+
     }
     return (
         <div className="flex flex-col items-center justify-center mt-5 bg-gray-800 mb-4">
@@ -54,7 +63,7 @@ const Theaterhall = ({ seats, theaterId }: TheaterProps) => {
                 })}
             </div>
 
-            <Button className="bg-sky-400 mt-4">Book seats</Button>
+            <Button className="bg-sky-400 mt-4" onClick={handle_SetTheater_data}>Book seats</Button>
             <div>
                 <p className="text-red-500">{PendingSeats.sort().join(',')}</p>
             </div>

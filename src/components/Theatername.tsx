@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { gql, useQuery } from "@apollo/client";
 import { useState } from "react";
 import Theaterhall from "./Theaterhall";
+
 type TheaterID = {
   _id: string;
   name: string;
@@ -25,6 +26,7 @@ const GET_THEATER = gql`
 `;
 
 const Theatername = ({ _id, name, location }: TheaterID) => {
+
   const [check,setcheck] = useState<boolean>(false)
   const { data, loading, error } = useQuery(GET_THEATER, {
     variables: {
@@ -38,6 +40,8 @@ const Theatername = ({ _id, name, location }: TheaterID) => {
   const handleClick = () => {
     setcheck((prev=>!prev))
   };
+
+
 
   return (
     <div className="flex flex-col items-center justify-center ">
