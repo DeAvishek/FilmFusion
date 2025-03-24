@@ -5,22 +5,9 @@ import UserModel from "@/app/Model/user";
 import { getServerSession } from "next-auth/next"
 import { AuthOptions } from "@/app/api/auth/[...nextauth]/provider";
 
-
-    // if (!session) {
-    //     return NextResponse.json({message:"U r not authorized",success:false},{
-    //         status:401
-    //     })
-    // }
-   
-    interface Interaction {
-        movieId: string | number;  // Adjust based on actual type
-        rating: number;
-        timestamp: number;
-    }
 export async function POST(req: Request, { params }: { params: { movieid: string } }) {
     const session = await getServerSession(AuthOptions )
     const userId=session?.user._id
-    // console.log("user id from rating api",session)
 
     const body = await req.json();
     const rating = body['imdbRating']

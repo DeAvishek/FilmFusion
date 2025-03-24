@@ -7,7 +7,7 @@ import CardContent from "@mui/material/CardContent";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import { useRouter } from "next/navigation";
-
+import PriceStore from "@/app/store/ticPriceStore";
 type ShowtimeProps = {
   time: string;
   screen: number;
@@ -16,6 +16,12 @@ type ShowtimeProps = {
 };
 
 const Cardcomponent = ({ time, screen, price, _id }: ShowtimeProps) => {
+  const set_ticket_price=PriceStore((state)=>state.set_Price)
+  const hnadle_on_click_of_BookSeats=()=>{
+    //store management
+    set_ticket_price(price)
+    router.push(`/${_id}/get-showtime-theater`)
+  }
   const router = useRouter()
   return (
     <React.Fragment>
@@ -43,7 +49,7 @@ const Cardcomponent = ({ time, screen, price, _id }: ShowtimeProps) => {
             variant="contained"
             size="large"
             className="bg-white text-blue-700 font-bold hover:bg-blue-400 transition-all"
-            onClick={()=>router.push(`/${_id}/get-showtime-theater`)}
+            onClick={hnadle_on_click_of_BookSeats}
           >
             Book Seats
           </Button>

@@ -1,9 +1,9 @@
 "use client"
 import { Button } from "@/components/ui/button";
-import React, { useState } from 'react';
+import React, { use, useState } from 'react';
 import TheaterDataStore from "@/app/store/theaterStore";
 import { useRouter } from "next/navigation";
-
+import PriceStore from "@/app/store/ticPriceStore";
 type SeatProp = {
     _id: string;
     seatnumber: string;
@@ -16,6 +16,11 @@ type TheaterProps = {
 };
 
 const Theaterhall = ({ seats, theaterId }: TheaterProps) => {
+    //use ticket_PriceStore
+    const use_ticket_price_store=PriceStore()
+    const set_ticket_price=PriceStore((state)=>state.set_Price)
+    const price=use_ticket_price_store.price
+    
     const router=useRouter()
     const set_Theater_Data=TheaterDataStore((state)=>state.setTheaterData)
     //handle toggle
@@ -29,12 +34,16 @@ const Theaterhall = ({ seats, theaterId }: TheaterProps) => {
             setPendingSeats((prev) => [...prev, seatnumber])
         }
     }
-    //state management of
+    //totla price of tickets
+    let total_seats_and_price=price*PendingSeats.length
+    //state management of theater and pricetickts
     const handle_SetTheater_data=()=>{
         set_Theater_Data(PendingSeats,theaterId)
+        set_ticket_price(total_seats_and_price)
         router.push(`/${theaterId}/payment_check`)
 
     }
+    
     return (
         <div className="flex flex-col items-center justify-center mt-5 bg-gray-800 mb-4">
             {/* Single Screen Display */}
@@ -63,7 +72,7 @@ const Theaterhall = ({ seats, theaterId }: TheaterProps) => {
                 })}
             </div>
 
-            <Button className="bg-sky-400 mt-4" onClick={handle_SetTheater_data}>Book seats</Button>
+            <Button className="bg-sky-400 mt-4" onClick={handle_SetTheater_data}>Proceed to pay {total_seats_and_price}</Button>
             <div>
                 <p className="text-red-500">{PendingSeats.sort().join(',')}</p>
             </div>

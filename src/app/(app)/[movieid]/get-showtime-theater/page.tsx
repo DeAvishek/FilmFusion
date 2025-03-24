@@ -32,7 +32,7 @@ query ExampleQuery($search: ShowtimeSearch) {
 
 const page = () => {
   const params = useParams()
-  const { data, loading, error } = useQuery(GET_THEATER_ID, {
+  const { data,loading, error } = useQuery(GET_THEATER_ID, {
     variables: {
       search: {
         _id: params?.movieid
@@ -43,7 +43,7 @@ const page = () => {
     <div className='flex justify-center'>
       {error && <p>{error.message}</p>}
 
-      <div>
+      {loading ?(<p>Loading to get theaters...</p>):(<div>
         {data?.showtime?.theaters.map((item: itemprop) => {
           return (
             <ul key={item._id}>
@@ -52,7 +52,7 @@ const page = () => {
           )
         })}
         
-      </div>
+      </div>)}
     </div>
   )
 }
