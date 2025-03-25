@@ -8,6 +8,7 @@ import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import { useRouter } from "next/navigation";
 import PriceStore from "@/app/store/ticPriceStore";
+import {useSession} from "next-auth/react"
 type ShowtimeProps = {
   time: string;
   screen: number;
@@ -16,6 +17,7 @@ type ShowtimeProps = {
 };
 
 const Cardcomponent = ({ time, screen, price, _id }: ShowtimeProps) => {
+  
   const set_ticket_price=PriceStore((state)=>state.set_Price)
   const hnadle_on_click_of_BookSeats=()=>{
     //store management
@@ -62,11 +64,14 @@ const Cardcomponent = ({ time, screen, price, _id }: ShowtimeProps) => {
 };
 
 const Showtimecard = ({ time, screen, price, _id }: ShowtimeProps) => {
+  const {data:session} =useSession()
+  const user=session?.user
   return (
     <Box className="min-w-[275px] max-w-[350px] mx-auto mt-8 shadow-2xl transform transition-transform hover:scale-105">
       <Card variant="outlined" className="rounded-2xl overflow-hidden">
         <Cardcomponent time={time} screen={screen} price={price} _id={_id} />
       </Card>
+      {user?.role==="admin" && <Button variant='contained' onClick={()=>console.log(_id)}>Edit show time</Button>}
     </Box>
   );
 };

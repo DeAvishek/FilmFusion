@@ -63,8 +63,7 @@ export default function Home() {
   useEffect(() => {
     getMovies()
   }, [cityValue])
-  //getting the full url
-   // Getting full URL and base URL on client-side only
+ 
    useEffect(() => {
     if (typeof window !== "undefined") {
       setfullurl(window.location.href);

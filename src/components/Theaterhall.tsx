@@ -13,9 +13,10 @@ type SeatProp = {
 type TheaterProps = {
     seats: SeatProp[];
     theaterId: string
+    name:string
 };
 
-const Theaterhall = ({ seats, theaterId }: TheaterProps) => {
+const Theaterhall = ({ seats, theaterId ,name}: TheaterProps) => {
     //use ticket_PriceStore
     const use_ticket_price_store=PriceStore()
     const set_ticket_price=PriceStore((state)=>state.set_Price)
@@ -38,7 +39,7 @@ const Theaterhall = ({ seats, theaterId }: TheaterProps) => {
     let total_seats_and_price=price*PendingSeats.length
     //state management of theater and pricetickts
     const handle_SetTheater_data=()=>{
-        set_Theater_Data(PendingSeats,theaterId)
+        set_Theater_Data(PendingSeats,theaterId,name)
         set_ticket_price(total_seats_and_price)
         router.push(`/${theaterId}/payment_check`)
 

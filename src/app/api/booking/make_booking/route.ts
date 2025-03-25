@@ -4,6 +4,8 @@ import {getServerSession} from "next-auth"
 import { AuthOptions } from "../../auth/[...nextauth]/provider";
 import { NextResponse } from "next/server";
 export async function POST(req:Request){
+    const reqBody= await req.json()
+    const {theatername,seats,totalamount,paymentId} =reqBody
     const session = await getServerSession(AuthOptions)
     const userID=session?.user._id
     if(!userID){
@@ -18,11 +20,10 @@ export async function POST(req:Request){
         await dbConnect()
         const newBooking=new BookingModel({
             userId:userID,
-            theaterName:"tilok" ,//todo
-            seats:['h1'],   //todo
-            totalAmount:1000, //todo
-            paymentStatus:"" ,// todo
-            paymentId:"",
+            theaterName:theatername ,//todo
+            seats:seats,   //todo
+            totalAmount:totalamount, //todo
+            paymentId:paymentId,
         })
         await newBooking.save()
         return NextResponse.json({

@@ -49,7 +49,7 @@ const Theatername = ({ _id, name, location }: TheaterID) => {
       {name} ({location})
     </Button>
     {check && (
-            <Theaterhall theaterId={_id} seats={data?.theater?.totalseats} />
+            <Theaterhall  name={name} theaterId={_id} seats={data?.theater?.totalseats} />
       )}
     </div>
   );
