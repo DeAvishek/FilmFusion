@@ -2,9 +2,9 @@
 import { useSession, signIn, signOut } from "next-auth/react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import React, { useContext, useEffect } from "react";
+import React, { useEffect } from "react";
 import Link from "next/link";
-import { ValueContext } from "@/app/context/optionsvalueprovider";
+// import { ValueContext } from "@/app/context/optionsvalueprovider";
 import { gql } from "graphql-tag"
 import { useQuery } from "@apollo/client"
 import { useState } from "react";
@@ -12,9 +12,9 @@ import axios from "axios";
 import { useRouter } from "next/navigation"
 import { useForm } from "react-hook-form"
 import Toastalert from "./Toastalert";
-const options = [
-    "kolkata", "mumbai", "pune", "kharagpur"
-]
+// const options = [
+//     "kolkata", "mumbai", "pune", "kharagpur"
+// ]
 
 const GET_MOVIES = gql`
 query GetMovies{
@@ -28,7 +28,7 @@ const Navbar = () => {
     const [inputSearch, setinputSearch] = useState<string | null>("")
     const { data: session } = useSession();
     const email = session?.user?.email;
-    const { setcityValue } = useContext(ValueContext)
+    // const { setcityValue } = useContext(ValueContext)
     const [moviesName, setMoviesName] = useState([])
     const [filteredMovies, setfilteredMovies] = useState<string[]>([]);
     const [isSignout,setisSignout] = useState<boolean>(false)
@@ -109,13 +109,13 @@ const Navbar = () => {
                     </div>
                 )}
 
-                <select style={{ width: "100px", height: "30px" }} className="text-black rounded" id="ddlViewBy"
+                {/* <select style={{ width: "100px", height: "30px" }} className="text-black rounded" id="ddlViewBy"
                     onChange={(e) => setcityValue(e.target.value)}>
                     <option value="" disabled>Select City</option>
                     {options.map((option, index) => (
                         <option key={index} value={option}>{option}</option>
                     ))}
-                </select>
+                </select> */}
 
                 {session?.user.role ==="admin" && (
                     <Button className="bg-blue-400" onClick={()=>router.push("/addmovie")}>Add Movie</Button>
