@@ -27,7 +27,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${geistSans.variable} ${geistMono.variable} antialiased bg-gradient-to-r from-yellow-600 to-blue-700 min-h-screen`}>
+      <body className={`${geistSans.variable} ${geistMono.variable} antialiased `}>
       <ApolloWrapper>
         <AuthProvider>
           <ValueSelectionProvider>
