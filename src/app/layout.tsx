@@ -4,7 +4,7 @@ import "./globals.css";
 import AuthProvider from "./context/sessionprovider";
 import ValueSelectionProvider from "./context/optionsvalueprovider";
 import { ApolloWrapper } from "./ApolloWrapper"
-import {MenubarDemo} from "@/components/Menubar"
+
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
@@ -27,12 +27,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
+      <body className={`${geistSans.variable} ${geistMono.variable} antialiased bg-gradient-to-r from-yellow-600 to-blue-700 min-h-screen`}>
       <ApolloWrapper>
         <AuthProvider>
           <ValueSelectionProvider>
             {children}
-            <MenubarDemo/>
+            
           </ValueSelectionProvider>
         </AuthProvider>
         </ApolloWrapper>

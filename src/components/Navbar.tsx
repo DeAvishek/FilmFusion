@@ -77,18 +77,18 @@ const Navbar = () => {
     }
     return (
         <>
-            <nav className="flex items-center justify-between px-6 py-4 bg-gray-800 text-white">
+            <nav className="flex items-center justify-between px-6 py-4 bg-gray-300 text-black">
                 {!email && <Toastalert alert_message="Sign out Successfully"/>}
                 {/* Left - Logo */}
                 <Link href="/" className="text-2xl font-bold">
-                    🎬 MovieApp
+                    🎬 FilmFusion
                 </Link>
 
                 {/* Middle - Search Bar */}
 
-                <div className="flex items-center flex-row bg-gray-800 rounded-lg px-3 py-1">
+                <div className="flex items-center flex-row  rounded-lg px-3 py-1">
                     <form className="flex flex-row gap-2" onSubmit={handleSubmit(handleInput)} >
-                        <Input className="text-white"
+                        <Input className="text-black bg-white-400"
                             placeholder="search movies..."
                             {...register("search")}
                             value={inputSearch!}

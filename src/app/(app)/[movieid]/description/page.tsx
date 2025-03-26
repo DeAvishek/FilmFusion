@@ -7,7 +7,7 @@ import { Button } from '@/components/ui/button'
 import Ratingform from '@/components/Ratingform'
 import Home from '@/app/page'
 import Link from 'next/link'
-
+import {Star} from "lucide-react"
 const Page = () => {
     const router = useRouter()
     const params = useParams()
@@ -77,89 +77,99 @@ const Page = () => {
 
     return (
         <div className="w-full h-full mt-0">
-            <section className="bg-black flex items-center justify-center gap-8 p-8 relative">
-                {!loading ? (
-                    <>
-                        {/* 🔥 Blurred Background Poster (Only render if image exists) */}
-                        {moviePoster && (
-                            <div
-                                className="absolute inset-0 w-full h-full bg-cover bg-center blur-md opacity-30"
-                                style={{ backgroundImage:`${moviePoster}` }}
-                            ></div>
-                        )}
-
-                        {/* 🎬 Main Poster with Small Overlay */}
-                        <div className="relative">
-                            <Card className="shadow-lg rounded-lg overflow-hidden border-2 border-gray-700">
-                                {moviePoster ? (
-                                    <img
-                                        className="w-[700px] h-[500px] object-cover"
-                                        src={moviePoster}
-                                        alt={movieTitle}
-                                    />
-                                ) : (
-                                    <div className="w-[700px] h-[500px] flex items-center justify-center text-gray-500">
-                                        No Poster Available
-                                    </div>
-                                )}
-                            </Card>
-
-                            {/* 🔥 Small Poster Overlay (Only render if image exists) */}
-                            {moviePoster && (
-                                <div className="absolute bottom-5 right-5 w-[200px] h-[150px]">
-                                    <img
-                                        className="w-full h-full object-cover rounded-lg border-4 border-white shadow-md"
-                                        src={moviePoster}
-                                        alt="Highlighted Poster"
-                                    />
-                                </div>
-                            )}
-                        </div>
-
-                        {/* 🎥 Movie Details */}
-                        <div className="text-white max-w-lg relative z-10">
-                            <h2 className="text-3xl font-bold">{movieTitle}</h2>
-                            <div style={{ height: "50px" }} className="text-white bg-gray-600 rounded flex items-center w-full">
-
-                                <b className="text-yellow-300 ml-3">IMDb Rating:</b>
-                                <span className="ml-2 text-lg font-semibold">{getAverageRating()}/5</span>
-
-                                {/* 🎬 IMDb Rating Button */}
-                                <Button onClick={handleRatingForm} className="ml-10 bg-yellow-500 hover:bg-yellow-600">
-                                    {ratingFormEnable ? "Close Form" : "Rate Now"}
-                                </Button>
-    
-                                
-                            </div>
-                            <a href='#'>{language}</a>
-                            <p>{duration} Minutes</p>
-                            {ratingFormEnable && <Ratingform movieID={movieId} />}
-                            <Link href="get-showtimes"><Button className="mt-5" variant="destructive">
-                                Book now
-                            </Button></Link>
-
-                        </div>
-                    </>
-                ) : (
-                    <p>Getting...</p>
+        {/* Section with Glassmorphism Effect */}
+        <section className="bg-black flex items-center justify-center gap-8 p-8 relative">
+          {!loading ? (
+            <>
+              {/* Blurred Background Poster */}
+              {moviePoster && (
+                <div
+                  className="absolute inset-0 w-full h-full bg-cover bg-center blur-lg opacity-20"
+                  style={{ backgroundImage: `url(${moviePoster})` }}
+                ></div>
+              )}
+  
+              {/* Main Poster */}
+              <div className="relative">
+                <Card className="shadow-xl rounded-lg overflow-hidden border-2 border-gray-700">
+                  {moviePoster ? (
+                    <img
+                      className="w-[700px] h-[500px] object-cover"
+                      src={moviePoster}
+                      alt={movieTitle}
+                    />
+                  ) : (
+                    <div className="w-[700px] h-[500px] flex items-center justify-center text-gray-500">
+                      No Poster Available
+                    </div>
+                  )}
+                </Card>
+  
+                {/* Small Poster Overlay */}
+                {moviePoster && (
+                  <div className="absolute bottom-5 right-5 w-[200px] h-[150px]">
+                    <img
+                      className="w-full h-full object-cover rounded-lg border-4 border-white shadow-lg"
+                      src={moviePoster}
+                      alt="Highlighted Poster"
+                    />
+                  </div>
                 )}
-            </section>
-            <div className='bg-gray-900'>
-                <p className="mt-2 text-gray-300">{mdescription.descTitle}</p>
-                <div className="mb-3">
-                    <b className="text-yellow-300">Cast:</b>
-                    <p className="text-gray-400">{mdescription.cast.join(", ")}</p>
+              </div>
+  
+              {/* Movie Details Section */}
+              <div className="text-white max-w-lg relative z-10">
+                <h2 className="text-4xl font-bold mb-4">{movieTitle}</h2>
+  
+                <div className="text-white bg-gradient-to-r from-gray-800 to-gray-600 p-4 rounded-lg flex items-center w-full mb-4">
+                  <Star className="text-yellow-500" size={24} />
+                  <b className="text-yellow-300 ml-3">IMDb Rating:</b>
+                  <span className="ml-2 text-lg font-semibold">{getAverageRating()}/5</span>
+  
+                  {/* Rating Form Toggle Button */}
+                  <Button onClick={handleRatingForm} className="ml-5 bg-yellow-500 hover:bg-yellow-600">
+                    {ratingFormEnable ? 'Close Form' : 'Rate Now'}
+                  </Button>
                 </div>
-                {/* Genre Details */}
-                <div className="mb-4">
-                    <b className="text-yellow-300">Genre:</b>
-                    <p className="text-gray-400">{mdescription.genre.join(", ")}</p>
-                </div>
-            </div>
-            <Home />
+  
+                <p className="text-gray-300">🗣 Language: {language}</p>
+                <p className="text-gray-300">⏱ Duration: {duration} Minutes</p>
+  
+                {ratingFormEnable && <Ratingform movieID={movieId} />}
+  
+                <Link href="/get-showtimes">
+                  <Button className="mt-5" variant="destructive">
+                    Book Now
+                  </Button>
+                </Link>
+              </div>
+            </>
+          ) : (
+            <p className="text-white">Getting...</p>
+          )}
+        </section>
+  
+        {/* Movie Description Section */}
+        <div className="bg-white p-6 rounded-lg shadow-md mt-6">
+          <p className="text-gray-700 text-xl font-semibold mb-4">{mdescription.descTitle}</p>
+  
+          {/* Cast Details */}
+          <div className="mb-3">
+            <b className="text-yellow-500">🎭 Cast:</b>
+            <p className="text-gray-600">{mdescription.cast.join(', ')}</p>
+          </div>
+  
+          {/* Genre Details */}
+          <div className="mb-4">
+            <b className="text-yellow-500">🎬 Genre:</b>
+            <p className="text-gray-600">{mdescription.genre.join(', ')}</p>
+          </div>
         </div>
-
-    )
+  
+        {/* Home Component */}
+        <Home />
+      </div>
+    );
 }
 
 export default Page

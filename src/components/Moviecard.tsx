@@ -1,9 +1,9 @@
+"use client"
 import Link from 'next/link'
 import React from 'react'
 import {
     Card,
     CardContent,
-    CardFooter,
     CardHeader,
     CardTitle,
 } from '@/components/ui/card'
@@ -62,7 +62,7 @@ const Moviecard = ({ movieId, movieTitle, moviePosterUrl, rating }: dMovieProps)
                             src={moviePosterUrl}
                             alt={movieTitle}
                         />
-                        <b>{getAverageRating()}/5</b>
+                        <b>⭐{getAverageRating()}/5</b>
                     </CardContent>
                 </Card>
             </Link>
