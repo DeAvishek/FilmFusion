@@ -7,7 +7,6 @@ export async function POST() {
         const paymentIntent=await stripe.paymentIntents.create({
             amount:50*100,  //convert to paisa 
             currency:"INR",
-            // payment_method_types: ["card"],
             automatic_payment_methods: {
                 enabled: true,
               },
@@ -30,3 +29,36 @@ export async function POST() {
     
 
 }
+
+// import Razorpay from "razorpay"
+// import crypto from "crypto"
+// import { NextResponse } from "next/server"
+
+// const razorpay=new Razorpay({
+
+// })
+// export async function POST(req:Request) {
+//     const reqBody=await req.json()
+//     const {amount,currency}=reqBody
+//     try {
+//         const order=await razorpay.orders.create({
+//             amount:amount*100,
+//             currency,
+//             receipt:crypto.randomBytes(10).toString('hex')
+//         })
+
+//         return NextResponse.json({
+//             order:order,
+//             success:true
+//         },{
+//             status:200
+//         })
+//     } catch (error) {
+//         return NextResponse.json({
+//             message: error instanceof Error ? error.message : "An unknown error occurred",
+//             success: false,
+//           }, {
+//             status: 500,
+//           });
+//     }
+// }

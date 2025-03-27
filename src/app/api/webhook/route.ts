@@ -1,47 +1,64 @@
 import Stripe from "stripe";
-import { NextRequest, NextResponse } from "next/server";
+import { NextResponse } from "next/server";
+import { Readable } from "stream";
 
-const stripe=new Stripe(process.env.STRIPE_SECRET_KEY!)
-const webhooksecret=process.env.STRIPE_WEBHOOK_SECRET as string
+const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!);
+const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET!;
 
-export async function POST(req:Request,res:NextResponse){
-    let event=await req.json()
+export const config = {
+  api: {
+    bodyParser: false, // Disable built-in body parsing
+  },
+};
 
-    if(!event || !webhooksecret){
-        return NextResponse.json({mssage:"missing webhook secret"},{
-            status:400
-        })
-    }
-    const sig=req.headers.get("strpie-signature")
-    try {
-        event=stripe.webhooks.constructEvent(
-            event,
-            sig as string,
-            webhooksecret
-        )
-    } catch (error:unknown) {
-        console.log("⚠️  Webhook signature verification failed.")  //todo to remove
-        return NextResponse.json({
-            message:error || "⚠️  Webhook signature verification failed."
-        },{
-            status:500
-        })
-    }
+async function getRawBody(readable: Readable): Promise<Buffer> {
+  const chunks = [];
+  for await (const chunk of readable) {
+    chunks.push(typeof chunk === 'string' ? Buffer.from(chunk) : chunk);
+  }
+  return Buffer.concat(chunks);
+}
 
-    switch (event.type) {
-        case 'payment_intent.succeeded':
-            const paymentIntent=event.data.object as Stripe.PaymentIntent
-            console.log(`PaymentIntent for ${paymentIntent.amount} was successful!`);
-            console.log("💰 Payment Successful:", paymentIntent.id);
-            break;
-        case 'payment_intent.payment_failed':
-            const failedPayment=event.data.object  as Stripe.PaymentIntent
-            console.log("❌ Payment Failed:",failedPayment.last_payment_error?.message)
-        default:
-            console.log(`Unhandled event type ${event.type}`);
-            break;
-    }
+export async function POST(req: Request) {
+  if (!webhookSecret) {
+    return NextResponse.json(
+      { message: "Webhook secret not configured" },
+      { status: 400 }
+    );
+  }
 
-    return NextResponse.json({recived:true})
+  const signature = req.headers.get("stripe-signature");
+  if (!signature) {
+    return NextResponse.json(
+      { message: "No Stripe signature header found" },
+      { status: 400 }
+    );
+  }
 
+  let event: Stripe.Event;
+  let rawBody: Buffer;
+
+  try {
+    rawBody = await getRawBody(Readable.from(req.body as any));
+    event = stripe.webhooks.constructEvent(rawBody, signature, webhookSecret);
+  } catch (err) {
+    console.error(`⚠️ Webhook signature verification failed.`, err);
+    return NextResponse.json(
+      { message: `Webhook Error: ${err instanceof Error ? err.message : 'Unknown error'}` },
+      { status: 400 }
+    );
+  }
+
+  // Process the event
+  switch (event.type) {
+    case 'payment_intent.succeeded':
+      const paymentIntent = event.data.object;
+      console.log(`💰 Payment succeeded: ${paymentIntent.id}`);
+      break;
+    // Add other event types as neededs
+    default:
+      console.log(`🔔 Unhandled event type: ${event.type}`);
+  }
+
+  return NextResponse.json({ received: true });
 }
