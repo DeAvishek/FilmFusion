@@ -19,13 +19,14 @@ const Page = () => {
     },
   })
 
-  // if (!seats?.length || !theaterId || !name || !price) {
-  //   return <div className="text-center text-red-500">Loading ticket details...</div>;
-  // }
 
   return (
     <>
       <div className='flex justify-center items-center h-screen bg-gray-200'>
+         <div className="text-center mt-20">
+           <h1 className="text-3xl text-green-500">🎉 Payment Successful!</h1>
+          <p>Thank you for booking your tickets. Enjoy the movie!</p>
+        </div>
         <div ref= {contentRef} className='bg-white w-[600px] h-[300px] rounded-lg shadow-lg overflow-hidden border border-gray-300 flex print-container'>
           {/* Success Image Section */}
           <div className='bg-green-500 text-white flex justify-center items-center p-4 w-1/3'>

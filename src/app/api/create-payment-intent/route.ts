@@ -1,12 +1,18 @@
 import {  NextResponse } from "next/server"
 import Stripe from "stripe"
 
-const stripe=new Stripe(process.env.STRIPE_SECRET_KEY!) 
-export async function POST() {
+const stripe=new Stripe(process.env.STRIPE_SECRET_KEY!,{
+    apiVersion:"2025-01-27.acacia"
+}) 
+export async function POST(req:Request) {
+    const {amount,currency} =await req.json()
+    if (!amount || !currency) {
+        return NextResponse.json({ error: "Missing amount or currency" }, { status: 400 });
+      }
     try {
         const paymentIntent=await stripe.paymentIntents.create({
-            amount:50*100,  //convert to paisa 
-            currency:"INR",
+            amount:amount*100,  //convert to paisa 
+            currency,
             automatic_payment_methods: {
                 enabled: true,
               },

@@ -55,6 +55,10 @@ export async function POST(req: Request) {
       const paymentIntent = event.data.object;
       console.log(`💰 Payment succeeded: ${paymentIntent.id}`);
       break;
+    case 'checkout.session.completed':
+      const payment_intent = event.data.object
+      console.log(payment_intent.id)
+      break;
     // Add other event types as neededs
     default:
       console.log(`🔔 Unhandled event type: ${event.type}`);

@@ -41,7 +41,7 @@ const Theaterhall = ({ seats, theaterId ,name}: TheaterProps) => {
     const handle_SetTheater_data=()=>{
         set_Theater_Data(PendingSeats,theaterId,name)
         set_ticket_price(total_seats_and_price)
-        router.push(`/${theaterId}/payment_check`)
+        router.push(`/${theaterId}/payment`)
 
     }
     

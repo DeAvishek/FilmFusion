@@ -1,13 +1,14 @@
 'use client'
 import React, { useState } from 'react'
 import { useStripe, useElements, PaymentElement } from "@stripe/react-stripe-js"
-const Checkoutform = () => {
+
+const Checkoutform = ({ amount }: { amount: number }) => {
     const stripe = useStripe()
     const elements = useElements()
 
     const [errors, seterrors] = useState('')
     const [loading, setloading] = useState(false)
-
+    
     const handleSubmit = async (e: React.FormEvent) => {
         setloading(true)
         e.preventDefault()
@@ -38,7 +39,7 @@ const Checkoutform = () => {
                     disabled={!stripe || loading}
                     className="mt-4 w-full bg-blue-500 text-white py-2 rounded"
                 >
-                    {loading ? "Processing..." : "Pay Now"}
+                    {loading ? "Processing..." : `Pay Now ${amount}`}
                 </button>
             </form>
 

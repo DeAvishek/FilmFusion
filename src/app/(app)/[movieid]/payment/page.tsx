@@ -5,15 +5,20 @@ import  {loadStripe} from "@stripe/stripe-js"
 import  {Elements} from "@stripe/react-stripe-js"
 import { StripeElementsOptions } from "@stripe/stripe-js";
 import Checkoutform from "@/app/(app)/checkoutform/page"
-
+import PriceStore from "@/app/store/ticPriceStore"
 const stripePromise=loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISH_KEY!)
 const checkoutPage = () => {
 const [clientsecret, setclientsecret] = useState<string |null>('')
 const [responseMessage,setresponseMessage]=useState('')
+const {price} =PriceStore()
+const data={
+  amount:price,
+  currency:'inr'
+}
 useEffect( () => {
   async function getclientsecret(){
     try {
-        const response = await axios.post('/api/create-payment-intent') 
+        const response = await axios.post('/api/create-payment-intent',data) 
         if(response.status===200){
             setclientsecret(response.data.clientsecret)
             setresponseMessage('client secret  fetched successfully')
@@ -30,7 +35,7 @@ useEffect( () => {
     }
   }
   getclientsecret()
-},[])
+},[price])
 const options:StripeElementsOptions={
     clientSecret :clientsecret ||"", // Ensure it's a string
     appearance: {
@@ -47,9 +52,9 @@ const options:StripeElementsOptions={
     <div className="flex justify-center items-center h-screen">
         {clientsecret ? (
             <Elements stripe={stripePromise} options={options}>
-                <Checkoutform/>
+                <Checkoutform amount={price}/>
             </Elements>
-        ):(<p>Loading payment details</p>)}
+        ):(<p>{responseMessage || 'Loading payment details...'}</p>)}
     </div>
   )
 }

@@ -6,7 +6,6 @@ import { Card } from "@/components/ui/card"
 import { Button } from '@/components/ui/button'
 import Ratingform from '@/components/Ratingform'
 import Home from '@/app/page'
-import Link from 'next/link'
 import {Star} from "lucide-react"
 const Page = () => {
     const router = useRouter()
@@ -137,11 +136,11 @@ const Page = () => {
   
                 {ratingFormEnable && <Ratingform movieID={movieId} />}
   
-                <Link href="/get-showtimes">
-                  <Button className="mt-5" variant="destructive">
+                
+                  <Button onClick={()=>router.push(`/${movieId}/get-showtimes`)} className="mt-5" variant="destructive">
                     Book Now
                   </Button>
-                </Link>
+               
               </div>
             </>
           ) : (
