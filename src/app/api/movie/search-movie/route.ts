@@ -4,11 +4,10 @@ import MovieModel from "@/app/Model/movie";
 export async function GET(request:Request){
     const {searchParams}= new URL(request.url)
     let searchItem=searchParams.get("search") as string
-    searchItem=searchItem.charAt(0).toLocaleUpperCase()+ searchItem.slice(1).toLowerCase()
-
+    searchItem=decodeURIComponent(searchItem.trim())
     try {
         await dbConnect();
-        const movie=await MovieModel.findOne({title:searchItem})
+        const movie=await MovieModel.findOne({title: new RegExp(`^${searchItem}$`, "i")})
         if(!movie){
             return NextResponse.json({
                 message:"No movie found",

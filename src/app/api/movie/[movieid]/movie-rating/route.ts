@@ -32,19 +32,32 @@ export async function POST(req: Request, { params }: { params: { movieid: string
                 }
             )
         }
+
+        const user=await UserModel.findById({_id:userId})
+        if (!user) {
+            return NextResponse.json({ message: "User not found", success: false }, { status: 404 });
+        }
+
+        const existingInteraction= user.interactions.find((intreaction)=> intreaction.movieId.toString()===movieId)
+        if(existingInteraction){
+            existingInteraction.rating=rating
+            existingInteraction.timestamp=Date.now()
+        }else{
+            const interactionObject={
+                movieId:movieId,
+                rating:rating,
+                timestamp:Date.now()
+            }
+            user.interactions.push(interactionObject)
+             
+        }
+        await user.save()
+
         const prefixSumRating = movie.rating.length > 0 ? movie.rating.at(-1) : 0
         const newRating = prefixSumRating as number + rating
         movie.rating.push(newRating)
         await movie.save()
 
-        const user=await UserModel.findById({_id:userId})
-        const interactionObject={
-            movieId:movieId,
-            rating:rating,
-            timestamp:Date.now()
-        }
-        user?.interactions.push(interactionObject)
-        await user?.save()
         return NextResponse.json({
             message: "Rating submit successfully",
             success: true,
