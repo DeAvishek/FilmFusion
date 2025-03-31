@@ -16,7 +16,7 @@ import {
         style={{
           position: "fixed",
           bottom: "0",
-          left: "15%",
+          left: "20%",
           transform: "translateX(-50%)",
           width: "480px",
           zIndex: 9999,

@@ -20,6 +20,9 @@ const typeDefs = gql`
   input TheaterSearch{
     _id:ID!
   }
+  input UserIdSearch{
+    _id:ID!
+  }
 
   type Movie {
     _id: String!
@@ -60,6 +63,7 @@ const typeDefs = gql`
     interactionsofuser: [Interactionofuser]
     showtime(search: ShowtimeSearch): Showtime!
     theater(search:TheaterSearch):Theater!
+    interaction_Of_One_User(search:UserIdSearch):[Interactionofuser]
   }
 `;
 
@@ -120,6 +124,16 @@ const resolvers = {
       } catch (error) {
         console.error("Error fetching interactions:", error);
         throw new Error("Failed to fetch interactions");
+      }
+    },
+    interaction_Of_One_User:async(_: any, { search }: { search: { _id: string } })=>{
+      try {
+        await dbConnect()
+        const user=await UserModel.findById(search._id)
+        return user?.interactions
+      } catch (error) {
+        console.error("Error fetching interactions Of current user:", error);
+        throw new Error("Failed to fetch interactions of current user");
       }
     },
 

@@ -32,7 +32,6 @@ export default function RootLayout({
         <AuthProvider>
           <ValueSelectionProvider>
             {children}
-            
           </ValueSelectionProvider>
         </AuthProvider>
         </ApolloWrapper>
