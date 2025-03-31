@@ -47,10 +47,10 @@ export default function Home() {
   }
 }
   `
-  const { data, error, loading } = useQuery(GET_CURRENT_USER_INTERACTIONS, {
+  const { data} = useQuery(GET_CURRENT_USER_INTERACTIONS, {
     variables: session?.user?._id ? {
       search: {
-        _id: session?.user._id
+        _id: session?.user?._id
       }
     } : undefined,
     skip: !session?.user?._id
@@ -58,9 +58,9 @@ export default function Home() {
 
   useEffect(() => {
     if (data?.interaction_Of_One_User) {
-      setcurrent_user_interaction(data.interaction_Of_One_User.map((item: InterAction_prop) => item));
+      setcurrent_user_interaction(data.interaction_Of_One_User.map((item:InterAction_prop) => item));
     }
-  }, []);
+  }, [data]);
 
   const getMovies = async () => {
     try {
@@ -110,10 +110,10 @@ export default function Home() {
         <span className="text-xl font-bold text-gray-800 w-full text-center mt-4"></span>
         <h1 className="text-lg font-semibold text-black-700 animate-pulse text-bold ml-0">Recomendations for You</h1>
         <div className=" mb-5 flex flex-wrap gap-8 sm:items-start justify-center rounded">
-        {current_user_interaction.length == 0 ? (
+        {current_user_interaction.length === 0 ? (
           <Recomended_rating />
         ) : (
-          <></>
+          <p>just wait ..</p>
           // <Component2 />
         )}
         </div>
