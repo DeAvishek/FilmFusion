@@ -11,6 +11,7 @@ import { useQuery } from "@apollo/client"
 import { gql } from "graphql-tag"
 import { useSession } from "next-auth/react"
 import Recomended_rating from "@/components/Recomended_rating";
+import Recomanded_predictions from "@/components/Recomanded_predictions";
 export default function Home() {
 
   type MovieProps = {
@@ -113,8 +114,7 @@ export default function Home() {
         {current_user_interaction.length === 0 ? (
           <Recomended_rating />
         ) : (
-          <p>just wait ..</p>
-          // <Component2 />
+          <Recomanded_predictions/>
         )}
         </div>
         <h1 className="text-lg font-semibold text-black-700 animate-pulse text-bold mt-10">Top Movies</h1>

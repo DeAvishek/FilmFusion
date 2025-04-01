@@ -52,9 +52,7 @@ const Recomended_rating = () => {
             movieTitle={movie.title}
             moviePosterUrl={movie.posterUrl}
             rating={movie.rating}
-            />)
-       )
-       }
+            />))}
        </>
     )
 }

@@ -14,17 +14,29 @@ export async function GET(req:Request){
             // },
             {
                 $match:{
-                    predicted_rating:{$gt:3.7}
+                    predicted_rating:{$gt:3.7},
+                    user_id:userId
                 }
             },
             {
-                $lookup:{
-                    from:"movies",
-                    localField:"movie_id",
-                    foreignField:"_id",
-                    as:"movieDetails"
-                }
+                $lookup: {
+                    from: 'movies',
+                    let: { movieId: { $toObjectId: "$movie_id" } },
+                    pipeline: [
+                      { $match: { $expr: { $eq: ["$_id", "$$movieId"] } } }
+                    ],
+                    as: 'movieDetails'
+                  }
             },
+            {
+                $unwind:'$movieDetails'
+            },
+            {
+                $replaceRoot :{newRoot:'$movieDetails'}
+            },
+            {
+                $limit:10
+            }
             
         
         ])
