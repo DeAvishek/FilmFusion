@@ -50,7 +50,7 @@ const Moviecard = ({ movieId, movieTitle, moviePosterUrl, rating }: dMovieProps)
 
     return (
         <div className="movie-card relative group overflow-hidden rounded-lg border border-gray-200 dark:border-gray-700 hover:border-primary transition-all duration-300 shadow-sm hover:shadow-md">
-            <Link href={`${movieId}/description`}>
+            <Link href={`/${movieId}/description`}>
                 <Card className="border-0 bg-transparent">
                     <CardHeader className="p-0">
                         <div className="relative">

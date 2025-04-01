@@ -63,9 +63,9 @@ const Signin = () => {
             <div className="flex h-screen">
                 {/* Left Side - Sign In Form */}
 
-                <div className="w-1/2 flex flex-col justify-center items-center bg-white">
+                <div className="w-1/2 flex flex-col justify-center items-center bg-white" >
                     
-                    <img src="/FilmFusion2.jpg" alt="FilmFusion Logo" className="w-32 mb-8" />
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQMqSIOOGcw8PVa9nuGP2JsAQS3M5K7kserbg&s" alt="FilmFusion Logo" className="w-80 mb-8" />
                     <h2 className="text-2xl font-bold mb-4">Log in to your account</h2>
                     <h1 className="mb-4 text-3xl">
                         Don't have an account? <a href="/sign-up" className="text-red-500">Sign Up</a>
@@ -102,7 +102,7 @@ const Signin = () => {
                 <div className="w-1/2 bg-grey-900 text-white flex flex-col justify-center items-center">
                     <h1 className="text-4xl font-bold mb-4">FilmFusion 1.0 is here</h1>
                     <p className="mb-8 text-center">Experience seamless booking with improved performance and new features.</p>
-                    <img src="\filmfusion1.png" alt="FilmFusion Visual" className="w-3/4 rounded-lg" />
+                    <img src="https://i.etsystatic.com/isla/c628f5/72874316/isla_500x500.72874316_slgarmpr.jpg?version=0" alt="FilmFusion Visual" className="w-3/4 rounded-lg" />
                 </div>
             </div>
         </>

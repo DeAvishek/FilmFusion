@@ -9,9 +9,6 @@ export async function GET(req:Request){
     try {
         await dbConnect()
         const moVies =  await PredictionModel.aggregate([
-            // {
-            //     $match:{user_id:userId}
-            // },
             {
                 $match:{
                     predicted_rating:{$gt:3.7},

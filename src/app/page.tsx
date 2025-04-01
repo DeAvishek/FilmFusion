@@ -12,6 +12,7 @@ import { gql } from "graphql-tag"
 import { useSession } from "next-auth/react"
 import Recomended_rating from "@/components/Recomended_rating";
 import Recomanded_predictions from "@/components/Recomanded_predictions";
+
 export default function Home() {
 
   type MovieProps = {
@@ -48,7 +49,7 @@ export default function Home() {
   }
 }
   `
-  const { data} = useQuery(GET_CURRENT_USER_INTERACTIONS, {
+  const { data } = useQuery(GET_CURRENT_USER_INTERACTIONS, {
     variables: session?.user?._id ? {
       search: {
         _id: session?.user?._id
@@ -59,7 +60,7 @@ export default function Home() {
 
   useEffect(() => {
     if (data?.interaction_Of_One_User) {
-      setcurrent_user_interaction(data.interaction_Of_One_User.map((item:InterAction_prop) => item));
+      setcurrent_user_interaction(data.interaction_Of_One_User.map((item: InterAction_prop) => item));
     }
   }, [data]);
 
@@ -109,14 +110,19 @@ export default function Home() {
       {fullurl === baseurl && <Navbar />}
       <div className="bg-gradient-to-r from-yellow-700 to-blue-700 min-h-screen flex flex-col items-center min-h-screen">
         <span className="text-xl font-bold text-gray-800 w-full text-center mt-4"></span>
-        <h1 className="text-lg font-semibold text-black-700 animate-pulse text-bold ml-0">Recomendations for You</h1>
-        <div className=" mb-5 flex flex-wrap gap-8 sm:items-start justify-center rounded">
-        {current_user_interaction.length === 0 ? (
-          <Recomended_rating />
-        ) : (
-          <Recomanded_predictions/>
-        )}
-        </div>
+
+        {session?.user &&
+          <>
+            <h1 className="text-lg font-semibold text-black-700 animate-pulse text-bold ml-0">Recomendations for You</h1>
+            <div className=" mb-5 flex flex-wrap gap-8 sm:items-start justify-center rounded">
+
+              {current_user_interaction.length === 0 ? (
+                <Recomended_rating />
+              ) : (
+                <Recomanded_predictions />
+              )}
+            </div>
+          </>}
         <h1 className="text-lg font-semibold text-black-700 animate-pulse text-bold mt-10">Top Movies</h1>
         <div className=" mb-5 flex flex-wrap gap-8 sm:items-start justify-center rounded">
           {loading_for_base ? (
