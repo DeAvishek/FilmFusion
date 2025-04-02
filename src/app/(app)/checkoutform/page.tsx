@@ -22,7 +22,7 @@ const Checkoutform = ({ amount }: { amount: number }) => {
             },
         })
         if (result.error) {
-            console.log(result.error.message) //todo remove
+            
             seterrors(result.error.message || "payment failed")
             setloading(false)
         } else {

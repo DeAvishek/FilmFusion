@@ -83,7 +83,7 @@ const Moviecard = ({ movieId, movieTitle, moviePosterUrl, rating }: dMovieProps)
                         variant="outline"
                         size="icon"
                         className="bg-white/90 hover:bg-white"
-                        onClick={() => router.push(`${movieTitle}/add-showtime-client`)}
+                        onClick={() => router.push(`/${movieTitle}/add-showtime-client`)}
                     >
                         <Plus className="h-4 w-4" />
                     </Button>

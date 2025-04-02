@@ -12,7 +12,7 @@ export async function POST(req:Request) {
     try {
         const paymentIntent=await stripe.paymentIntents.create({
             amount:amount*100,  //convert to paisa 
-            currency,
+            currency:currency,
             automatic_payment_methods: {
                 enabled: true,
               },

@@ -13,7 +13,7 @@ const [responseMessage,setresponseMessage]=useState('')
 const {price} =PriceStore()
 const data={
   amount:price,
-  currency:'inr'
+  currency:'INR'
 }
 useEffect( () => {
   async function getclientsecret(){
@@ -22,8 +22,6 @@ useEffect( () => {
         if(response.status===200){
             setclientsecret(response.data.clientsecret)
             setresponseMessage('client secret  fetched successfully')
-            console.log(responseMessage)  //todo to remove
-            console.log(clientsecret)     //todo to remove for debugging
         }
     } catch (error) {
         if(axios.isAxiosError(error)){
