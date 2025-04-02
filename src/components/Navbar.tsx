@@ -94,7 +94,7 @@ const Navbar = () => {
                 </div>
 
                 {session?.user?.role === "admin" && (
-                    <Button className="bg-blue-400" onClick={() => router.push("/addmovie")}>Add Movie</Button>
+                    <Button className="bg-blue-400" onClick={() => router.push("/admin")}>Got to Admin panel</Button>
                 )}
 
                 <div>
