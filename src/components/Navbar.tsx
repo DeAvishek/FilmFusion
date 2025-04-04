@@ -10,6 +10,7 @@ import axios from "axios";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import Toastalert from "./Toastalert";
+import {Move3DIcon,UserCog} from "lucide-react"
 
 const GET_MOVIES = gql`
 query GetMovies{
@@ -93,10 +94,7 @@ const Navbar = () => {
                     )}
                 </div>
 
-                {session?.user?.role === "admin" && (
-                    <Button className="bg-blue-400" onClick={() => router.push("/admin")}>Got to Admin panel</Button>
-                )}
-
+                {session?.user?.role === "admin" && (<Link href="/admin">< UserCog onClick={() => router.push("/admin")} size={40}/> </Link>)}
                 <div>
                     {email ? (
                         <div className="flex items-center gap-4">
