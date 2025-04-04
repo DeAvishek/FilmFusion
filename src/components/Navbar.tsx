@@ -94,7 +94,7 @@ const Navbar = () => {
                     )}
                 </div>
 
-                {session?.user?.role === "admin" && (<Link href="/admin">< UserCog onClick={() => router.push("/admin")} size={40}/> </Link>)}
+                {session?.user?.role === "admin" && (<Button className="bg-yellow-500 w-20 h-10"><Link href="/admin">< UserCog onClick={() => router.push("/admin")} size={40}/> </Link></Button>)}
                 <div>
                     {email ? (
                         <div className="flex items-center gap-4">

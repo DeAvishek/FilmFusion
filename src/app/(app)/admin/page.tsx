@@ -50,7 +50,7 @@
           <Menu theme="dark" mode="inline" defaultSelectedKeys={["1"]}>
             <Menu.Item key="1" icon={<DashboardOutlined />}>Dashboard</Menu.Item>
             <Menu.Item key="2" icon={<VideoCameraOutlined />}>Movies</Menu.Item>
-            <Menu.Item key="3" icon={<UserOutlined />}>Users</Menu.Item>
+            <Menu.Item key="3" onClick={()=>router.push('/admin/all-users')} icon={<UserOutlined />}>Users</Menu.Item>
             <Menu.Item key="4"  onClick={()=>router.push('/admin/allbookings')} icon={<DollarOutlined /> }>Bookings</Menu.Item>
             <Menu.Item key="5" icon={<SettingOutlined />}>Settings</Menu.Item>
             <Menu.Item key="6" onClick={()=>router.push('/addmovie')} icon={<FileAddFilled/>}>AddMovie</Menu.Item>
