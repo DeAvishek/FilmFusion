@@ -1,5 +1,4 @@
 import mongoose,{Schema,Document} from "mongoose";
-import { boolean } from "zod";
 export interface ISetting extends Document{
     movieRecommendation:boolean,
     autoApproveMovies:boolean,
@@ -52,5 +51,5 @@ const adminSettingsSchema:Schema<ISetting>= new mongoose.Schema(
       timestamps: true,
     }
   );
-  const SettingModel= (mongoose.models.Booking as mongoose.Model<ISetting> )||(mongoose.model<ISetting>("Setting",adminSettingsSchema))
+  const SettingModel= (mongoose.models.Setting as mongoose.Model<ISetting> )||(mongoose.model<ISetting>("Setting",adminSettingsSchema))
   export default SettingModel

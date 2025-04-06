@@ -1,9 +1,16 @@
 import axios from "axios"
-const recomendation=async(movieRecommendation:boolean)=>{
+export const recomendation=async(movieRecommendation:boolean)=>{
     try {
-        const response = await axios.put('/api/admin/settings-admin' ,{movieRecommendation:!movieRecommendation})
-
+        const response = await axios.patch('/api/admin/settings-admin' ,
+                                        {movieRecommendation:!movieRecommendation})
+        if (response.status===200){
+            console.log(response.data.message)
+        }
     } catch (error) {
-        
+        if(axios.isAxiosError(error)){
+            console.log(error.response?.data.error)
+        }else{
+            console.log("internal server error")
+        }
     }
 }
