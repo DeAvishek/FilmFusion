@@ -12,7 +12,7 @@ import { gql } from "graphql-tag"
 import { useSession } from "next-auth/react"
 import Recomended_rating from "@/components/Recomended_rating";
 import Recomanded_predictions from "@/components/Recomanded_predictions";
-
+import { useMovieRecommendation } from '@/app/hooks/useMovieRecommendation'
 export default function Home() {
 
   type MovieProps = {
@@ -105,13 +105,16 @@ export default function Home() {
       setBaseUrl(`${window.location.protocol}//${window.location.host}/`);
     }
   }, []);
+
+   
+
   return (
     <>
       {fullurl === baseurl && <Navbar />}
       <div className="bg-gradient-to-r from-yellow-700 to-blue-700 min-h-screen flex flex-col items-center min-h-screen">
         <span className="text-xl font-bold text-gray-800 w-full text-center mt-4"></span>
 
-        {session?.user &&
+        {(session?.user) &&(
           <>
             <h1 className="text-lg font-semibold text-black-700 animate-pulse text-bold ml-0">Recomendations for You</h1>
             <div className=" mb-5 flex flex-wrap gap-8 sm:items-start justify-center rounded">
@@ -122,7 +125,7 @@ export default function Home() {
                 <Recomanded_predictions />
               )}
             </div>
-          </>}
+          </>)}
         <h1 className="text-lg font-semibold text-black-700 animate-pulse text-bold mt-10">Top Movies</h1>
         <div className=" mb-5 flex flex-wrap gap-8 sm:items-start justify-center rounded">
           {loading_for_base ? (

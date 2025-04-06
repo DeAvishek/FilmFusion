@@ -98,7 +98,7 @@ const Navbar = () => {
                 <div>
                     {email ? (
                         <div className="flex items-center gap-4">
-                            <span className="hidden sm:block">{email}</span>
+                            <span className="hidden sm:block text-green-700">Welcome user {email}</span>
                             <Button onClick={handlSignout} className="bg-red-500 hover:bg-red-600">Sign Out</Button>
                         </div>
                     ) : (

@@ -3,6 +3,7 @@ import React from 'react'
 import { Switch } from "@/components/ui/switch"
 import { FormLabel } from '@mui/material'
 import {ArrowBigDownDashIcon} from "lucide-react"
+
 const page = () => {
     return (
         <div className="settings-container p-6 bg-gray-100 rounded-xl shadow-md space-y-4">
@@ -14,7 +15,8 @@ const page = () => {
                 Movie Management
                 <div className="flex items-center space-x-2 mt-5">
                     <FormLabel htmlFor="airplane-mode">Enable/Disable movie recomendation</FormLabel>
-                    <Switch className='ml-10'/>
+                    <Switch className='ml-10'
+                    />
                 </div>
                 <div className="flex items-center space-x-2 mt-5"> 
                     <FormLabel htmlFor="airplane-mode">Auto approved movie</FormLabel>
