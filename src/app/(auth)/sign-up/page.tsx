@@ -18,10 +18,18 @@ import { z } from 'zod'
 import { SignupSchemaValidation } from "@/app/schema/signupvalidation"
 import  Link  from 'next/link'
 import axios from 'axios'
+import { useSearchParams } from 'next/navigation' 
 const page = () => {
     const router=useRouter()
     const [isSubmit, setisSubmit] = useState<boolean>(false)
     const [responseMessage, setresponseMessage] = useState<string | "">("")
+    //by deafult
+    let role="user"
+    const params=useSearchParams();
+    const role_of_user = params.get("role") as string
+    if(role_of_user){
+        role = role_of_user
+    }
 
     const form = useForm<z.infer<typeof SignupSchemaValidation>>({
         resolver: zodResolver(SignupSchemaValidation),
@@ -34,7 +42,7 @@ const page = () => {
     const handleSignUp = async (data: z.infer<typeof SignupSchemaValidation>) => {
         try {
             setisSubmit(true)
-            const response = await axios.post('/api/user/create-account', data)
+            const response = await axios.post(`/api/user/create-account?role=${role}`, data)
 
             if (response.status === 201) {
                 setresponseMessage(response.data.message)

@@ -10,7 +10,7 @@ export async function middleware(request: NextRequest) {
 
   // Redirect authenticated users away from sign-in or sign-up
   if (token) {
-    if (url.pathname === "/sign-in" || url.pathname === "/sign-up") {
+    if (url.pathname === "/sign-in") {
       return NextResponse.redirect(new URL("/", request.url));
     }
   } else {
