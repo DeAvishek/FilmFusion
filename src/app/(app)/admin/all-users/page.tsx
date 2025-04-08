@@ -25,7 +25,7 @@ const page = () => {
             }
         }, [data]);
     return (
-        <div className='flex items-center justify-centermt-5'>
+        <div className='flex items-center justify-center mt-5'>
             {error ? (<span className='bg-red-500'> </span>):(
                 loading?(<LucideLoaderCircle size={100}  className="text-blue-500 animate-spin"/>):
                 (users.map((user,index)=>

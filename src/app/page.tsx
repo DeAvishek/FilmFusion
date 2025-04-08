@@ -12,7 +12,7 @@ import { gql } from "graphql-tag"
 import { useSession } from "next-auth/react"
 import Recomended_rating from "@/components/Recomended_rating";
 import Recomanded_predictions from "@/components/Recomanded_predictions";
-import { useMovieRecommendation } from '@/app/hooks/useMovieRecommendation'
+import {LucideLoaderCircle} from "lucide-react" 
 export default function Home() {
 
   type MovieProps = {
@@ -118,7 +118,6 @@ export default function Home() {
           <>
             <h1 className="text-lg font-semibold text-black-700 animate-pulse text-bold ml-0">Recomendations for You</h1>
             <div className=" mb-5 flex flex-wrap gap-8 sm:items-start justify-center rounded">
-
               {current_user_interaction.length === 0 ? (
                 <Recomended_rating />
               ) : (
@@ -129,7 +128,7 @@ export default function Home() {
         <h1 className="text-lg font-semibold text-black-700 animate-pulse text-bold mt-10">Top Movies</h1>
         <div className=" mb-5 flex flex-wrap gap-8 sm:items-start justify-center rounded">
           {loading_for_base ? (
-            <h1 className="text-lg font-semibold text-gray-700 animate-pulse">Getting best Movies for you...</h1>
+            <LucideLoaderCircle size={100}  className="text-blue-500 animate-spin"/>
           ) : movies.length === 0 ? (<p>No movies found</p>) : (
             (
               movies.map((movie) => (

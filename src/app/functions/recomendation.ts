@@ -39,3 +39,27 @@ export const updateMaxAdmins=async(maxAllowedAdmins:number)=>{
         }
     }
 }
+
+export const updateUserRaringStatus=async(enableUserRatings:boolean)=>{
+    try {
+        await axios.patch('/api/admin/settings-admin',{enableUserRatings:!enableUserRatings})
+    } catch (error) {
+        if(axios.isAxiosError(error)){
+            console.log(error.response?.data.error)
+        }else{
+            console.log("internal server error")
+        }
+    }
+}
+export const updateCreateAccountStatus=async(allowSignups:boolean)=>{
+    try {
+        await axios.patch('/api/admin/settings-admin',{allowSignups:!allowSignups})
+    } catch (error) {
+        if(axios.isAxiosError(error)){
+            console.log(error.response?.data.error)
+        }else{
+            console.log("internal server error")
+        }
+    }
+
+}
