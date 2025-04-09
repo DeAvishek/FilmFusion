@@ -6,6 +6,7 @@ import  {Elements} from "@stripe/react-stripe-js"
 import { StripeElementsOptions } from "@stripe/stripe-js";
 import Checkoutform from "@/app/(app)/checkoutform/page"
 import PriceStore from "@/app/store/ticPriceStore"
+import {LucideLoaderCircle} from "lucide-react" 
 const stripePromise=loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISH_KEY!)
 const checkoutPage = () => {
 const [clientsecret, setclientsecret] = useState<string |null>('')
@@ -52,7 +53,7 @@ const options:StripeElementsOptions={
             <Elements stripe={stripePromise} options={options}>
                 <Checkoutform amount={price}/>
             </Elements>
-        ):(<p>{responseMessage || 'Loading payment details...'}</p>)}
+        ):(<p>{responseMessage || <LucideLoaderCircle size={100}  className="text-blue-500 animate-spin"/>}</p>)}
     </div>
   )
 }
