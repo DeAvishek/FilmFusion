@@ -46,7 +46,7 @@ const page = () => {
 
             if (response.status === 201) {
                 setresponseMessage(response.data.message)
-                router.push('/sign-in')
+                router.push('/api/auth/signin')
             }
             
         } catch (error) {

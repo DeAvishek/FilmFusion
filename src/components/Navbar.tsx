@@ -96,9 +96,8 @@ const Navbar = () => {
 
                 {session?.user?.role === "admin" && (<Button className="bg-yellow-500 w-20 h-10"><Link href="/admin">< UserCog onClick={() => router.push("/admin")} size={40}/> </Link></Button>)}
                 <div>
-                    {email ? (
+                    {session?.user ? (
                         <div className="flex items-center gap-4">
-                            <span className="hidden sm:block text-green-700">Welcome user {email}</span>
                             <Button onClick={handlSignout} className="bg-red-500 hover:bg-red-600">Sign Out</Button>
                         </div>
                     ) : (

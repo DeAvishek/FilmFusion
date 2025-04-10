@@ -1,112 +1,109 @@
 "use client"
 import React, { useState } from 'react'
-import { signInValidationScheam } from '@/app/schema/signinvalidation'
 import { useForm } from "react-hook-form"
+import { z } from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { signIn } from 'next-auth/react'
-import { z } from 'zod'
 import { useRouter } from 'next/navigation'
-import { Button } from "@/components/ui/button"
-import {
-    Form,
-    FormControl,
-    FormField,
-    FormItem,
-    FormLabel,
-    FormMessage,
-} from "@/components/ui/form"
+import { signInValidationScheam } from '@/app/schema/signinvalidation'
 import { Input } from "@/components/ui/input"
-
+import { Button } from "@/components/ui/button"
 import Toastalert from '@/components/Toastalert'
 
-const Signin = () => {
-    const [isSubmit, setisSumbmit] = useState<boolean>(false)
-    const [responseMessage, setresponseMessage] = useState<string | null>('')
+const SignIn = () => {
+    const [isSubmitting, setSubmitting] = useState(false)
+    const [responseMessage, setResponseMessage] = useState<string | null>(null)
     const router = useRouter()
+
     const form = useForm<z.infer<typeof signInValidationScheam>>({
         resolver: zodResolver(signInValidationScheam),
-        defaultValues: ({
-            email: ""
-        })
+        defaultValues: {
+            email: "",
+        }
     })
+
     const handleSignIn = async (data: z.infer<typeof signInValidationScheam>) => {
+        setSubmitting(true)
         try {
-            setisSumbmit(true)
             const response = await signIn('credentials', {
                 redirect: false,
                 email: data.email,
             })
+
             if (response?.error) {
-                setresponseMessage(response.error);
+                setResponseMessage(response.error)
             } else {
-                setresponseMessage("Logged in successfully");
-
-                setTimeout(() => {
-                    router.push('/');
-                }, 3500);
-
-
+                setResponseMessage("Logged in successfully")
+                setTimeout(() => router.push("/"), 3000)
             }
-
-        } catch (error) {
-            setresponseMessage("Something went wrong. Please try again.");
-            console.error(error);
-
+        } catch (err) {
+            setResponseMessage("Something went wrong. Try again.")
         } finally {
-            setisSumbmit(false)
+            setSubmitting(false)
         }
-
     }
+
     return (
+        <div className="flex h-screen w-full">
+            {/* Left Side - Form (1/3) */}
+            <div className="w-1/3 bg-gradient-to-br from-purple-500 via-blue-500 to-indigo-600 flex justify-center items-center p-6">
+                <div className="bg-white/20 backdrop-blur-lg p-10 rounded-3xl shadow-2xl w-full max-w-sm">
+                    <h1 className="text-3xl font-bold text-white mb-6">Sign In</h1>
+                    <form onSubmit={form.handleSubmit(handleSignIn)} className="space-y-5">
+                        <Input
+                            className="rounded-full py-2 px-4 text-black placeholder-gray-500 bg-white/90"
+                            placeholder="Email Address"
+                            {...form.register("email")}
+                        />
+                        <Button
+                            type="submit"
+                            disabled={isSubmitting}
+                            className="w-full bg-black text-white rounded-full py-2 hover:bg-gray-800"
+                        >
+                            {isSubmitting ? "Signing in..." : "Sign In"}
+                        </Button>
+                    </form>
+                    <p className="text-sm text-white mt-4">
+                        Don’t have an account?{" "}
+                        <a href="/sign-up" className="text-black font-semibold hover:underline">Sign Up</a>
+                    </p>
 
-        <>
-            <div className="flex h-screen">
-                {/* Left Side - Sign In Form */}
+                    {responseMessage?.includes("success") && <Toastalert alert_message="Logged in successfully" />}
 
-                <div className="w-1/2 flex flex-col justify-center items-center bg-white" >
-                    
-                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQMqSIOOGcw8PVa9nuGP2JsAQS3M5K7kserbg&s" alt="FilmFusion Logo" className="w-80 mb-8" />
-                    <h2 className="text-2xl font-bold mb-4">Log in to your account</h2>
-                    <h1 className="mb-4 text-3xl">
-                        Don't have an account? <a href="/sign-up" className="text-red-500">Sign Up</a>
-                    </h1>   
-                    {responseMessage?.includes("success") && (<Toastalert alert_message="Logged in successfully" />)}          
-                     <Form {...form}>
-                        <form onSubmit={form.handleSubmit(handleSignIn)} className="space-y-8">
-                            <FormField
-                                name="email"
-                                control={form.control}
-                                render={({ field }) => (
-                                    <FormItem>
-                                        <FormLabel>Email</FormLabel>
-                                        <FormControl>
-                                            <Input className="bg-white-400 text-black" style={{width:'400px'}} type="email" placeholder="Email" {...field} />
-                                        </FormControl>
-                                        <FormMessage />
-                                    </FormItem>
-                                )}
-                            />
-
-                            <Button
-                                type="submit"
-                                className="border-purple-200 text-purple-600 hover:border-transparent hover:bg-purple-600 hover:text-white active:bg-purple-700"
-                                disabled={isSubmit}
-                            >
-                                {isSubmit ? "Signing in..." : "Sign In"}
-                            </Button>
-                        </form>
-                    </Form>
-                </div>
-
-                {/* Right Side - Visuals */}
-                <div className="w-1/2 bg-grey-900 text-white flex flex-col justify-center items-center">
-                    <h1 className="text-4xl font-bold mb-4">FilmFusion 1.0 is here</h1>
-                    <p className="mb-8 text-center">Experience seamless booking with improved performance and new features.</p>
-                    <img src="https://i.etsystatic.com/isla/c628f5/72874316/isla_500x500.72874316_slgarmpr.jpg?version=0" alt="FilmFusion Visual" className="w-3/4 rounded-lg" />
+                    {/* Social login buttons */}
+                    <div className="mt-6 space-y-3">
+                        <p className="text-white text-center">Or</p>
+                        <button 
+                        className="flex items-center justify-center w-full border border-white text-white rounded-full py-2 hover:bg-white hover:text-black transition"
+                        onClick={()=>signIn('facebook')}
+                        >
+                            <img src="https://www.svgrepo.com/show/475647/facebook-color.svg" alt="Facebook" className="w-5 h-5 mr-2" />
+                            Sign in with Facebook
+                        </button>
+                        <button 
+                        className="flex items-center justify-center w-full border border-white text-white rounded-full py-2 hover:bg-white hover:text-black transition"
+                        onClick={()=>signIn('github')}
+                        >
+                            <img src="https://www.svgrepo.com/show/35001/github.svg" alt="Facebook" className="w-5 h-5 mr-2" />
+                            Sign in with Github
+                        </button>
+                    </div>
                 </div>
             </div>
-        </>
+
+            {/* Right Side - Visual (2/3) */}
+            <div className="w-2/3 relative">
+                <img
+                    src="https://img.freepik.com/premium-photo/film-fusion-ultimate-movie-mixing-machine_1015980-28917.jpg?w=2000" // Replace with your own image if desired
+                    alt="Visual"
+                    className="object-cover w-full h-full"
+                />
+                <div className="absolute top-0 left-0 w-full h-full bg-black bg-opacity-30 flex items-center justify-center">
+                    <h1 className="text-white text-4xl font-bold">Welcome to FilmFusion</h1>
+                </div>
+            </div>
+        </div>
     )
 }
 
-export default Signin
+export default SignIn

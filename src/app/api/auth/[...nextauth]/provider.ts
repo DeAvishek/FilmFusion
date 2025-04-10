@@ -1,10 +1,13 @@
 import CredentialsProvider from "next-auth/providers/credentials"
 // import GoogleProvider from "next-auth/providers/google";
-// import GitHubProvider from "next-auth/providers/github"
+import GitHubProvider from "next-auth/providers/github"
+import FacebookProvider from "next-auth/providers/facebook";
 import type { NextAuthOptions, User } from "next-auth"
 import dbConnect from "@/app/lib/db";
 import UserModel from "@/app/Model/user";
 
+const clientID=process.env.GITHUB_CLIENT_ID!
+const clientSecret=process.env.GITHUB_CLIENT_SECRET!
 export const AuthOptions: NextAuthOptions = {
     providers: [
       
@@ -38,16 +41,46 @@ export const AuthOptions: NextAuthOptions = {
                 }
 
             }
+        }),
+        GitHubProvider({
+            clientId:clientID,
+            clientSecret:clientSecret
+        }),
+        FacebookProvider({
+            clientId:process.env.FB_CLIENT_ID!,
+            clientSecret:process.env.FB_CLIENT_SECRET!,
+            authorization:{
+                params:{
+                    scope:'public_profile email',
+                }
+            },
+            profile(profile){
+                console.log("📘 Facebook profile received:", profile);
+                return{
+                    id: profile.id,
+                    name: profile.name,
+                    email: profile.email || null
+                }
+            }
         })
     ],
     callbacks: {
-        async jwt({ token, user }) {
-            if (user && user._id) {
-                token._id = user._id?.toString(),
-                token.email = user.email
-                token.role = user.role 
+        async jwt({ token, user,account }) {
+            if(user){
+                token.email=user?.email
+
+                if(account?.provider!=="credentials"){
+                    const exiting_user = await UserModel.findOne({email:user.email})
+                    token._id=exiting_user?._id
+                    token.role=exiting_user?.role
+                    
+                }else{
+                    token._id=user._id as string
+                    token.role=user.role
+                }
+            }else{
+                console.warn("⚠️ No email returned from provider. Cannot sync user.");
             }
-            // console.log("my token is",token) //todo to remove just for debugging
             return token
         },
         async session({ session, token }) {
@@ -60,10 +93,9 @@ export const AuthOptions: NextAuthOptions = {
             }
             return session
         },
-
     },
     pages: {
-        signIn: `/sign-in`,
+        // signIn:'/sign-in',
         signOut: '/sign-out',
     }, session: {
         strategy: "jwt",

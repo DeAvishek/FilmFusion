@@ -1,10 +1,11 @@
+
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import AuthProvider from "./context/sessionprovider";
 import ValueSelectionProvider from "./context/optionsvalueprovider";
 import { ApolloWrapper } from "./ApolloWrapper"
-
+import Hashclean from "./lib/Hashclean";
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
@@ -31,6 +32,7 @@ export default function RootLayout({
       <ApolloWrapper>
         <AuthProvider>
           <ValueSelectionProvider>
+            <Hashclean/>
             {children}
           </ValueSelectionProvider>
         </AuthProvider>
