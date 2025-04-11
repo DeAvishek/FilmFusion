@@ -1,13 +1,16 @@
 import CredentialsProvider from "next-auth/providers/credentials"
-// import GoogleProvider from "next-auth/providers/google";
 import GitHubProvider from "next-auth/providers/github"
-import FacebookProvider from "next-auth/providers/facebook";
+import GoogleProvider from "next-auth/providers/google";
 import type { NextAuthOptions, User } from "next-auth"
 import dbConnect from "@/app/lib/db";
 import UserModel from "@/app/Model/user";
 
+//credentials
 const clientID=process.env.GITHUB_CLIENT_ID!
 const clientSecret=process.env.GITHUB_CLIENT_SECRET!
+
+const google_client_id=process.env.GOOGLE_CLIENT_ID!
+const google_client_secret=process.env.GOOGLE_CLIENT_SECRET!
 export const AuthOptions: NextAuthOptions = {
     providers: [
       
@@ -44,25 +47,14 @@ export const AuthOptions: NextAuthOptions = {
         }),
         GitHubProvider({
             clientId:clientID,
-            clientSecret:clientSecret
+            clientSecret:clientSecret,
+            authorization: { params: { scope: "user:email" } }
         }),
-        FacebookProvider({
-            clientId:process.env.FB_CLIENT_ID!,
-            clientSecret:process.env.FB_CLIENT_SECRET!,
-            authorization:{
-                params:{
-                    scope:'public_profile email',
-                }
-            },
-            profile(profile){
-                console.log("📘 Facebook profile received:", profile);
-                return{
-                    id: profile.id,
-                    name: profile.name,
-                    email: profile.email || null
-                }
-            }
+        GoogleProvider({
+            clientId:google_client_id,
+            clientSecret:google_client_secret
         })
+        
     ],
     callbacks: {
         async jwt({ token, user,account }) {
@@ -95,11 +87,11 @@ export const AuthOptions: NextAuthOptions = {
         },
     },
     pages: {
-        // signIn:'/sign-in',
+        signIn:'/sign-in',
         signOut: '/sign-out',
     }, session: {
         strategy: "jwt",
-        maxAge: 30 * 24 * 60 * 60
+        maxAge:24 * 60 * 60
     },
     secret: process.env.NEXTAUTH_SECRET
 

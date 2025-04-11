@@ -75,11 +75,12 @@ const SignIn = () => {
                         <p className="text-white text-center">Or</p>
                         <button 
                         className="flex items-center justify-center w-full border border-white text-white rounded-full py-2 hover:bg-white hover:text-black transition"
-                        onClick={()=>signIn('facebook')}
+                        onClick={()=>signIn('google')}
                         >
-                            <img src="https://www.svgrepo.com/show/475647/facebook-color.svg" alt="Facebook" className="w-5 h-5 mr-2" />
-                            Sign in with Facebook
+                            <img src="https://www.freepnglogos.com/uploads/google-logo-png/google-logo-png-google-icon-logo-png-transparent-svg-vector-bie-supply-14.png" alt="Google" className="w-5 h-5 mr-2" />
+                            Sign in with Google
                         </button>
+
                         <button 
                         className="flex items-center justify-center w-full border border-white text-white rounded-full py-2 hover:bg-white hover:text-black transition"
                         onClick={()=>signIn('github')}
