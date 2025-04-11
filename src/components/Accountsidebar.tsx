@@ -1,7 +1,7 @@
-// components/AccountSidebar.tsx
 "use client";
-import { LogOut, User, Bookmark, Settings } from "lucide-react";
+import { LogOut, User, Bookmark, Settings, UserCog } from "lucide-react";
 import { signOut, useSession } from "next-auth/react";
+import Link from "next/link";
 
 const AccountSidebar = () => {
     const { data: session } = useSession();
@@ -14,7 +14,7 @@ const AccountSidebar = () => {
                     <p className="text-lg font-semibold">
                         Welcome, <span className="text-green-500">{session?.user?.username}</span>
                     </p>
-                    <p className="text-sm text-gray-400">Film Fusion</p>
+                    <p className="text-sm text-gray-400">Filmfusion</p>
                 </div>
             </div>
 
@@ -23,6 +23,9 @@ const AccountSidebar = () => {
                 <SidebarItem icon={<User size={16} />} label="Profile" />
                 <SidebarItem icon={<Bookmark size={16} />} label="Watchlist" />
                 <SidebarItem icon={<Settings size={16} />} label="Settings" />
+                {session?.user.role==="admin" && <Link  href="/admin" className="space-y-4">
+                    <SidebarItem icon={<UserCog size={16} />} label="Admin Setting" />
+                </Link>}
             </nav>
 
             {/* Sign Out Button */}

@@ -8,7 +8,6 @@ export interface ISetting extends Document{
     enableUserRatings:boolean
     allowSignups:boolean
     siteLogoUrl:string
-
 }
 const adminSettingsSchema:Schema<ISetting>= new mongoose.Schema(
     {

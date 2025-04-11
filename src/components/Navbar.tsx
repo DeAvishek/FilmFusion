@@ -10,7 +10,7 @@ import axios from "axios";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import Toastalert from "./Toastalert";
-import {UserCog,UserCircle} from "lucide-react"
+import {UserCircle} from "lucide-react"
 import AccountSidebar from "./Accountsidebar";
 import { useRef } from "react";
 const GET_MOVIES = gql`
@@ -72,7 +72,7 @@ const Navbar = () => {
 
     return (
         <>
-            <nav className="flex items-center justify-between px-6 py-4 bg-gray-300 text-black relative">
+            <nav className="flex items-center justify-between px-6 py-4 bg-gray-300 text-black relative" style={{height:'60px'}}>
                 {!email && <Toastalert alert_message="Sign out Successfully" />}
                 <Link href="/" className="text-2xl font-bold">🎬 FilmFusion</Link>
                 <div className="flex items-center flex-row rounded-lg px-3 py-1 relative w-full max-w-md">
@@ -91,10 +91,9 @@ const Navbar = () => {
                     )}
                 </div>
 
-                {session?.user?.role === "admin" && (<Button className="bg-yellow-500 w-20 h-10"><Link href="/admin">< UserCog onClick={() => router.push("/admin")} size={40}/> </Link></Button>)}
                 <div>
                     {session?.user ? (
-                        <UserCircle onClick={()=>setaccountSidebar(prev=>!prev)} className="hover:cursor-pointer"/>
+                        <UserCircle onClick={()=>setaccountSidebar(prev=>!prev)}size={30} className="hover:cursor-pointer"/>
                     ) : (
                         <Button onClick={() => signIn()} className="bg-blue-500 hover:bg-blue-600">Sign In</Button>
                     )}
