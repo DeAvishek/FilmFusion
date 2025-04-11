@@ -1,5 +1,6 @@
 "use client"
-import React from 'react'
+
+import React, { useState } from 'react'
 import { Button } from "@/components/ui/button"
 import {
     Form,
@@ -12,22 +13,20 @@ import {
 import { Input } from "@/components/ui/input"
 import { useForm } from "react-hook-form"
 import { zodResolver } from '@hookform/resolvers/zod'
-import { useRouter } from 'next/navigation'
-import { useState } from 'react'
+import { useRouter, useSearchParams } from 'next/navigation'
 import { z } from 'zod'
 import { SignupSchemaValidation } from "@/app/schema/signupvalidation"
-import  Link  from 'next/link'
+import Link from 'next/link'
 import axios from 'axios'
-import { useSearchParams } from 'next/navigation' 
-const page = () => {
-    const router=useRouter()
+
+const Page = () => {
+    const router = useRouter()
     const [isSubmit, setisSubmit] = useState<boolean>(false)
     const [responseMessage, setresponseMessage] = useState<string | "">("")
-    //by deafult
-    let role="user"
-    const params=useSearchParams();
+    let role = "user"
+    const params = useSearchParams();
     const role_of_user = params.get("role") as string
-    if(role_of_user){
+    if (role_of_user) {
         role = role_of_user
     }
 
@@ -48,63 +47,62 @@ const page = () => {
                 setresponseMessage(response.data.message)
                 router.push('/api/auth/signin')
             }
-            
+
         } catch (error) {
-                setresponseMessage("Email Must be Unique")
-        }finally{
+            setresponseMessage("Email must be unique")
+        } finally {
             setisSubmit(false)
         }
-
     }
+
     return (
-        <div className="flex justify-center items-center min-h-screen bg-grey-100 text-white">
-            <div className="w-full max-w-md p-8 space-y-8 bg-sky-600 rounded-lg shadow-md">
-                <div className="text-center">
-                    <h1 className="text-4xl font-extrabold tracking-tight lg:text-5xl mb-6 text-white">
-                        Join Now
-                    </h1>
-                    <p className="mb-4 text-white">Sign up in to start your movie adventure</p>
+        <div className="min-h-screen flex items-center justify-center bg-gradient-to-r from-sky-500 to-indigo-500 px-4">
+            <div className="w-full max-w-md p-10 bg-gray-300 rounded-2xl shadow-xl space-y-6">
+            <h1 className="text-4xl font-bold text-sky-700 text-center">Join Now</h1>
+                <div className="text-center flex justify-center ">
+                    <p className="mt-2 text-gray-600">Sign up to start your movie adventure </p>
+                    <img src='https://film-fusion-ecu.netlify.app/Images/Logo.png' style={{width:'50px',height:'30px'} } className='mt-2 ml-2'/>
                 </div>
 
                 {responseMessage && (
-                    <b className={`text-sm ${responseMessage.includes("success") ? "text-green-900" : "text-red-500"}`}>
+                    <p className={`text-sm text-center font-medium ${responseMessage.includes("success") ? "text-green-600" : "text-red-500"}`}>
                         {responseMessage}
-                    </b>
+                    </p>
                 )}
 
                 <Form {...form}>
-                    <form onSubmit={form.handleSubmit(handleSignUp)} className="space-y-8">
+                    <form onSubmit={form.handleSubmit(handleSignUp)} className="space-y-6">
                         <FormField
                             name="username"
                             control={form.control}
                             render={({ field }) => (
                                 <FormItem>
-                                    <FormLabel>UserName</FormLabel>
+                                    <FormLabel className="text-gray-700">Username</FormLabel>
                                     <FormControl>
-                                        <Input className="bg-white-500 text-black" type="text" placeholder="John Doe" {...field} />
+                                        <Input className="bg-gray-100 text-black" type="text" placeholder="John Doe" {...field} />
                                     </FormControl>
                                     <FormMessage />
                                 </FormItem>
                             )}
                         />
+
                         <FormField
                             name="email"
                             control={form.control}
                             render={({ field }) => (
                                 <FormItem>
-                                    <FormLabel>Email</FormLabel>
+                                    <FormLabel className="text-gray-700">Email</FormLabel>
                                     <FormControl>
-                                        <Input className="bg-white-500 text-black" type="email" placeholder="Email" {...field} />
+                                        <Input className="bg-gray-100 text-black" type="email" placeholder="you@example.com" {...field} />
                                     </FormControl>
                                     <FormMessage />
                                 </FormItem>
                             )}
                         />
 
-
                         <Button
                             type="submit"
-                            className="border-purple-200 text-purple-600 hover:border-transparent hover:bg-purple-600 hover:text-white active:bg-purple-700"
+                            className="w-full py-2 rounded-md bg-sky-600 hover:bg-sky-700 text-white font-semibold transition duration-200"
                             disabled={isSubmit}
                         >
                             {isSubmit ? "Signing up..." : "Sign Up"}
@@ -112,12 +110,15 @@ const page = () => {
                     </form>
                 </Form>
 
-                <div className="text-center">
-                    <p>Already have an account? <Link href='/sign-in' className="text-yellow-200">Sign In</Link></p>
+                <div className="text-center text-sm text-gray-600">
+                    Already have an account?{" "}
+                    <Link href='/sign-in' className="text-sky-600 hover:underline">
+                        Sign In
+                    </Link>
                 </div>
             </div>
         </div>
     )
 }
 
-export default page
+export default Page

@@ -10,8 +10,9 @@ import axios from "axios";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import Toastalert from "./Toastalert";
-import {Move3DIcon,UserCog} from "lucide-react"
-
+import {UserCog,UserCircle} from "lucide-react"
+import AccountSidebar from "./Accountsidebar";
+import { useRef } from "react";
 const GET_MOVIES = gql`
 query GetMovies{
   movies{
@@ -27,9 +28,9 @@ const Navbar = () => {
     const email = session?.user?.email;
     const [moviesName, setMoviesName] = useState<string[]>([]);
     const [filteredMovies, setfilteredMovies] = useState<string[]>([]);
-    const [isSignout, setisSignout] = useState<boolean>(false);
     const { data } = useQuery(GET_MOVIES);
-
+    const [accountSidebar, setaccountSidebar] = useState<boolean>(false)
+    const sidebarRef = useRef(null);
     useEffect(() => {
         if (data && data?.movies) {
             setMoviesName(data.movies.map((movie: { title: string }) => movie.title));
@@ -68,10 +69,6 @@ const Navbar = () => {
         setfilteredMovies([]);
     };
 
-    const handlSignout = () => {
-        signOut();
-        setisSignout(true);
-    };
 
     return (
         <>
@@ -97,13 +94,19 @@ const Navbar = () => {
                 {session?.user?.role === "admin" && (<Button className="bg-yellow-500 w-20 h-10"><Link href="/admin">< UserCog onClick={() => router.push("/admin")} size={40}/> </Link></Button>)}
                 <div>
                     {session?.user ? (
-                        <div className="flex items-center gap-4">
-                            <Button onClick={handlSignout} className="bg-red-500 hover:bg-red-600">Sign Out</Button>
-                        </div>
+                        <UserCircle onClick={()=>setaccountSidebar(prev=>!prev)} className="hover:cursor-pointer"/>
                     ) : (
                         <Button onClick={() => signIn()} className="bg-blue-500 hover:bg-blue-600">Sign In</Button>
                     )}
                 </div>
+                {accountSidebar && (
+                <div
+                    className="fixed top-16 right-4 z-50"
+                    ref={sidebarRef}
+                >
+                    <AccountSidebar />
+                </div>
+            )}
             </nav>
         </>
     );

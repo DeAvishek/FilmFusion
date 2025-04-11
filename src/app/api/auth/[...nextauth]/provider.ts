@@ -65,10 +65,12 @@ export const AuthOptions: NextAuthOptions = {
                     const exiting_user = await UserModel.findOne({email:user.email})
                     token._id=exiting_user?._id
                     token.role=exiting_user?.role
+                    token.username=exiting_user?.username
                     
                 }else{
                     token._id=user._id as string
                     token.role=user.role
+                    token.username=user.username
                 }
             }else{
                 console.warn("⚠️ No email returned from provider. Cannot sync user.");
@@ -80,7 +82,8 @@ export const AuthOptions: NextAuthOptions = {
                 session.user={
                     _id:token._id as string,
                     email:token.email as string,
-                    role:token.role as string
+                    role:token.role as string,
+                    username:token.username as string
                 }
             }
             return session

@@ -25,13 +25,18 @@ const page = () => {
             }
         }, [data]);
     return (
-        <div className='flex items-center justify-center mt-5'>
-            {error ? (<span className='bg-red-500'> </span>):(
-                loading?(<LucideLoaderCircle size={100}  className="text-blue-500 animate-spin"/>):
-                (users.map((user,index)=>
-                <Users key={index} username={user.username} email={user.email} />))
-            )}
-
+        <div className="w-full flex justify-center mt-5 px-4">
+            <div className="max-w-6xl w-full flex flex-wrap justify-center gap-1">
+                {error ? (
+                    <span className="bg-red-500 text-white px-4 py-2 rounded">Error loading users</span>
+                ) : loading ? (
+                    <LucideLoaderCircle size={80} className="text-blue-500 animate-spin" />
+                ) : (
+                    users.map((user, index) => (
+                        <Users key={index} username={user.username} email={user.email} />
+                    ))
+                )}
+            </div>
         </div>
     )
 }
