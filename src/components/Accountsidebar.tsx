@@ -19,10 +19,10 @@ const AccountSidebar = () => {
             </div>
 
             {/* Navigation (non-link options) */}
-            <nav className="space-y-4 text-sm">
+            <nav className="space-y-4 text-sm ">
                 <SidebarItem icon={<User size={16} />} label="Profile" />
                 <SidebarItem icon={<Bookmark size={16} />} label="Watchlist" />
-                <SidebarItem icon={<Settings size={16} />} label="Settings" />
+                <Link href='/settings' className="mt-4"><SidebarItem icon={<Settings size={16} />} label="Settings" /></Link>
                 {session?.user.role==="admin" && <Link  href="/admin" className="space-y-4">
                     <SidebarItem icon={<UserCog size={16} />} label="Admin Setting" />
                 </Link>}

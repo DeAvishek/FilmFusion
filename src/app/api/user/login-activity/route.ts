@@ -12,14 +12,14 @@ export async function PATCH(req:Request){
     const uaResult = parser.setUA(userAgent!)
     const loginActivity={
         device:uaResult.getDevice().model || "Desktop",
-        browser:uaResult.getBrowser().name
+        browser:uaResult.getBrowser().name 
     }
     if (!session?.user?._id) {
         return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
     }
     try {
         await dbConnect();
-        await UserSettingsModel.findOneAndUpdate({userID:session?.user?._id},{loginActivity},{
+        await UserSettingsModel.findOneAndUpdate({userID:session?.user?._id},{loginActivity,username:session?.user?.username},{
             new:true,
             upsert:true
         })
