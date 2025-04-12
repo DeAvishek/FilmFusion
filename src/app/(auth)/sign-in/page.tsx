@@ -9,6 +9,7 @@ import { signInValidationScheam } from '@/app/schema/signinvalidation'
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import Toastalert from '@/components/Toastalert'
+import axios from 'axios'
 
 const SignIn = () => {
     const [isSubmitting, setSubmitting] = useState(false)
@@ -21,7 +22,19 @@ const SignIn = () => {
             email: "",
         }
     })
-
+    
+    const Hndle_login_activity=async()=>{
+        try {
+            await axios.patch('/api/user/login-activity')
+        } catch (error) {
+            if(axios.isAxiosError(error)){
+                setResponseMessage(error.response?.data.error.message || "Login activity upadation error")
+                console.log(error.response?.data.error.message || "Login activity upadation error")
+            }else{
+                console.log("Login activity upadation error")
+            }
+        }
+    }
     const handleSignIn = async (data: z.infer<typeof signInValidationScheam>) => {
         setSubmitting(true)
         try {
@@ -34,7 +47,9 @@ const SignIn = () => {
                 setResponseMessage(response.error)
             } else {
                 setResponseMessage("Logged in successfully")
-                setTimeout(() => router.push("/"), 3000)
+                await Hndle_login_activity()
+                setTimeout(() => router.push("/"), 2000)
+                
             }
         } catch (err) {
             setResponseMessage("Something went wrong. Try again.")
@@ -68,7 +83,7 @@ const SignIn = () => {
                         <a href="/sign-up" className="text-black font-semibold hover:underline">Sign Up</a>
                     </p>
 
-                    {responseMessage?.includes("success") && <Toastalert alert_message="Logged in successfully" />}
+                    {responseMessage && <Toastalert alert_message={responseMessage} />}
 
                     {/* Social login buttons */}
                     <div className="mt-6 space-y-3">

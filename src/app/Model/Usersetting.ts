@@ -1,27 +1,33 @@
 import mongoose,{Document,Schema}from "mongoose";
-import { ILoginActivity } from "./Loginactivity";
-import { LoginActivitySchema } from "./Loginactivity";
 
-interface IUserSetting extends Document{
+export interface ILoginActivity extends Document{
+  date:Date,
+  device:string,
+  browser:string
+}
+export interface IUserSetting extends Document{
+    userID:mongoose.Types.ObjectId
     username:string,
-    deleteAccount:boolean,
     theme:string,
     preferredGenre:[string],
     language:string,
     autoplayTrailers:boolean,
     ProfileStatus:string,
-    loginActivity:ILoginActivity[]
+    loginActivity:ILoginActivity
 
 }
+
 const UserSettingsSchema:Schema<IUserSetting> = new mongoose.Schema({
+    userID  :{
+      type:mongoose.Schema.Types.ObjectId,
+      ref:'User',
+      required:true,
+      unique:true
+    },
     username: {
       type: String,
       required: true,
       minlength: 3,
-    },
-    deleteAccount: {
-      type: Boolean,
-      default: false,
     },
     theme: {
       type: String,
@@ -48,8 +54,22 @@ const UserSettingsSchema:Schema<IUserSetting> = new mongoose.Schema({
       default: "public",
     },
     loginActivity: {
-      type: [LoginActivitySchema],
-      default: [],
+      type:{
+        date:{
+          type:Date,
+          required:true,
+          default:Date.now
+        },
+        device:{
+          type:String,
+          required:true
+        },
+        browser:{
+          type:String,
+          required:true
+        }
+      },
+      // default:()=>({})
     },
   }, { timestamps: true });
   
