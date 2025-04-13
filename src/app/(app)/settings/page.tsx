@@ -4,7 +4,6 @@ import axios from 'axios'
 import { useState, useEffect } from 'react'
 import { Input } from "@/components/ui/input"
 import { Switch } from "@/components/ui/switch"
-import { useRouter } from 'next/navigation'
 import { Button } from '@/components/ui/button'
 import { Label } from "@/components/ui/label"
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
@@ -34,6 +33,7 @@ const page = () => {
                     setuserSettings(settingsWithoutLoginActivity)
                     setloginActivity(loginActivity)
                 }
+
             } catch (error) {
                 if (axios.isAxiosError(error)) {
                     setifNosetting(error.response?.data.error.messgae || "Internal server error..Can't get settings")
@@ -72,16 +72,16 @@ const page = () => {
                         {/* Theme */}
                         <h2 className="text-lg font-semibold text-gray-700">🎨 Theme</h2>
                         <RadioGroup className="space-y-2" value={userSettings.theme}
-                            onValueChange={(value) => {
+                            onValueChange={async (value) => {
                                 setuserSettings((prev) => ({
                                     ...prev,
                                     theme: value
                                 }))
-                                // await dbcallforUpade theme 
+                                await axios.patch('/api/user/update-user-settings', { theme: value })
                             }}
                         >
                             <div className="flex items-center space-x-3">
-                                <RadioGroupItem value="system" id="option-one"/>
+                                <RadioGroupItem value="system" id="option-one" />
                                 <Label htmlFor="option-one" className="text-gray-600">System</Label>
                             </div>
                             <div className="flex items-center space-x-3">
@@ -97,12 +97,12 @@ const page = () => {
                         {/* Profile Status */}
                         <h2 className="text-lg font-semibold text-gray-700">🔒 Profile</h2>
                         <RadioGroup className="space-y-2" value={userSettings.ProfileStatus}
-                            onValueChange={(value) => {
+                            onValueChange={async(value) => {
                                 setuserSettings((prev) => ({
                                     ...prev,
                                     ProfileStatus: value
                                 }))
-                                // await dbcallfor update profile status
+                                await axios.patch('/api/user/update-user-settings',{ProfileStatus:value})
 
                             }}
                         >
@@ -120,15 +120,15 @@ const page = () => {
                         <div className="flex items-center justify-between bg-gray-50 p-3 rounded-lg border border-gray-200">
                             <label className="text-sm font-medium text-gray-700">Autoplay Trailers</label>
                             <Switch
-                                checked={userSettings.autoplayTrailers} 
-                                onCheckedChange={async()=>{
-                                    setuserSettings((prev)=>({
+                                checked={userSettings.autoplayTrailers}
+                                onCheckedChange={async () => {
+                                    setuserSettings((prev) => ({
                                         ...prev,
-                                        autoplayTrailers:!userSettings.autoplayTrailers
+                                        autoplayTrailers: !userSettings.autoplayTrailers
                                     }))
-                                    // await dbcallforupdate autoplaytrailor
+                                    await axios.patch('/api/user/update-user-settings',{autoplayTrailers:!userSettings.autoplayTrailers})
                                 }}
-                                />
+                            />
                         </div>
                     </div>
 
