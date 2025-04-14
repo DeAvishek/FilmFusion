@@ -7,8 +7,12 @@ import { Switch } from "@/components/ui/switch"
 import { Button } from '@/components/ui/button'
 import { Label } from "@/components/ui/label"
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
+import {Edit} from "lucide-react"
+import User_Settings_Data_store from '@/app/store/usersettingsStore'
 
 const page = () => {
+    const [enableupdateUsername, setenableupdateUsername] = useState<boolean>(false)
+    const [updatedUsername, setupdatedUsername] = useState("")
     const [loading, setloading] = useState(false)
     const [ifNosetting, setifNosetting] = useState("")
     const [userSettings, setuserSettings] = useState({
@@ -23,31 +27,53 @@ const page = () => {
         device: "",
         browser: ""
     })
-    useEffect(() => {
-        const get_user_settings = async () => {
-            try {
-                setloading(true)
-                const response = await axios.get('/api/user/get-users-settings')
-                const { loginActivity, ...settingsWithoutLoginActivity } = response.data.settings
-                if (response.status === 200) {
-                    setuserSettings(settingsWithoutLoginActivity)
-                    setloginActivity(loginActivity)
-                }
 
-            } catch (error) {
-                if (axios.isAxiosError(error)) {
-                    setifNosetting(error.response?.data.error.messgae || "Internal server error..Can't get settings")
-                } else {
-                    setifNosetting("Internal server error..Can't get settings")
-                }
-            } finally {
-                setloading(false)
+    const set_user_settings_to_store = User_Settings_Data_store((state)=>state.setUserSettings)
+    const get_user_settings = async () => {
+        try {
+            setloading(true)
+            const response = await axios.get('/api/user/get-users-settings')
+            const { loginActivity, ...settingsWithoutLoginActivity } = response.data.settings
+            if (response.status === 200) {
+                setuserSettings(settingsWithoutLoginActivity)
+                setloginActivity(loginActivity)
+                set_user_settings_to_store(
+                    userSettings.username,
+                    userSettings.theme,
+                    userSettings.language,
+                    userSettings.autoplayTrailers,
+                    userSettings.ProfileStatus
+                )
             }
 
+        } catch (error) {
+            if (axios.isAxiosError(error)) {
+                setifNosetting(error.response?.data.error.messgae || "Internal server error..Can't get settings")
+            } else {
+                setifNosetting("Internal server error..Can't get settings")
+            }
+        } finally {
+            setloading(false)
         }
+    }
+    useEffect(() => {
         get_user_settings()
-
     }, [])
+    const update_username=async(newUsername:string)=>{
+        try {
+             await axios.patch('/api/user/update-user-name',{username:newUsername})
+             await get_user_settings()
+            
+        } catch (error) {
+            if(axios.isAxiosError(error)){
+                console.log(error.response?.data.error.message || "Internal server error..during update username")
+            }else{
+                console.log("Internal server error..during update username")
+            }
+        }finally{
+            setenableupdateUsername(false)
+        }
+    }
     return (
         <div className="max-w-xl mx-auto mt-10 p-8 rounded-3xl shadow-2xl border border-gray-200 bg-gradient-to-br from-white via-gray-50 to-white space-y-8 transition-all duration-300 hover:shadow-[0_10px_40px_rgba(0,0,0,0.15)]">
             <h1 className="text-3xl font-extrabold text-gray-800 tracking-tight">✨ User Settings</h1>
@@ -61,14 +87,19 @@ const page = () => {
             ) : (
                 <>
                     <div className="space-y-6">
+                        <div className='flex flex-row'>
                         <Input
                             type="text"
-                            value={userSettings.username}
-                            onChange={(e) => e.target.value}
+                            defaultValue={userSettings.username}
+                            onChange={(e) => setupdatedUsername(e.target.value)}
                             placeholder="Username"
                             className="border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 shadow-sm"
+                            disabled={!enableupdateUsername}
                         />
+                        <Edit className='mt-1 hover:cursor-pointer' onClick={()=>setenableupdateUsername(true)}/>
+                        </div>
 
+                         {enableupdateUsername && <Button onClick={()=>update_username(updatedUsername)}>Save change</Button>}
                         {/* Theme */}
                         <h2 className="text-lg font-semibold text-gray-700">🎨 Theme</h2>
                         <RadioGroup className="space-y-2" value={userSettings.theme}
@@ -78,6 +109,7 @@ const page = () => {
                                     theme: value
                                 }))
                                 await axios.patch('/api/user/update-user-settings', { theme: value })
+                                await get_user_settings()
                             }}
                         >
                             <div className="flex items-center space-x-3">
@@ -103,6 +135,7 @@ const page = () => {
                                     ProfileStatus: value
                                 }))
                                 await axios.patch('/api/user/update-user-settings',{ProfileStatus:value})
+                                await get_user_settings()
 
                             }}
                         >
@@ -127,6 +160,7 @@ const page = () => {
                                         autoplayTrailers: !userSettings.autoplayTrailers
                                     }))
                                     await axios.patch('/api/user/update-user-settings',{autoplayTrailers:!userSettings.autoplayTrailers})
+                                    await get_user_settings()
                                 }}
                             />
                         </div>
@@ -138,10 +172,9 @@ const page = () => {
                         <p className="text-sm text-gray-600"><strong>Device:</strong> {loginActivity.device}</p>
                         <p className="text-sm text-gray-600"><strong>Browser:</strong> {loginActivity.browser}</p>
                     </div>
-
-                    <Button className="mt-6 w-full bg-gradient-to-r from-blue-500 to-indigo-600 text-white font-semibold py-2 rounded-xl hover:from-indigo-500 hover:to-blue-600 transition-all duration-200 shadow-lg">
-                        💾 Save Changes
-                    </Button>
+                    <div>
+                        <Button variant='destructive'>Delete Acoount</Button>
+                    </div>
                 </>
             )}
         </div>
