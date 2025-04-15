@@ -3,7 +3,6 @@ import { useSession, signIn, signOut } from "next-auth/react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import React, { useEffect, useState } from "react";
-import Link from "next/link";
 import { gql } from "graphql-tag";
 import { useQuery } from "@apollo/client";
 import axios from "axios";
@@ -13,6 +12,7 @@ import Toastalert from "./Toastalert";
 import {UserCircle} from "lucide-react"
 import AccountSidebar from "./Accountsidebar";
 import { useRef } from "react";
+import Admin_setting_store from "@/app/store/admin_settings_Store";
 const GET_MOVIES = gql`
 query GetMovies{
   movies{
@@ -31,6 +31,8 @@ const Navbar = () => {
     const { data } = useQuery(GET_MOVIES);
     const [accountSidebar, setaccountSidebar] = useState<boolean>(false)
     const sidebarRef = useRef(null);
+    const siteLogoUrl = Admin_setting_store(state=>state.siteLogoUrl)
+    
     useEffect(() => {
         if (data && data?.movies) {
             setMoviesName(data.movies.map((movie: { title: string }) => movie.title));
@@ -74,7 +76,9 @@ const Navbar = () => {
         <>
             <nav className="flex items-center justify-between px-6 py-4 bg-gray-300 text-black relative" style={{height:'60px'}}>
                 {!email && <Toastalert alert_message="Sign out Successfully" />}
-                <Link href="/" className="text-2xl font-bold">🎬 FilmFusion</Link>
+               
+                {siteLogoUrl && <img src={siteLogoUrl} alt="logo" className="h-10 w-auto object-contain" />}
+             
                 <div className="flex items-center flex-row rounded-lg px-3 py-1 relative w-full max-w-md">
                     <form className="flex flex-row gap-2 w-full" onSubmit={handleSubmit(handleInput)}>
                         <Input className="text-black w-full" placeholder="Search movies..." {...register("search")} value={inputSearch!} onChange={handleOnChange} />

@@ -6,6 +6,7 @@ import AuthProvider from "./context/sessionprovider";
 import ValueSelectionProvider from "./context/optionsvalueprovider";
 import { ApolloWrapper } from "./ApolloWrapper"
 import Hashclean from "./lib/Hashclean";
+import ClientLayout from "./Layoutclient"
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
@@ -26,17 +27,22 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+
   return (
     <html lang="en">
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased `}>
-      <ApolloWrapper>
-        <AuthProvider>
-          <ValueSelectionProvider>
-            <Hashclean/>
-            {children}
-          </ValueSelectionProvider>
-        </AuthProvider>
+
+        <ApolloWrapper>
+          <AuthProvider>
+            <ValueSelectionProvider>
+              <ClientLayout>
+                <Hashclean />
+                {children}
+              </ClientLayout>
+            </ValueSelectionProvider>
+          </AuthProvider>
         </ApolloWrapper>
+
       </body>
 
 

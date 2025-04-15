@@ -14,11 +14,11 @@ type Actions={
 }
 
 const User_Settings_Data_store = create<userSettingState&Actions>()(persist((set)=>({
-    username:"",
-    theme:"",
-    language:"",
+    username:'',
+    theme:'',
+    language:'',
     autoplayTrailers:true,
-    ProfileStatus:"",
+    ProfileStatus:'',
     setUserSettings:(username,theme,language,autoplayTrailers,ProfileStatus)=>set({username,theme,language,autoplayTrailers,ProfileStatus})
 }),{
     name:"user_settings_store",

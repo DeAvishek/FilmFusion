@@ -1,4 +1,4 @@
-"useState"
+"use client"
 import React from 'react'
 type booking_prop={
     
@@ -12,8 +12,8 @@ type booking_prop={
 const Bookingrows = ({theaterName,seats,totalAmount,paymentStatus,bookedAt}:booking_prop) => {
   return (
     <tr className="border border-gray-300 hover:bg-gray-100 transition-all">
-      <td className="p-4 border border-gray-300 text-center text-bold text-white">{theaterName}</td>
-      <td className="p-4 border border-gray-300 text-center text-white">{seats.join(", ")}</td>
+      <td className="p-4 border border-gray-300 text-center text-bold ">{theaterName}</td>
+      <td className="p-4 border border-gray-300 text-center ">{seats.join(", ")}</td>
       <td className="p-4 border border-gray-300 text-center font-semibold text-green-600">INR {totalAmount}</td>
       <td
         className={`p-4 border border-gray-300 text-center font-semibold ${

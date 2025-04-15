@@ -69,7 +69,7 @@ const Moviecard = ({ movieId, movieTitle, moviePosterUrl, rating }: dMovieProps)
                         </div>
                     </CardHeader>
                     <CardContent className="px-3 py-2">
-                        <CardTitle className="text-lg font-bold line-clamp-1 text-white dark:text-white">
+                        <CardTitle className="text-lg font-bold line-clamp-1 text-yellow-500">
                             {movieTitle}
                         </CardTitle>
                     </CardContent>

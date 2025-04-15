@@ -3,7 +3,6 @@
   import { Layout, Menu, Card, Row, Col } from "antd";
   import {
     DashboardOutlined,
-    VideoCameraOutlined,
     UserOutlined,
     DollarOutlined,
     SettingOutlined,
@@ -48,8 +47,8 @@
             🎬 FilmFusion Admin
           </div>
           <Menu theme="dark" mode="inline" defaultSelectedKeys={["1"]}>
-            <Menu.Item key="1" icon={<DashboardOutlined />}>Dashboard</Menu.Item>
-            <Menu.Item key="2" icon={<VideoCameraOutlined />}>Movies</Menu.Item>
+            <Menu.Item key="1" icon={<DashboardOutlined />} onClick={()=>router.push("#")}>Dashboard</Menu.Item>
+            {/* <Menu.Item key="2" icon={<VideoCameraOutlined />}>Movies</Menu.Item> */}
             <Menu.Item key="3" onClick={()=>router.push('/admin/all-users')} icon={<UserOutlined />}>Users</Menu.Item>
             <Menu.Item key="4" onClick={()=>router.push('/admin/allbookings')} icon={<DollarOutlined /> }>Bookings</Menu.Item>
             <Menu.Item key="5" onClick={()=>router.push('/admin/settings')} icon={<SettingOutlined />}>Settings</Menu.Item>

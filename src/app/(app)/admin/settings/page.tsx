@@ -11,7 +11,9 @@ import { updateUserRaringStatus } from '@/app/functions/recomendation'
 import { Input } from '@/components/ui/input'
 import { useRouter } from 'next/navigation'
 import { Button } from '@/components/ui/button'
-import {updateCreateAccountStatus} from "@/app/functions/recomendation"
+import { updateCreateAccountStatus } from "@/app/functions/recomendation"
+import Admin_setting_store from '@/app/store/admin_settings_Store'
+import { FolderEdit } from "lucide-react"
 const page = () => {
     const [settings, setsettings] = useState({
         movieRecommendation: false, //+
@@ -21,9 +23,11 @@ const page = () => {
         homepageBannerMessage: "",
         enableUserRatings: false, //+
         allowSignups: true,  // +
-        siteLogoUrl: ""
+        siteLogoUrl: ""  //+
     })
     const router = useRouter()
+    const set_admin_setting = Admin_setting_store(state => state.setAdminSetting)
+    const [afterUpdate, setafterUpdate] = useState<boolean>(false)
 
     useEffect(() => {
         const get_settings = async () => {
@@ -31,7 +35,10 @@ const page = () => {
                 const response = await axios.get('/api/admin/get-settings')
                 if (response.status === 200) {
                     setsettings(response.data.settings)
-                    console.log(setsettings)
+                    set_admin_setting(response.data.settings.movieRecommendation,
+                        response.data.settings.enableUserRatings,
+                        response.data.settings.homepageBannerMessage,
+                        response.data.settings.siteLogoUrl)
                 }
             } catch (error) {
                 if (axios.isAxiosError(error)) {
@@ -42,34 +49,46 @@ const page = () => {
             }
         }
         get_settings()
-    }, [])
+    }, [afterUpdate])
     return (
         <div className="settings-container p-6 bg-gray-100 rounded-2xl shadow-lg space-y-6 max-w-4xl mx-auto mt-10">
             {/* General setting */}
-            <div className="settings-section text-xl font-bold bg-white p-5 rounded-xl shadow transition hover:bg-gray-50 border border-gray-200">
+            <div className="settings-section text-xl font-bold bg-white text-black p-5 rounded-xl shadow transition hover:bg-gray-50 border border-gray-200">
                 General Settings
                 <div className="flex items-center justify-between mt-5">
                     <FormLabel htmlFor="auto-approved" className="text-base font-medium">
                         {settings.allowSignups ? "Disable" : "Enable"} Create New Accounts
                     </FormLabel>
-                    <Switch id="auto-approved" 
-                    checked = {settings.allowSignups}
-                    className={settings.allowSignups
-                    ? "ml-10 data-[state=checked]:bg-blue-600"
-                    : "ml-10 data-[state=unchecked]:bg-red-600"} 
-                    onCheckedChange={async()=>{
-                        setsettings((prev)=>({
-                            ...prev,
-                            allowSignups:!settings.allowSignups
-                        }))
-                        await updateCreateAccountStatus(settings.allowSignups)
-                    }}
+                    <Switch id="auto-approved"
+                        checked={settings.allowSignups}
+                        className={settings.allowSignups
+                            ? "ml-10 data-[state=checked]:bg-blue-600"
+                            : "ml-10 data-[state=unchecked]:bg-red-600"}
+                        onCheckedChange={async () => {
+                            setsettings((prev) => ({
+                                ...prev,
+                                allowSignups: !settings.allowSignups
+                            }))
+                            await updateCreateAccountStatus(settings.allowSignups)
+                            setafterUpdate(prev=>!prev)
+                        }}
                     />
+                </div>
+                <div className="text-xl font-bold  p-5 rounded-xl  ">
+                    <FormLabel htmlFor="auto-approved" className="text-base font-medium">Site logo URL</FormLabel>
+                    <div className='flex gap-2'>
+                        <Input
+                            defaultValue={settings.siteLogoUrl || "not available"}
+                            type='text'
+                            className='border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 shadow-sm'
+                        />
+                        <FolderEdit className='mt-1 hover:cursor-pointer'/>
+                    </div>
                 </div>
             </div>
 
             {/* Movie Management */}
-            <div className="settings-section text-xl font-bold bg-white p-5 rounded-xl shadow transition hover:bg-gray-50 border border-gray-200">
+            <div className="settings-section text-xl font-bold bg-white text-black p-5 rounded-xl shadow transition hover:bg-gray-50 border border-gray-200">
                 Movie Management
                 <div className="flex items-center justify-between mt-5">
                     <FormLabel htmlFor="movie-recommendation" className="text-base font-medium">
@@ -78,8 +97,8 @@ const page = () => {
                     <Switch
                         id="movie-recommendation"
                         className={settings.movieRecommendation
-                        ? "ml-10 data-[state=checked]:bg-blue-600"
-                        : "ml-10 data-[state=unchecked]:bg-red-600"}
+                            ? "ml-10 data-[state=checked]:bg-blue-600"
+                            : "ml-10 data-[state=unchecked]:bg-red-600"}
                         checked={settings.movieRecommendation}
                         onCheckedChange={async () => {
                             setsettings((prev) => ({
@@ -87,6 +106,7 @@ const page = () => {
                                 movieRecommendation: !settings.movieRecommendation,
                             }));
                             await recomendation(settings.movieRecommendation);
+                            setafterUpdate(prev=>!prev)
                         }}
                     />
                 </div>
@@ -103,8 +123,8 @@ const page = () => {
                     <Switch
                         id="user-rating"
                         className={settings.enableUserRatings
-                        ? "ml-10 data-[state=checked]:bg-blue-600"
-                        : "ml-10 data-[state=unchecked]:bg-red-600"}
+                            ? "ml-10 data-[state=checked]:bg-blue-600"
+                            : "ml-10 data-[state=unchecked]:bg-red-600"}
                         checked={settings.enableUserRatings}
                         onCheckedChange={async () => {
                             setsettings((prev) => ({
@@ -112,13 +132,14 @@ const page = () => {
                                 enableUserRatings: !settings.enableUserRatings,
                             }));
                             await updateUserRaringStatus(settings.enableUserRatings);
+                            setafterUpdate(prev=>!prev)
                         }}
                     />
                 </div>
             </div>
 
             {/* Admin Setting */}
-            <div className="settings-section text-xl font-bold bg-white p-5 rounded-xl shadow transition hover:bg-gray-50 border border-gray-200">
+            <div className="settings-section text-xl text-black font-bold bg-white p-5 rounded-xl shadow transition hover:bg-gray-50 border border-gray-200">
                 Admin Settings
 
                 <div className="flex items-center justify-between mt-5">
@@ -128,8 +149,8 @@ const page = () => {
                     <Switch
                         id="admin-creation"
                         className={settings.allowNewAdminCreation
-                        ? "ml-10 data-[state=checked]:bg-blue-600"
-                        : "ml-10 data-[state=unchecked]:bg-red-600"}
+                            ? "ml-10 data-[state=checked]:bg-blue-600"
+                            : "ml-10 data-[state=unchecked]:bg-red-600"}
                         checked={settings.allowNewAdminCreation}
                         onCheckedChange={async () => {
                             setsettings((prev) => ({
@@ -137,6 +158,7 @@ const page = () => {
                                 allowNewAdminCreation: !settings.allowNewAdminCreation,
                             }));
                             await adminCreation(settings.allowNewAdminCreation);
+                            setafterUpdate(prev=>!prev)
                         }}
                     />
                 </div>
@@ -167,7 +189,10 @@ const page = () => {
                         }}
                     />
                     <Button
-                        onClick={async () => await updateMaxAdmins(settings.maxAllowedAdmins)}
+                        onClick={async () => {
+                            await updateMaxAdmins(settings.maxAllowedAdmins)
+                            setafterUpdate(prev=>!prev)}
+                        }
                         variant="outline"
                         className="hover:bg-sky-500 transition"
                     >

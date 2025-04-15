@@ -28,13 +28,13 @@ const GET_THEATER = gql`
 const Theatername = ({ _id, name, location }: TheaterID) => {
 
   const [check,setcheck] = useState<boolean>(false)
-  const { data, loading, error } = useQuery(GET_THEATER, {
+  const { data } = useQuery(GET_THEATER, {
     variables: {
       search: {
         _id,
       },
     },
-    skip: !_id, // Prevent query if _id is missing
+    skip: !_id, 
   });
 
   const handleClick = () => {

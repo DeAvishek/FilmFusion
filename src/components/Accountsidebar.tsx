@@ -14,19 +14,28 @@ const AccountSidebar = () => {
                     <p className="text-lg font-semibold">
                         Welcome, <span className="text-green-500">{session?.user?.username}</span>
                     </p>
-                    <p className="text-sm text-gray-400">Filmfusion</p>
+                    <p className="text-sm text-gray-400">to,Filmfusion</p>
                 </div>
             </div>
 
             {/* Navigation (non-link options) */}
-            <nav className="space-y-4 text-sm ">
-                <SidebarItem icon={<User size={16} />} label="Profile" />
-                <SidebarItem icon={<Bookmark size={16} />} label="Watchlist" />
-                <Link href='/settings' className="mt-4"><SidebarItem icon={<Settings size={16} />} label="Settings" /></Link>
-                {session?.user.role==="admin" && <Link  href="/admin" className="space-y-4">
-                    <SidebarItem icon={<UserCog size={16} />} label="Admin Setting" />
-                </Link>}
+            <nav className="space-y-4 text-sm">
+                <div><SidebarItem icon={<User size={16} />} label="Profile" /></div>
+                <div><SidebarItem icon={<Bookmark size={16} />} label="Watchlist" /></div>
+                <div>
+                    <Link href="/settings">
+                        <SidebarItem icon={<Settings size={16} />} label="Settings" />
+                    </Link>
+                </div>
+                {session?.user.role === "admin" && (
+                    <div>
+                        <Link href="/admin">
+                            <SidebarItem icon={<UserCog size={16} />} label="Admin Setting" />
+                        </Link>
+                    </div>
+                )}
             </nav>
+
 
             {/* Sign Out Button */}
             <div className="pt-8 border-t border-gray-700">

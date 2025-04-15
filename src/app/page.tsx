@@ -111,7 +111,7 @@ export default function Home() {
   return (
     <>
       {fullurl === baseurl && <Navbar />}
-      <div className="bg-gradient-to-r from-yellow-700 to-blue-700 min-h-screen flex flex-col items-center min-h-screen">
+      <div className=" min-h-screen flex flex-col items-center min-h-screen">
         <span className="text-xl font-bold text-gray-800 w-full text-center mt-4"></span>
 
         {(session?.user) &&(

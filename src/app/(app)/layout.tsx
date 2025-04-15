@@ -24,11 +24,11 @@ export default function RootLayout({
     children: React.ReactNode;
 }>) {
     return (
-        <div className={`${geistSans.variable} ${geistMono.variable} antialiased bg-gradient-to-r from-yellow-700 to-blue-700 min-h-screen`}>
+        <div className={`${geistSans.variable} ${geistMono.variable} antialiased  min-h-screen`}>
             <Navbar />
             {children}
             <MenubarDemo/>
-            {/* <Footer /> */}
         </div>
     );
 }
+// bg-gradient-to-r from-yellow-700 to-blue-700

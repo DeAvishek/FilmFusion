@@ -28,7 +28,7 @@ const page = () => {
         browser: ""
     })
 
-    const set_user_settings_to_store = User_Settings_Data_store((state)=>state.setUserSettings)
+    const set_user_settings_to_store = User_Settings_Data_store(state=>state.setUserSettings)
     const get_user_settings = async () => {
         try {
             setloading(true)
@@ -38,11 +38,11 @@ const page = () => {
                 setuserSettings(settingsWithoutLoginActivity)
                 setloginActivity(loginActivity)
                 set_user_settings_to_store(
-                    userSettings.username,
-                    userSettings.theme,
-                    userSettings.language,
-                    userSettings.autoplayTrailers,
-                    userSettings.ProfileStatus
+                    settingsWithoutLoginActivity.username,
+                    settingsWithoutLoginActivity.theme,
+                    settingsWithoutLoginActivity.language,
+                    settingsWithoutLoginActivity.autoplayTrailers,
+                    settingsWithoutLoginActivity.ProfileStatus
                 )
             }
 
