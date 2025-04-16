@@ -85,7 +85,7 @@ const Moviecard = ({ movieId, movieTitle, moviePosterUrl, rating }: dMovieProps)
                         className="bg-white/90 hover:bg-white"
                         onClick={() => router.push(`/${movieTitle}/add-showtime-client`)}
                     >
-                        <Plus className="h-4 w-4" />
+                        <Plus className="h-4 w-4 text-black"/>
                     </Button>
                     <Button
                         variant="outline"
@@ -93,7 +93,7 @@ const Moviecard = ({ movieId, movieTitle, moviePosterUrl, rating }: dMovieProps)
                         className="bg-white/90 hover:bg-red-500 hover:text-white"
                         onClick={handleDeleteMovie}
                     >
-                        <Trash2 className="h-4 w-4" />
+                        <Trash2 className="h-4 w-4 text-black" />
                     </Button>
                 </div>
             )}

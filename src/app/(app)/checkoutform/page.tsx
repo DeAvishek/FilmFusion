@@ -15,7 +15,7 @@ const Checkoutform = ({ amount }: { amount: number }) => {
     const stripe = useStripe()
     const elements = useElements()
     const {price} = PriceStore()
-    const theaterData=TheaterDataStore() as theater_dataPrpop
+    const theaterData=TheaterDataStore() as theater_dataPrpop //todo to update
 
     const [errors, seterrors] = useState('')
     const [loading, setloading] = useState(false)
@@ -53,6 +53,7 @@ const Checkoutform = ({ amount }: { amount: number }) => {
     }
     return (
         <div>
+            <h2 className='text- animate-pulse '>This may take few seconds Don't refresh....</h2>
             <form onSubmit={handleSubmit} className="bg-white p-6 rounded shadow-md w-96">
                 <PaymentElement />
                 {errors && <p className="text-red-500 mt-2">{errors}</p>}

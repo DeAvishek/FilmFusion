@@ -13,6 +13,8 @@ import { useSession } from "next-auth/react"
 import Recomended_rating from "@/components/Recomended_rating";
 import Recomanded_predictions from "@/components/Recomanded_predictions";
 import {LucideLoaderCircle} from "lucide-react" 
+import Admin_setting_store from "./store/admin_settings_Store";
+import { MenubarDemo } from "@/components/Menubar";
 export default function Home() {
 
   type MovieProps = {
@@ -39,6 +41,7 @@ export default function Home() {
   const { cityValue } = useContext(ValueContext)
   const { data: session } = useSession()
   const [current_user_interaction, setcurrent_user_interaction] = useState<InterAction_prop[]>([])
+  const recomendation = Admin_setting_store(state=>state.movieRecommendation)
 
   //query for getting the current user interactions
   const GET_CURRENT_USER_INTERACTIONS = gql`
@@ -114,7 +117,7 @@ export default function Home() {
       <div className=" min-h-screen flex flex-col items-center min-h-screen">
         <span className="text-xl font-bold text-gray-800 w-full text-center mt-4"></span>
 
-        {(session?.user) &&(
+        {(session?.user  && recomendation) &&(
           <>
             <h1 className="text-lg font-semibold text-black-700 animate-pulse text-bold ml-0">Recomendations for You</h1>
             <div className=" mb-5 flex flex-wrap gap-8 sm:items-start justify-center rounded">
@@ -144,6 +147,7 @@ export default function Home() {
           )}
         </div>
       </div>
+      {fullurl=== baseurl && <MenubarDemo/>}
       {fullurl === baseurl && <Footer />}
     </>
 

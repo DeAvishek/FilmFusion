@@ -1,5 +1,4 @@
 import axios from 'axios'
-
 // Make these functions accept store data as arguments to avoid invalid hook calls
 type theater_dataPrpop={
   seats:[string],
@@ -46,6 +45,7 @@ export const handle_Seat_status_post = async (
 
     if (response.status === 200) {
       await handle_making_booking(theaterData, price, paymentId)
+
     }
   } catch (error) {
     if (axios.isAxiosError(error)) {

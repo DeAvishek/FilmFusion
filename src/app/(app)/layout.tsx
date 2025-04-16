@@ -28,6 +28,8 @@ export default function RootLayout({
             <Navbar />
             {children}
             <MenubarDemo/>
+            <Footer/>
+
         </div>
     );
 }

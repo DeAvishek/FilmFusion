@@ -4,38 +4,19 @@ import { Button } from "@/components/ui/button";
 import { gql, useQuery } from "@apollo/client";
 import { useState } from "react";
 import Theaterhall from "./Theaterhall";
-
+import { getTheater } from "@/lib/hooks/getTheaterDeatils";
 type TheaterID = {
   _id: string;
   name: string;
   location: string;
 };
 
-// GraphQL Query
-const GET_THEATER = gql`
-  query Showtime($search: TheaterSearch) {
-    theater(search: $search) {
-      name
-      totalseats {
-        _id
-        seatnumber
-        status
-      }
-    }
-  }
-`;
+
 
 const Theatername = ({ _id, name, location }: TheaterID) => {
 
   const [check,setcheck] = useState<boolean>(false)
-  const { data } = useQuery(GET_THEATER, {
-    variables: {
-      search: {
-        _id,
-      },
-    },
-    skip: !_id, 
-  });
+  const {data} = getTheater(_id)
 
   const handleClick = () => {
     setcheck((prev=>!prev))

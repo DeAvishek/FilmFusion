@@ -7,6 +7,9 @@ import ValueSelectionProvider from "./context/optionsvalueprovider";
 import { ApolloWrapper } from "./ApolloWrapper"
 import Hashclean from "./lib/Hashclean";
 import ClientLayout from "./Layoutclient"
+import Navbar from "@/components/Navbar";
+import Footer from "@/components/Footer";
+import { MenubarDemo } from "@/components/Menubar";
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
@@ -31,13 +34,15 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased `}>
-
         <ApolloWrapper>
           <AuthProvider>
             <ValueSelectionProvider>
               <ClientLayout>
                 <Hashclean />
+                {/* <Navbar/> */}
+                {/* <MenubarDemo/> */}
                 {children}
+                {/* <Footer/> */}
               </ClientLayout>
             </ValueSelectionProvider>
           </AuthProvider>

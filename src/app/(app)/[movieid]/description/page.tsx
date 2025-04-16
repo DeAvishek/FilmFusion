@@ -8,6 +8,7 @@ import Ratingform from '@/components/Ratingform'
 import Home from '@/app/page'
 import { Star } from "lucide-react"
 import User_Settings_Data_store from '@/app/store/usersettingsStore'
+import Admin_setting_store from '@/app/store/admin_settings_Store'
 const Page = () => {
   const router = useRouter()
   const params = useParams()
@@ -29,6 +30,7 @@ const Page = () => {
   const [trailerUrl, settrailerUrl] = useState<string>("")
 
   const autoplayTrailers = User_Settings_Data_store(state => state.autoplayTrailers) //autoplaytrailer from store
+  const enableUserRating = Admin_setting_store(state=>state.enableUserRatings) //useRAting from admin store
   useEffect(() => {
     const getDesc = async () => {
       try {
@@ -137,9 +139,9 @@ const Page = () => {
                 <span className="ml-2 text-lg font-semibold">{getAverageRating()}/5</span>
 
                 {/* Rating Form Toggle Button */}
-                <Button onClick={handleRatingForm} className="ml-5 bg-yellow-500 hover:bg-yellow-600">
+                {enableUserRating && <Button onClick={handleRatingForm} className="ml-5 bg-yellow-500 hover:bg-yellow-600">
                   {ratingFormEnable ? 'Close Form' : 'Rate Now'}
-                </Button>
+                </Button> }
               </div>
 
               <p className="text-gray-300">🗣 Language: {language}</p>

@@ -75,9 +75,11 @@ const Navbar = () => {
     return (
         <>
             <nav className="flex items-center justify-between px-6 py-4 bg-gray-300 text-black relative" style={{height:'60px'}}>
-                {!email && <Toastalert alert_message="Sign out Successfully" />}
-               
+                {!session?.user && <Toastalert alert_message="Sign out Successfully" />}
+                
+                <div className="">
                 {siteLogoUrl && <img src={siteLogoUrl} alt="logo" className="h-10 w-auto object-contain" />}
+                </div>
              
                 <div className="flex items-center flex-row rounded-lg px-3 py-1 relative w-full max-w-md">
                     <form className="flex flex-row gap-2 w-full" onSubmit={handleSubmit(handleInput)}>

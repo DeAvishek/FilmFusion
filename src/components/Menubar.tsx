@@ -18,13 +18,13 @@ import {
           bottom: "0",
           left: "20%",
           transform: "translateX(-50%)",
-          width: "480px",
+          width: "550px",
           zIndex: 9999,
           marginBottom:"20px"
         }}
-        className="bg-gradient-to-r from-purple-600 via-pink-500 to-red-500 p-2 rounded-full shadow-2xl border border-white/30 backdrop-blur-md"
+        className="bg-gradient-to-r from-purple-600 via-pink-500 to-red-500 p-2 rounded-full shadow-2xl border border-white/30 backdrop-blur-md ml-5"
       >
-        {["Drama", "Comedy", "Thriller", "Action"].map((genre, index) => (
+        {["Drama", "Comedy", "Thriller", "Action","Love"].map((genre, index) => (
           <MenubarMenu  key={index}>
             <MenubarTrigger onClick={()=>handle_genre_based_movie(genre)} className="text-white px-6 py-2 text-lg font-semibold cursor-pointer " >
               {genre}
