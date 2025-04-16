@@ -4,7 +4,7 @@ import Link from 'next/link'
 import {FaFacebook,FaGithub,FaLinkedin,FaTwitter} from 'react-icons/fa'
 const Footer = () => {
   return (
-    <footer className="bg-gray-300 text-black py-4 px-6 mt-5">
+    <footer className="bg-gray-300 text-black py-4 px-6" style={{marginTop:"400px"}}>
       <div className="flex flex-wrap  justify-between">
         <div>
           <h4 className="font-semibold mb-2">Help</h4>

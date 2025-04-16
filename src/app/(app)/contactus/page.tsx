@@ -3,7 +3,7 @@ import React from "react";
 
 const ContactUs = () => {
   return (
-    <div className="min-h-screen bg-white text-black px-6 py-12 max-w-3xl mx-auto">
+    <div className="min-h-screen px-6 py-12 max-w-3xl mx-auto mt-5">
       <h1 className="text-3xl font-bold mb-6">Contact Us</h1>
 
       <p className="mb-6 text-lg">
@@ -46,8 +46,8 @@ const ContactUs = () => {
 
       <div className="mt-10 text-lg">
         <p>Email: <a href="https://mail.google.com/mail/u/0/#sent?compose=jrjtWvNPMkLkqvqtTVWBCBnMdbqtXbstJjDPVkHhTnDpdBzrNbcBZFVVqwDLkTvRvKWhrwXv" className="text-blue-600 underline">patraavishek900@gmail.com</a></p>
-        <p>Phone: <span className="text-black">+91 98765 43210</span></p>
-        <p>Address: <span className="text-black">123 Cineplex Road, Mumbai, India</span></p>
+        <p>Phone: <span className="text-black">+91 81166 98594</span></p>
+        <p>Address: <span className="text-black">90 Mission Road, Rahara, India</span></p>
       </div>
     </div>
   );
