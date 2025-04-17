@@ -6,20 +6,21 @@ import { useRouter } from 'next/navigation'
 import TheaterDataStore from '@/app/store/theaterStore'
 import PriceStore from '@/app/store/ticPriceStore'
 type theater_dataPrpop={
-    seats:[string],
+    seats:string[],
     theaterId:string,
     name:string
   }
+  
 const Checkoutform = ({ amount }: { amount: number }) => {
     const router=useRouter()
     const stripe = useStripe()
     const elements = useElements()
     const {price} = PriceStore()
-    const theaterData=TheaterDataStore() as theater_dataPrpop //todo to update
+    const theaterData : theater_dataPrpop=TheaterDataStore()  //todo to update
 
     const [errors, seterrors] = useState('')
     const [loading, setloading] = useState(false)
-    
+
     const handleSubmit = async (e: React.FormEvent) => {
         setloading(true)
         e.preventDefault()
@@ -41,7 +42,7 @@ const Checkoutform = ({ amount }: { amount: number }) => {
             if(paymentintent && paymentintent.status==="succeeded"){
                 try {
                     //handle seat status update and make booking
-                    await handle_Seat_status_post(theaterData, price,result.paymentIntent.id,result.paymentIntent.status)
+                    await handle_Seat_status_post(theaterData , price,result.paymentIntent.id,result.paymentIntent.status)
                     router.push('/success-payment')
                 } catch (error) {
                     console.error("❌ Failed to update seat status:", error);

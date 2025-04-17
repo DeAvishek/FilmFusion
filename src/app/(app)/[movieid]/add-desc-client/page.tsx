@@ -8,8 +8,8 @@ import { Button } from "@/components/ui/button"
 import { useRouter } from 'next/navigation'
 type formvalue = {
     descTitle: string,
-    cast: string[],
-    genre: string[]
+    cast: Array<{ name: string; role?: string }>,
+    genre:Array<{name:string;role?: string}>
 }
 const page = () => {
     const router = useRouter();
@@ -19,8 +19,8 @@ const page = () => {
     const { register, handleSubmit, control } = useForm<formvalue>({
         defaultValues: {
             descTitle: "",
-            cast: [""],
-            genre: [""],
+            cast: [{ name: "" }],
+            genre: [{name:""}],
         }
     })
 
@@ -57,6 +57,7 @@ const page = () => {
     return (
         <div className="flex justify-center items-center min-h-screen bg-gradient-to-r from-blue-500 to-purple-600 p-6">
             <div className="w-full max-w-lg p-8 bg-white/30 backdrop-blur-lg rounded-2xl shadow-lg">
+                {responseMessage.includes("error")&& <h2>{responseMessage}</h2>}
                 <h1 className="text-2xl font-bold text-center text-gray-800">Add Description for {movieid}</h1>
 
                 <form onSubmit={handleSubmit(handleAddDesc)} className="space-y-4">
@@ -93,7 +94,7 @@ const page = () => {
                         ))}
                         <Button
                             type="button"
-                            onClick={() => castAppend("")}
+                            onClick={() => castAppend({name:""})}
                             className="mt-2 px-4 py-2 text-white bg-blue-600 rounded-md hover:bg-blue-700"
                         >
                             Add Cast Member
@@ -122,7 +123,7 @@ const page = () => {
                         ))}
                         <Button
                             type="button"
-                            onClick={() => appendGenre("")}
+                            onClick={() => appendGenre({name:""})}
                             className="mt-2 px-4 py-2 text-white bg-blue-600 rounded-md hover:bg-blue-700"
                         >
                             Add Genre

@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 type theater_dataPrpop={
-  seats:[string],
+  seats:string[],
   theaterId:string,
   name:string
 }
