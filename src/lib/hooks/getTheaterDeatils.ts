@@ -12,7 +12,7 @@ const GET_THEATER = gql`
   }
 `;
 
-export const getTheater=(_id:string)=>{
+export const GetTheater=(_id:string)=>{
      const { data } = useQuery(GET_THEATER, {
         variables: {
           search: {

@@ -41,7 +41,7 @@ const Recomanded_predictions = () => {
   }
   useEffect(() => {
     get_movies_based_on_predictions()
-  }, [null])
+  }, [])
 
 
   return (

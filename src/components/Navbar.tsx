@@ -13,6 +13,7 @@ import {UserCircle} from "lucide-react"
 import AccountSidebar from "./Accountsidebar";
 import { useRef } from "react";
 import Admin_setting_store from "@/app/store/admin_settings_Store";
+import Image from "next/image";
 const GET_MOVIES = gql`
 query GetMovies{
   movies{
@@ -77,7 +78,7 @@ const Navbar = () => {
                 {!session?.user && <Toastalert alert_message="Sign out Successfully" />}
                 
                 <div className="">
-                {siteLogoUrl && <img src={siteLogoUrl} alt="logo" className="h-10 w-auto object-contain" />}
+                {siteLogoUrl && <Image src={siteLogoUrl} alt="logo" className="h-10 w-auto object-contain" />}
                 </div>
              
                 <div className="flex items-center flex-row rounded-lg px-3 py-1 relative w-full max-w-md">

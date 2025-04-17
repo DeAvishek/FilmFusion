@@ -9,6 +9,7 @@ import Home from '@/app/page'
 import { Star } from "lucide-react"
 import User_Settings_Data_store from '@/app/store/usersettingsStore'
 import Admin_setting_store from '@/app/store/admin_settings_Store'
+import Image from 'next/image'
 const Page = () => {
   const router = useRouter()
   const params = useParams()
@@ -105,7 +106,7 @@ const Page = () => {
             <div className="relative">
               <Card className="shadow-xl rounded-lg overflow-hidden border-2 border-gray-700">
                 {moviePoster ? (
-                  <img
+                  <Image
                     className="w-[700px] h-[500px] object-cover"
                     src={moviePoster}
                     alt={movieTitle}
@@ -120,7 +121,7 @@ const Page = () => {
               {/* Small Poster Overlay */}
               {moviePoster && (
                 <div className="absolute bottom-5 right-5 w-[200px] h-[150px]">
-                  <img
+                  <Image
                     className="w-full h-full object-cover rounded-lg border-4 border-white shadow-lg"
                     src={moviePoster}
                     alt="Highlighted Poster"

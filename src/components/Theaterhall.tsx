@@ -36,7 +36,7 @@ const Theaterhall = ({ seats, theaterId ,name}: TheaterProps) => {
         }
     }
     //totla price of tickets
-    let total_seats_and_price=price*PendingSeats.length
+    const total_seats_and_price=price*PendingSeats.length
     //state management of theater and pricetickts
     const handle_SetTheater_data=()=>{
         set_Theater_Data(PendingSeats,theaterId,name)

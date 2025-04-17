@@ -12,6 +12,7 @@ import { Button } from './ui/button'
 import axios from 'axios'
 import { useRouter } from 'next/navigation'
 import { Plus, Trash2 } from 'lucide-react'
+import Image from 'next/image'
 // Movie Props
 type dMovieProps = {
     movieId: string
@@ -55,7 +56,7 @@ const Moviecard = ({ movieId, movieTitle, moviePosterUrl, rating }: dMovieProps)
                     <CardHeader className="p-0">
                         <div className="relative">
                             {/* Movie Poster with Gradient Overlay */}
-                            <img
+                            <Image
                                 width={300}
                                 height={450}
                                 className="w-full h-64 object-cover rounded-t-lg group-hover:scale-105 transition-transform duration-500"
