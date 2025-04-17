@@ -4,7 +4,7 @@ import { useEffect,useState } from "react"
 import  {loadStripe} from "@stripe/stripe-js"
 import  {Elements} from "@stripe/react-stripe-js"
 import { StripeElementsOptions } from "@stripe/stripe-js";
-import Checkoutform from "@/app/(app)/checkoutform/page"
+import Checkoutform from "@/components/Checkoutform"
 import PriceStore from "@/app/store/ticPriceStore"
 import {LucideLoaderCircle} from "lucide-react" 
 const stripePromise=loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISH_KEY!)
