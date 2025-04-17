@@ -1,6 +1,7 @@
 import dbConnect from "@/app/lib/db";
 import MovieModel from "@/app/Model/movie";
 import { ApolloServer } from "@apollo/server";
+import { NextRequest } from "next/server";
 import { gql } from "graphql-tag";
 import { NextApiRequest } from "next";
 import { startServerAndCreateNextHandler } from "@as-integrations/next";
@@ -147,9 +148,13 @@ const server = new ApolloServer({
 });
 
 // API Handler
-const handler = startServerAndCreateNextHandler<NextApiRequest>(server, {
-  context: async (req) => ({ req }),
-});
+const handler = startServerAndCreateNextHandler<NextApiRequest>(server);
 
 // Export named handlers for GET and POST
-export const POST = handler;
+export async function GET(request: NextRequest) {
+  return handler(request);
+}
+
+export async function POST(request: NextRequest) {
+  return handler(request);
+}
