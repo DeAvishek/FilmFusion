@@ -88,7 +88,7 @@ const resolvers = {
         throw new Error("Failed to fetch users");
       }
     },
-    showtime: async (_: any, { search }: { search: { _id: string } }) => {
+    showtime: async (_: unknown, { search }: { search: { _id: string } }) => {
       try {
         await dbConnect();
         const showtime = await ShowtimeModel.findById(search._id).populate('theaters');
@@ -98,7 +98,7 @@ const resolvers = {
         throw new Error("Failed to fetch showtimes");
       }
     },
-    theater:async(_: any, { search }: { search: { _id: string } })=>{
+    theater:async(_: unknown, { search }: { search: { _id: string } })=>{
       try {
         await dbConnect()
         const theater = await TheaterModel.findById(search._id)
@@ -126,7 +126,7 @@ const resolvers = {
         throw new Error("Failed to fetch interactions");
       }
     },
-    interaction_Of_One_User:async(_: any, { search }: { search: { _id: string } })=>{
+    interaction_Of_One_User:async(_: unknown, { search }: { search: { _id: string } })=>{
       try {
         await dbConnect()
         const user=await UserModel.findById(search._id)

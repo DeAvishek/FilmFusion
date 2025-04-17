@@ -2,7 +2,7 @@
 import { NextResponse } from "next/server";
 import MovieModel from "@/app/Model/movie";
 import dbConnect from "@/app/lib/db";
-export async function GET(req: Request) {
+export async function GET() {
     try {
         await dbConnect();
         const Movies = await MovieModel.find()

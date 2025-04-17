@@ -10,6 +10,7 @@ import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import Toastalert from '@/components/Toastalert'
 import axios from 'axios'
+import Image from 'next/image'
 
 const SignIn = () => {
     const [isSubmitting, setSubmitting] = useState(false)
@@ -52,7 +53,10 @@ const SignIn = () => {
                 
             }
         } catch (err) {
-            setResponseMessage("Something went wrong. Try again.")
+            if(axios.isAxiosError(err)){
+                setResponseMessage( err.response?.data.error.message || "Something went wrong. Try again." )
+            }
+           
         } finally {
             setSubmitting(false)
         }
@@ -92,7 +96,7 @@ const SignIn = () => {
                         className="flex items-center justify-center w-full border border-white text-white rounded-full py-2 hover:bg-white hover:text-black transition"
                         onClick={()=>signIn('google')}
                         >
-                            <img src="https://www.freepnglogos.com/uploads/google-logo-png/google-logo-png-google-icon-logo-png-transparent-svg-vector-bie-supply-14.png" alt="Google" className="w-5 h-5 mr-2" />
+                            <Image src="https://www.freepnglogos.com/uploads/google-logo-png/google-logo-png-google-icon-logo-png-transparent-svg-vector-bie-supply-14.png" alt="Google" className="w-5 h-5 mr-2" />
                             Sign in with Google
                         </button>
 
@@ -100,7 +104,7 @@ const SignIn = () => {
                         className="flex items-center justify-center w-full border border-white text-white rounded-full py-2 hover:bg-white hover:text-black transition"
                         onClick={()=>signIn('github')}
                         >
-                            <img src="https://www.svgrepo.com/show/35001/github.svg" alt="Facebook" className="w-5 h-5 mr-2" />
+                            <Image src="https://www.svgrepo.com/show/35001/github.svg" alt="Facebook" className="w-5 h-5 mr-2" />
                             Sign in with Github
                         </button>
                     </div>
@@ -109,7 +113,7 @@ const SignIn = () => {
 
             {/* Right Side - Visual (2/3) */}
             <div className="w-2/3 relative">
-                <img
+                <Image
                     src="https://img.freepik.com/premium-photo/film-fusion-ultimate-movie-mixing-machine_1015980-28917.jpg?w=2000" // Replace with your own image if desired
                     alt="Visual"
                     className="object-cover w-full h-full"

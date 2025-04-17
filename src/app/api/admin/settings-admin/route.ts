@@ -15,7 +15,7 @@ export async function PATCH(req:Request) {
         status:200
       });
     } catch (error) {
-      return NextResponse.json({ message: "Failed to update settings" },{status:500});
+      return NextResponse.json({ message: error|| "Failed to update settings" },{status:500});
     }
   }
 

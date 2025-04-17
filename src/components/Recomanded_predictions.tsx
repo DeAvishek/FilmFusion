@@ -1,7 +1,7 @@
 "use client"
 import React from 'react'
 import { useState, useEffect } from 'react'
-import axios, { Axios } from 'axios'
+import axios from 'axios'
 import Moviecard from './Moviecard'
 import { IShowtime } from '@/app/Model/showtime'
 import { Progress } from "@/components/ui/progress"

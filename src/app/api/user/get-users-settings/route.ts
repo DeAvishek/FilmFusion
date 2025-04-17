@@ -3,7 +3,7 @@ import UserSettingsModel from "@/app/Model/Usersetting";
 import { NextResponse } from "next/server";
 import { AuthOptions } from "../../auth/[...nextauth]/provider";
 import {getServerSession} from "next-auth"
-export async function GET(req:Request) {
+export async function GET() {
     const session = await getServerSession(AuthOptions) 
     if(!session?.user){
         return NextResponse.json({message:"Bad request User not found",success:false},{status:400})
@@ -14,6 +14,6 @@ export async function GET(req:Request) {
         const userSettings = await UserSettingsModel.findOne({userID:session.user._id})
         return NextResponse.json({settings:userSettings,success:true},{status:200})
     } catch (error) {
-        return NextResponse.json({messgae:"Not getting users settings"},{status:500})
+        return NextResponse.json({messgae:error || "Not getting users settings"},{status:500})
     }
 }

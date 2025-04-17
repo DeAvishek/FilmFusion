@@ -41,10 +41,10 @@ const Moviecard = ({ movieId, movieTitle, moviePosterUrl, rating }: dMovieProps)
     const user = session?.user
 
     const getAverageRating = () => {
-        let length = rating.length
+        const length = rating.length
         if (length === 0) return 'No ratings yet'
         if (length === 1) return rating[0].toFixed(1)
-        let lastElement = rating.at(-1)
+        const lastElement = rating.at(-1)
         return (lastElement as number / length).toFixed(1)
     }
 

@@ -10,7 +10,7 @@ import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
 import {Edit} from "lucide-react"
 import User_Settings_Data_store from '@/app/store/usersettingsStore'
 
-const page = () => {
+const Page = () => {
     const [enableupdateUsername, setenableupdateUsername] = useState<boolean>(false)
     const [updatedUsername, setupdatedUsername] = useState("")
     const [loading, setloading] = useState(false)
@@ -182,4 +182,4 @@ const page = () => {
     )
 }
 
-export default page
+export default Page

@@ -7,7 +7,7 @@ import { useState } from "react";
 import React from 'react'
 import { Button } from "@/components/ui/button";
 
-const page = () => {
+const Page = () => {
     const [loading, setloading] = useState<boolean>(false);
     const [responseMessage, setResponseMessage] = useState<string>("");
     type theater = {
@@ -137,4 +137,4 @@ const page = () => {
     )
 }
 
-export default page
+export default Page

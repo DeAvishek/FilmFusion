@@ -3,7 +3,7 @@ import PredictionModel from "@/app/Model/prediction";
 import { NextResponse } from "next/server";
 import { AuthOptions } from "../../auth/[...nextauth]/provider";
 import {getServerSession} from "next-auth/next"
-export async function GET(req:Request){
+export async function GET(){
     const session=await getServerSession(AuthOptions)
     const userId=session?.user?._id
     try {

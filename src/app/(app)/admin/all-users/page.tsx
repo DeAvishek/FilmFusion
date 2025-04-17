@@ -1,14 +1,15 @@
 "use client"
-import React from 'react'
+import React, { useEffect } from 'react'
 import { gql } from 'graphql-tag'
 import { useQuery } from '@apollo/client'
 import {LucideLoaderCircle} from "lucide-react" 
 import Users from '@/components/Users'
+import { useState} from 'react'
 type user_prop={
     username:string,
     email:string
 }
-const page = () => {
+const Page = () => {
     const GET_USERS = gql`
     query Query {
      users {
@@ -17,9 +18,9 @@ const page = () => {
   }
 }`
     const { data, loading, error } = useQuery(GET_USERS)
-    const [users,setUsers] = React.useState<user_prop[]>([])
+    const [users,setUsers] = useState<user_prop[]>([])
 
-    React.useEffect(() => {
+    useEffect(() => {
             if (data && data?.users) {
                 setUsers(data.users.map((user:user_prop) => user ));
             }
@@ -41,4 +42,4 @@ const page = () => {
     )
 }
 
-export default page
+export default Page

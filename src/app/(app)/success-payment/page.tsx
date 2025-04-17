@@ -5,6 +5,7 @@ import PriceStore from '@/app/store/ticPriceStore'
 import { useReactToPrint } from "react-to-print"
 import { useRouter } from 'next/navigation'
 import {Download} from "lucide-react"
+import Image from 'next/image'
 const Page = () => {
   const { seats, theaterId, name, clearTheaterData } = TheaterDataStore()
   const { price, clear_Price } = PriceStore()
@@ -37,7 +38,7 @@ const Page = () => {
         >
           {/* Success Image Section */}
           <div className="bg-green-500 text-white flex justify-center items-center p-4 w-1/3">
-            <img src="/FilmFusion2.jpg" alt="Success" className="w-full h-full object-cover rounded-l-lg" />
+            <Image src="/FilmFusion2.jpg" alt="Success" className="w-full h-full object-cover rounded-l-lg" />
           </div>
 
           {/* Ticket Details Section */}

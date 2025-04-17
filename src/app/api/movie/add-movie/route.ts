@@ -2,7 +2,7 @@ import MovieModel from "@/app/Model/movie";
 import { NextResponse } from "next/server";
 import dbConnect from "@/app/lib/db";
 
-export async function POST(req: Request, res: NextResponse) {
+export async function POST(req: Request) {
     const reqBody = await req.json()
     const { title, duration, language, posterUrl, trailerUrl, releaseDate } = reqBody
 

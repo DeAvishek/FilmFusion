@@ -18,6 +18,6 @@ export async function PATCH(req:Request){
         })
         return NextResponse.json({message:"User setting updated" ,success:true},{status:200})
     } catch (error) {
-        return NextResponse.json({messgae:"Server request declined",success:false},{status:500})
+        return NextResponse.json({messgae:error || "Server request declined",success:false},{status:500})
     }
 }

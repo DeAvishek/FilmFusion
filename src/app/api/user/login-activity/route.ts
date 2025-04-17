@@ -26,6 +26,6 @@ export async function PATCH(req:Request){
         return NextResponse.json({message:"LoginActivity updated" ,success:true },{status:200})
         
     } catch (error) {
-        return NextResponse.json({ message: "Failed to update LoginActivity" },{status:500});
+        return NextResponse.json({ message: error ||"Failed to update LoginActivity" },{status:500});
     } 
 }

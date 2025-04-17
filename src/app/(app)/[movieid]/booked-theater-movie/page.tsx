@@ -1,9 +1,8 @@
 "use client"
 import React from 'react'
 // import { useState,useEffect } from 'react'
-import { useParams } from 'next/navigation'
 
-const page = () => {
+const Page = () => {
   const seats=[
     {
       seatnumber:"A1",
@@ -35,7 +34,6 @@ const page = () => {
       seat.status="available"
     }
   }
-    const params=useParams()
   return (
     <div className="flex flex-col items-center">
       <div className="w-full bg-gray-800 text-white py-2 text-center mb-4 rounded-md my-10">
@@ -62,4 +60,4 @@ const page = () => {
   )
 }
 
-export default page
+export default Page

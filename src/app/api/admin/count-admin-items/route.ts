@@ -3,7 +3,7 @@ import UserModel from "@/app/Model/user";
 import { NextResponse } from "next/server";
 import BookingModel from "@/app/Model/booking";
 import MovieModel from "@/app/Model/movie";
-export async function GET(req:Request){
+export async function GET(){
     try {
         await dbConnect()
         const no_of_users = await UserModel.collection.countDocuments()

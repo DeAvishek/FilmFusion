@@ -1,15 +1,6 @@
 import dbConnect from "@/app/lib/db";
 import MovieModel from "@/app/Model/movie";
-import ShowtimeModel, { IShowtime } from "@/app/Model/showtime";
 import { NextResponse } from "next/server";
-import { string } from "zod";
-type showtime_type={
-    _id:string,
-    screen:number,
-    price:number,
-    time:Date,
-    theaters:[]
-}
 export async function GET(req:Request,{params}:{params:{movieid:string}}){
     const slug= await params?.movieid //grt the slug
     try {

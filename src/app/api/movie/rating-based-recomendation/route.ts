@@ -2,7 +2,7 @@ import dbConnect from "@/app/lib/db";
 import MovieModel from "@/app/Model/movie";
 import { NextResponse } from "next/server";
 
-export async function GET(req:Request){
+export async function GET(){
     try {
         await dbConnect
         const moVies= await MovieModel.aggregate([

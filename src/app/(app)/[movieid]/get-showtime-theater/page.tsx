@@ -30,7 +30,7 @@ query ExampleQuery($search: ShowtimeSearch) {
 }
 `
 
-const page = () => {
+const Page = () => {
   const params = useParams()
   const { data,loading, error } = useQuery(GET_THEATER_ID, {
     variables: {
@@ -58,4 +58,4 @@ const page = () => {
   )
 }
 
-export default page
+export default Page

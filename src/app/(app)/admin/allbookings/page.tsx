@@ -13,7 +13,7 @@ type booking_prop={
     paymentId:string,
     bookedAt:string
 }
-const page = () => {
+const Page = () => {
     const [bookings, setbookings] = useState<booking_prop[]>([])
     const [loading, setloading] = useState<boolean>(false)
     useEffect(()=>{
@@ -39,6 +39,7 @@ const page = () => {
         
         <div className="p-6">
       <div className="overflow-x-auto">
+        {loading && <h2>Getting Bookings...</h2>}
         <table className="min-w-full border-collapse border border-gray-300 shadow-lg">
           <thead>
             <tr className="bg-gray-800 text-white">
@@ -67,4 +68,4 @@ const page = () => {
     )
 }
 
-export default page
+export default Page

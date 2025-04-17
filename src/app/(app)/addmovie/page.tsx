@@ -19,8 +19,16 @@ const Page = () => {
             releaseDate: ""
         }
     });
+    type MovieFormData = {
+        title: string;
+        duration: string;      // or `number` depending on how you want to store it
+        language: string;
+        posterUrl: string;
+        trailerUrl?: string;   // optional
+        releaseDate?: string;  // optional
+      };
 
-    const handleAddMovie = async (data: any) => {
+    const handleAddMovie = async (data:MovieFormData) => {
         console.log("Submitting data:", data);
         try {
             setIsSubmit(true);

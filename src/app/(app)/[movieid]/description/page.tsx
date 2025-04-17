@@ -67,10 +67,10 @@ const Page = () => {
 
   // Calculate the average rating
   const getAverageRating = () => {
-    let length = movieRating.length
+    const length = movieRating.length
     if (length === 0) return "No ratings yet"
     if (length === 1) return movieRating[0].toFixed(1)
-    let lastElement = movieRating.at(-1)
+    const lastElement = movieRating.at(-1)
     return (lastElement as number / length).toFixed(1)
   }
   useEffect(() => {

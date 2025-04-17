@@ -1,5 +1,5 @@
 "use client";
-import { useSession, signIn, signOut } from "next-auth/react";
+import { useSession, signIn } from "next-auth/react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import React, { useEffect, useState } from "react";
@@ -25,7 +25,6 @@ const Navbar = () => {
     const { register, handleSubmit } = useForm();
     const [inputSearch, setinputSearch] = useState<string | null>("");
     const { data: session } = useSession();
-    const email = session?.user?.email;
     const [moviesName, setMoviesName] = useState<string[]>([]);
     const [filteredMovies, setfilteredMovies] = useState<string[]>([]);
     const { data } = useQuery(GET_MOVIES);

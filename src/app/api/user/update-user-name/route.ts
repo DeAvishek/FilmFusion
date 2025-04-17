@@ -20,6 +20,6 @@ export async function PATCH(req:Request){
         await UserModel.findByIdAndUpdate({_id:user_ID},update)
         return NextResponse.json({message:"User name updated",success:true},{status:200})
     } catch (error) {
-        return NextResponse.json({message:"Internal server error..during update username",success:false},{status:500})
+        return NextResponse.json({message: error ||"Internal server error..during update username",success:false},{status:500})
     }
 }

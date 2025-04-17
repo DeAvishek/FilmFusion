@@ -18,6 +18,7 @@ import { z } from 'zod'
 import { SignupSchemaValidation } from "@/app/schema/signupvalidation"
 import Link from 'next/link'
 import axios from 'axios'
+import Image from 'next/image'
 
 const Page = () => {
     const router = useRouter()
@@ -49,7 +50,10 @@ const Page = () => {
             }
 
         } catch (error) {
-            setresponseMessage("Email must be unique")
+            if(axios.isAxiosError(error)){
+                setresponseMessage(error.response?.data.error.message||"Email must be unique")
+            }
+            
         } finally {
             setisSubmit(false)
         }
@@ -61,7 +65,7 @@ const Page = () => {
             <h1 className="text-4xl font-bold text-sky-700 text-center">Join Now</h1>
                 <div className="text-center flex justify-center ">
                     <p className="mt-2 text-gray-600">Sign up to start your movie adventure </p>
-                    <img src='https://film-fusion-ecu.netlify.app/Images/Logo.png' style={{width:'50px',height:'30px'} } className='mt-2 ml-2'/>
+                    <Image src='https://film-fusion-ecu.netlify.app/Images/Logo.png' style={{width:'50px',height:'30px'} } className='mt-2 ml-2' alt="logo"/>
                 </div>
 
                 {responseMessage && (

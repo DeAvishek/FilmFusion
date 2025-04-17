@@ -7,9 +7,6 @@ import ValueSelectionProvider from "./context/optionsvalueprovider";
 import { ApolloWrapper } from "./ApolloWrapper"
 import Hashclean from "./lib/Hashclean";
 import ClientLayout from "./Layoutclient"
-import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
-import { MenubarDemo } from "@/components/Menubar";
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],

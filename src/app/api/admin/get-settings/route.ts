@@ -2,7 +2,7 @@ import dbConnect from "@/app/lib/db";
 import SettingModel from "@/app/Model/adminsetting";
 import { NextResponse } from "next/server";
 
-export async function GET(req:Request){
+export async function GET(){
     try {
         await dbConnect();
         
@@ -12,6 +12,6 @@ export async function GET(req:Request){
             }
             return NextResponse.json({settings},{status:200});
     } catch (error) {
-        return NextResponse.json({ message: "Failed to fetch settings"},{status:500});
+        return NextResponse.json({ message: error||"Failed to fetch settings"},{status:500});
     }
 }

@@ -11,7 +11,7 @@ type showTimes = {
   price: number,
   theaters: []
 }
-const page = () => {
+const Page = () => {
   const [showTimes, setshowTimes] = useState<showTimes[]>([])
   const params = useParams();
   const slug = params?.movieid
@@ -50,4 +50,4 @@ const page = () => {
   )
 }
 
-export default page
+export default Page

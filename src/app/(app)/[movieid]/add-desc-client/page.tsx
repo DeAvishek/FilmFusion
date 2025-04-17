@@ -11,7 +11,7 @@ type formvalue = {
     cast: Array<{ name: string; role?: string }>,
     genre:Array<{name:string;role?: string}>
 }
-const page = () => {
+const Page = () => {
     const router = useRouter();
     const [loading, setloading] = useState(false)
     const [responseMessage, setResponseMessage] = useState("")
@@ -145,4 +145,4 @@ const page = () => {
     )
 }
 
-export default page
+export default Page

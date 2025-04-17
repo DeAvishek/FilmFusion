@@ -14,7 +14,7 @@ import { Button } from '@/components/ui/button'
 import { updateCreateAccountStatus } from "@/app/functions/recomendation"
 import Admin_setting_store from '@/app/store/admin_settings_Store'
 import { FolderEdit } from "lucide-react"
-const page = () => {
+const Page = () => {
     const [settings, setsettings] = useState({
         movieRecommendation: false, //+
         autoApproveMovies: false,
@@ -206,4 +206,4 @@ const page = () => {
     )
 }
 
-export default page
+export default Page

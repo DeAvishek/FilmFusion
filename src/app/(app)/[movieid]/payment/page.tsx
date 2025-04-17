@@ -8,7 +8,7 @@ import Checkoutform from "@/app/(app)/checkoutform/page"
 import PriceStore from "@/app/store/ticPriceStore"
 import {LucideLoaderCircle} from "lucide-react" 
 const stripePromise=loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISH_KEY!)
-const checkoutPage = () => {
+const CheckoutPage = () => {
 const [clientsecret, setclientsecret] = useState<string |null>('')
 const [responseMessage,setresponseMessage]=useState('')
 const {price} =PriceStore()
@@ -57,4 +57,4 @@ const options:StripeElementsOptions={
   )
 }
 
-export default checkoutPage
+export default CheckoutPage
