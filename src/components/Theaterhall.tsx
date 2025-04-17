@@ -1,6 +1,6 @@
 "use client"
 import { Button } from "@/components/ui/button";
-import React, { use, useState } from 'react';
+import React, { useState } from 'react';
 import TheaterDataStore from "@/app/store/theaterStore";
 import { useRouter } from "next/navigation";
 import PriceStore from "@/app/store/ticPriceStore";

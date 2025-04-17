@@ -1,7 +1,6 @@
 "use client";
 import React from "react";
 import { Button } from "@/components/ui/button";
-import { gql, useQuery } from "@apollo/client";
 import { useState } from "react";
 import Theaterhall from "./Theaterhall";
 import { getTheater } from "@/lib/hooks/getTheaterDeatils";
