@@ -12,8 +12,6 @@ import Toastalert from "./Toastalert";
 import {UserCircle} from "lucide-react"
 import AccountSidebar from "./Accountsidebar";
 import { useRef } from "react";
-import Admin_setting_store from "@/app/store/admin_settings_Store";
-import Image from "next/image";
 const GET_MOVIES = gql`
 query GetMovies{
   movies{
@@ -31,7 +29,6 @@ const Navbar = () => {
     const { data } = useQuery(GET_MOVIES);
     const [accountSidebar, setaccountSidebar] = useState<boolean>(false)
     const sidebarRef = useRef(null);
-    // const siteLogoUrl = Admin_setting_store(state=>state.siteLogoUrl)
     
     useEffect(() => {
         if (data && data?.movies) {

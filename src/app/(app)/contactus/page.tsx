@@ -7,7 +7,7 @@ const ContactUs = () => {
       <h1 className="text-3xl font-bold mb-6">Contact Us</h1>
 
       <p className="mb-6 text-lg">
-        Got a question, feedback, or just want to say hi? We'd love to hear from you!
+        Got a question, feedback, or just want to say hi? We would love to hear from you!
         Use the form below or reach out directly.
       </p>
 

@@ -12,7 +12,7 @@ const AboutUs = () => {
       </p>
 
       <p className="mb-4 text-lg">
-        Whether you're a movie buff, a sports enthusiast, or just looking for your next weekend plan, FilmFusion makes it easy to explore what's happening around you.
+        Whether you are a movie buff, a sports enthusiast, or just looking for your next weekend plan, FilmFusion makes it easy to explore what is happening around you.
       </p>
 
       <p className="mb-4 text-lg">
