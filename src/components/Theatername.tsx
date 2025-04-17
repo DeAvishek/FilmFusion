@@ -3,7 +3,7 @@ import React from "react";
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
 import Theaterhall from "./Theaterhall";
-import { getTheater } from "@/lib/hooks/getTheaterDeatils";
+import { GetTheater } from "@/lib/hooks/getTheaterDeatils";
 type TheaterID = {
   _id: string;
   name: string;
@@ -15,7 +15,7 @@ type TheaterID = {
 const Theatername = ({ _id, name, location }: TheaterID) => {
 
   const [check,setcheck] = useState<boolean>(false)
-  const {data} = getTheater(_id)
+  const {data} = GetTheater(_id)
 
   const handleClick = () => {
     setcheck((prev=>!prev))
