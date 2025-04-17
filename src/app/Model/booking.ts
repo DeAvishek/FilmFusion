@@ -29,7 +29,7 @@ const BookingSchema:Schema<IBooking>=new Schema({
     },
     paymentStatus: {
         type: String,
-        enum: ["pending", "completed", "failed"],
+        enum: ["pending", "succeeded", "failed"],
         default: "pending",
     },
     paymentId: {

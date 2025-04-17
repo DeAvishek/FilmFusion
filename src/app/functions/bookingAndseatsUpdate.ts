@@ -1,5 +1,5 @@
 import axios from 'axios'
-// Make these functions accept store data as arguments to avoid invalid hook calls
+
 type theater_dataPrpop={
   seats:[string],
   theaterId:string,
@@ -8,14 +8,16 @@ type theater_dataPrpop={
 export const handle_making_booking = async (
   theaterData: theater_dataPrpop,
   price: number,
-  paymentId: string
+  paymentId: string,
+  paymentStatus:string
 ) => {
   try {
     const data = {
       theatername: theaterData.name,
       seats: theaterData.seats,
       totalamount: price,
-      paymentId,
+      paymentId:paymentId,
+      paymentStatus:paymentStatus
     }
 
     const response = await axios.post('/api/booking/make_booking', data)
@@ -35,7 +37,8 @@ export const handle_making_booking = async (
 export const handle_Seat_status_post = async (
   theaterData: theater_dataPrpop,
   price: number,
-  paymentId: string
+  paymentId: string,
+  paymentStatus:string
 ) => {
   try {
     const response = await axios.post(
@@ -44,7 +47,7 @@ export const handle_Seat_status_post = async (
     )
 
     if (response.status === 200) {
-      await handle_making_booking(theaterData, price, paymentId)
+      await handle_making_booking(theaterData, price, paymentId,paymentStatus)
 
     }
   } catch (error) {

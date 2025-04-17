@@ -50,7 +50,6 @@ const Page = () => {
           setduration(response.data.content.duration)
           setlanguage(response.data.content.language)
           settrailerUrl(response.data.content.trailerUrl)
-          console.log(responseMessage) //todo to remove
 
         }
       } catch (error) {
@@ -89,6 +88,7 @@ const Page = () => {
 
   return (
     <div className="w-full h-full mt-0">
+      {responseMessage.includes("server") && <h2 className='text-red-500'>{responseMessage}</h2>}
       {/* Section with Glassmorphism Effect */}
       <section className="bg-black flex items-center justify-center gap-8 p-8 relative">
         {!loading ? (

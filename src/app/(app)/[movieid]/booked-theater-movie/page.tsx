@@ -1,5 +1,5 @@
 "use client"
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 // import { useState,useEffect } from 'react'
 import { useParams } from 'next/navigation'
 
@@ -35,12 +35,6 @@ const page = () => {
       seat.status="available"
     }
   }
-  //   setselectedSeats(seats.filter((seat)=>
-  //   seatnumber!==seat.seatnumber))
-  // }
-  // useEffect(()=>{
-    
-  // })
     const params=useParams()
   return (
     <div className="flex flex-col items-center">

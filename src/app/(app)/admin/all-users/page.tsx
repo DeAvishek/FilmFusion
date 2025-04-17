@@ -1,5 +1,5 @@
 "use client"
-import React, { use } from 'react'
+import React from 'react'
 import { gql } from 'graphql-tag'
 import { useQuery } from '@apollo/client'
 import {LucideLoaderCircle} from "lucide-react" 

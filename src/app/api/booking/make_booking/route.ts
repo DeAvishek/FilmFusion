@@ -5,7 +5,7 @@ import { AuthOptions } from "../../auth/[...nextauth]/provider";
 import { NextResponse } from "next/server";
 export async function POST(req:Request){
     const reqBody= await req.json()
-    const {theatername,seats,totalamount,paymentId} =reqBody
+    const {theatername,seats,totalamount,paymentId,paymentStatus} =reqBody
     const session = await getServerSession(AuthOptions)
     const userID=session?.user._id
     if(!userID){
@@ -23,7 +23,9 @@ export async function POST(req:Request){
             theaterName:theatername ,//todo
             seats:seats,   //todo
             totalAmount:totalamount, //todo
+            paymentStatus:paymentStatus,
             paymentId:paymentId,
+            
         })
         await newBooking.save()
         return NextResponse.json({

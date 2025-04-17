@@ -43,7 +43,6 @@ const page = () => {
             if (response.status === 200) {
                 setResponseMessage(response.data.message)
                 reset()  //resest the form
-                console.log(responseMessage) //todo to remove
                 router.push("/") //todo to modify
             }
         } catch (error) {
@@ -60,6 +59,7 @@ const page = () => {
         <>
             <div className="flex justify-center items-center min-h-screen bg-gradient-to-r from-blue-500 to-purple-600 p-6">
                 <div className="w-full max-w-lg p-8 bg-white/30 backdrop-blur-lg rounded-2xl shadow-lg">
+                    {responseMessage && <h2 className="text-black bg-white-400">{responseMessage}</h2>}
                     <h1 className="text-2xl font-bold text-center text-gray-800">Add Showtime for {movieid}</h1>
                     <form onSubmit={handleSubmit(handeAddShowtime)} className="space-y-4">
                         <div>

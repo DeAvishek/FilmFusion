@@ -40,14 +40,16 @@ const Checkoutform = ({ amount }: { amount: number }) => {
             const paymentintent=result.paymentIntent
             if(paymentintent && paymentintent.status==="succeeded"){
                 try {
-                    await handle_Seat_status_post(theaterData, price,result.paymentIntent.id)
+                    //handle seat status update and make booking
+                    await handle_Seat_status_post(theaterData, price,result.paymentIntent.id,result.paymentIntent.status)
                     router.push('/success-payment')
                 } catch (error) {
                     console.error("❌ Failed to update seat status:", error);
                 }
             }else{
                 seterrors("Unexpected payment status.");
-                console.log("🔁 PaymentIntent status:", paymentintent?.status);
+                await handle_Seat_status_post(theaterData, price,result.paymentIntent.id,result.paymentIntent.status)
+                router.push('/failed-payment')
             }
         }
     }

@@ -30,7 +30,6 @@ useEffect( () => {
         }else{
             setresponseMessage("stripe payment intent error")
         }
-        console.log("client secret not found") 
     }
   }
   getclientsecret()

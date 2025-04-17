@@ -39,7 +39,6 @@ const page = () => {
             const response = await axios.post(`/api/movie/${movieid}/add-desc-server`, data)
             if (response.status === 200) {
                 setResponseMessage(response.data.message)
-                console.log(responseMessage)  //todo to remove
                 router.push(`/${movieid}/add-showtime-client`)
 
             }

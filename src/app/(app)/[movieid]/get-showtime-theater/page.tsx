@@ -36,8 +36,9 @@ const page = () => {
     variables: {
       search: {
         _id: params?.movieid
-      }
-    }
+      },
+    },
+    skip:!params?.movieid
   })
   return (
     <div className='flex justify-center'>
