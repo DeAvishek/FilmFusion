@@ -152,5 +152,4 @@ const handler = startServerAndCreateNextHandler<NextApiRequest>(server, {
 });
 
 // Export named handlers for GET and POST
-export const GET = handler;
 export const POST = handler;
