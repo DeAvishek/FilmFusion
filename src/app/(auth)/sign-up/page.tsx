@@ -20,9 +20,8 @@ import Link from 'next/link'
 import axios from 'axios'
 import Image from 'next/image'
 
-// Disable static generation for this page
 
-const Page = () => {
+const SignupPage = () => {
   const router = useRouter()
   const [isSubmit, setIsSubmit] = useState<boolean>(false)
   const [responseMessage, setResponseMessage] = useState<string>("")
@@ -48,7 +47,7 @@ const Page = () => {
 
       if (response.status === 201) {
         setResponseMessage(response.data.message)
-        router.push('/sign-in') // Changed from '/api/auth/signin' to client route
+        router.push('/sign-in')
       }
 
     } catch (error) {
@@ -148,4 +147,4 @@ const Page = () => {
   )
 }
 
-export default Page
+export default SignupPage
