@@ -96,7 +96,7 @@ const SignIn = () => {
                         className="flex items-center justify-center w-full border border-white text-white rounded-full py-2 hover:bg-white hover:text-black transition"
                         onClick={()=>signIn('google')}
                         >
-                            <Image src="https://www.freepnglogos.com/uploads/google-logo-png/google-logo-png-google-icon-logo-png-transparent-svg-vector-bie-supply-14.png" alt="Google" className="w-5 h-5 mr-2" />
+                            <Image src="https://www.freepnglogos.com/uploads/google-logo-png/google-logo-png-google-icon-logo-png-transparent-svg-vector-bie-supply-14.png" alt="Google" className="w-5 h-5 mr-2" width={20} height={20}/>
                             Sign in with Google
                         </button>
 
@@ -104,7 +104,7 @@ const SignIn = () => {
                         className="flex items-center justify-center w-full border border-white text-white rounded-full py-2 hover:bg-white hover:text-black transition"
                         onClick={()=>signIn('github')}
                         >
-                            <Image src="https://www.svgrepo.com/show/35001/github.svg" alt="Facebook" className="w-5 h-5 mr-2" />
+                            <Image src="https://www.svgrepo.com/show/35001/github.svg" alt="Facebook" className="w-5 h-5 mr-2"  width={20} height={20}/>
                             Sign in with Github
                         </button>
                     </div>
@@ -117,6 +117,8 @@ const SignIn = () => {
                     src="https://img.freepik.com/premium-photo/film-fusion-ultimate-movie-mixing-machine_1015980-28917.jpg?w=2000" // Replace with your own image if desired
                     alt="Visual"
                     className="object-cover w-full h-full"
+                    width={400}
+                    height={400}
                 />
                 <div className="absolute top-0 left-0 w-full h-full bg-black bg-opacity-30 flex items-center justify-center">
                     <h1 className="text-white text-4xl font-bold">Welcome to FilmFusion</h1>
