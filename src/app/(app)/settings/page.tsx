@@ -93,10 +93,10 @@ const Page = () => {
                             defaultValue={userSettings.username}
                             onChange={(e) => setupdatedUsername(e.target.value)}
                             placeholder="Username"
-                            className="border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 shadow-sm"
+                            className="border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 shadow-sm text-black"
                             disabled={!enableupdateUsername}
                         />
-                        <Edit className='mt-1 hover:cursor-pointer' onClick={()=>setenableupdateUsername(true)}/>
+                        <Edit className='mt-1 hover:cursor-pointer text-black' onClick={()=>setenableupdateUsername(true)} />
                         </div>
 
                          {enableupdateUsername && <Button onClick={()=>update_username(updatedUsername)}>Save change</Button>}
