@@ -2,7 +2,8 @@ import { NextResponse } from "next/server";
 import dbConnect from "@/app/lib/db";
 import MovieModel from "@/app/Model/movie";
 import MovieDescModel from "@/app/Model/moviedescription";
-async function POST(req:Request,{params}:{params:{movieid:string}}){
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+export async function POST(req:Request,{params}:{params:{movieid:string}}){
     const reqBody=await req.json()
     const movieTitle= await params?.movieid
     if(!movieTitle){
