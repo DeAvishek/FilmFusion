@@ -1,5 +1,5 @@
 import mongoose,{Document,Schema} from "mongoose";
-import { ISeat,SeatSchema } from "./seats"
+import {SeatSchema } from "./seats"
 type ISeatInput = {
     seatnumber: string;
     status: "available" | "booked" | "reserved";
