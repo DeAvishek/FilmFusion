@@ -21,7 +21,6 @@ import axios from 'axios'
 import Image from 'next/image'
 
 // Disable static generation for this page
-export const dynamic = 'force-dynamic'
 
 const Page = () => {
   const router = useRouter()
