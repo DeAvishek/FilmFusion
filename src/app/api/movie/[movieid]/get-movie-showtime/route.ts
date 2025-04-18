@@ -1,8 +1,8 @@
 import dbConnect from "@/app/lib/db";
 import MovieModel from "@/app/Model/movie";
-import { NextResponse } from "next/server";
-export async function GET(req:Request,{params}:{params:{movieid:string}}){
-    const slug= await params?.movieid //grt the slug
+import { NextRequest, NextResponse } from "next/server";
+export async function GET(req:NextRequest){
+    const slug= req.nextUrl.pathname.split("/")[3] //grt the slug
     try {
         await dbConnect()
         const movie = await MovieModel.findById(slug).populate('showtimes');

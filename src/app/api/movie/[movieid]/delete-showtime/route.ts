@@ -1,10 +1,10 @@
 import dbConnect from "@/app/lib/db";
 import TheaterModel from "@/app/Model/theater";
 import ShowtimeModel from "@/app/Model/showtime";
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 
-export async function DELETE(req:Request,{params}:{params:{movieid:string}}){
-    const showtime_id=await params?.movieid
+export async function DELETE(req:NextRequest){
+    const showtime_id=req.nextUrl.pathname.split("/")[3]
     if(!showtime_id) {
         return NextResponse.json({
             message:"Showtime id is no present",

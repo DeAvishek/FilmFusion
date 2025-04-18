@@ -1,18 +1,18 @@
 import dbConnect from "@/app/lib/db";
 import MovieModel from "@/app/Model/movie";
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import UserModel from "@/app/Model/user";
 import { getServerSession } from "next-auth/next"
 import { AuthOptions } from "@/app/api/auth/[...nextauth]/provider";
 
-export async function POST(req: Request, { params }: { params: { movieid: string } }) {
+export async function POST(req: NextRequest) {
     const session = await getServerSession(AuthOptions )
     const userId=session?.user._id
 
     const body = await req.json();
     const rating = body['imdbRating']
 
-    const movieId = params.movieid
+    const movieId = req.nextUrl.pathname.split("/")[3]
     console.log("movie id from movie rating api", movieId)
     if (!movieId) {
         return NextResponse.json({

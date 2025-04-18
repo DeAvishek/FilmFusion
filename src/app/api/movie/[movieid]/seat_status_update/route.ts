@@ -1,10 +1,10 @@
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import dbConnect from "@/app/lib/db";
 import TheaterModel from "@/app/Model/theater";
 
-export async function POST(req: Request, { params }: { params: { movieid: string } }) {
+export async function POST(req: NextRequest) {
     const reqBody = await req.json()
-    const slug = params?.movieid
+    const slug = req.nextUrl.pathname.split("/")[3]
     if (!slug) {
         return NextResponse.json({
             message: "Theater ID is Required",

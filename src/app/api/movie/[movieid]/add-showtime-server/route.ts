@@ -2,13 +2,13 @@
 import dbConnect from '@/app/lib/db'
 import ShowtimeModel from '@/app/Model/showtime'
 import MovieModel from '@/app/Model/movie'
-import { NextResponse } from 'next/server'
+import { NextRequest, NextResponse } from 'next/server'
 import TheaterModel, { ITheater } from '@/app/Model/theater'
 import mongoose from 'mongoose';
-export async function POST(req: Request, { params }: { params: { movieid: string } }) {
+export async function POST(req:NextRequest) {
     const reqBody = await req.json();
     const {screen,time,price,theaters}=reqBody
-    const movieTitle = await params?.movieid
+    const movieTitle = req.nextUrl.pathname.split("/")[3]
     if (!movieTitle) {
         console.log("i am from Movie title required") 
         return NextResponse.json({

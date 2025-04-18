@@ -1,9 +1,9 @@
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import MovieModel from "@/app/Model/movie";
 import dbConnect from "@/app/lib/db";
 
-export async function DELETE(req:Request,{params}:{params:{movieid:string}}){
-    const id=await params?.movieid
+export async function DELETE(req:NextRequest){
+    const id=req.nextUrl.pathname.split("/")[3]
     if(!id){
         return NextResponse.json({
             message:"Movie id is required"

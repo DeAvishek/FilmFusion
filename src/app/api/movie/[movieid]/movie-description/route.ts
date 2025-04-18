@@ -2,10 +2,10 @@
 import MovieModel from "@/app/Model/movie";
 import dbConnect from "@/app/lib/db";
 import mongoose from 'mongoose'
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 
-export async function GET(req: Request, { params }: { params: { movieid: string } }) {
-    const movieId= params?.movieid
+export async function GET(req:NextRequest) {
+    const movieId= req.nextUrl.pathname.split("/")[3]
     const movieObjId=new mongoose.Types.ObjectId(movieId )
     
     console.log("movie id",movieObjId) //todo remove

@@ -1,11 +1,11 @@
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import dbConnect from "@/app/lib/db";
 import MovieModel from "@/app/Model/movie";
 import MovieDescModel from "@/app/Model/moviedescription";
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-export async function POST(req:Request,{params}:{params:{movieid:string}}){
+export async function POST(req:NextRequest){
     const reqBody=await req.json()
-    const movieTitle= await params?.movieid
+    const movieTitle = req.nextUrl.pathname.split("/")[3]
     if(!movieTitle){
         return NextResponse.json({
             message:"Movie title is required"
