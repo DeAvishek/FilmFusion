@@ -64,7 +64,7 @@ const Page = () => {
       }
     }
     getDesc()
-  }, [movieId])
+  }, [])
 
   // Calculate the average rating
   const getAverageRating = () => {
@@ -107,9 +107,12 @@ const Page = () => {
               <Card className="shadow-xl rounded-lg overflow-hidden border-2 border-gray-700">
                 {moviePoster ? (
                   <Image
-                    className="w-[700px] h-[500px] object-cover"
+                    className="object-cover"
                     src={moviePoster}
                     alt={movieTitle}
+                    width={380}
+                    height={0}
+                    
                   />
                 ) : (
                   <div className="w-[700px] h-[500px] flex items-center justify-center text-gray-500">
@@ -125,6 +128,8 @@ const Page = () => {
                     className="w-full h-full object-cover rounded-lg border-4 border-white shadow-lg"
                     src={moviePoster}
                     alt="Highlighted Poster"
+                    width={500}
+                    height={400}
                   />
                 </div>
               )}

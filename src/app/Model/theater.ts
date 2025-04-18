@@ -1,11 +1,16 @@
 import mongoose,{Document,Schema} from "mongoose";
-import { ISeat, SeatSchema } from "./seats"
+import { ISeat,SeatSchema } from "./seats"
+type ISeatInput = {
+    seatnumber: string;
+    status: "available" | "booked" | "reserved";
+  };
 export interface ITheater extends Document{
     name:string,
     location:string,
-    totalseats:ISeat[]
+    totalseats:ISeatInput[]
 }
-const generateSeats= () : ISeat[]=>{
+
+const generateSeats= () : ISeatInput[]=>{
   return Array.from({length:50},(_,i)=>({
       seatnumber:`A${i+1}`,
       status:"available",
@@ -22,7 +27,7 @@ export const TheaterSchema:Schema<ITheater> =new Schema({
     },
     totalseats:{
         type: [SeatSchema],
-        default: generateSeats
+        default:generateSeats
     }
 })
 

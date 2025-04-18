@@ -5,7 +5,9 @@ import mongoose from 'mongoose'
 import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(req:NextRequest) {
-    const movieId= req.nextUrl.pathname.split("/")[3]
+    const pathSegments= req.nextUrl.pathname.split('/')
+    const movieId = pathSegments[pathSegments.length-2].toString()
+    // console.log("here",movieId)
     const movieObjId=new mongoose.Types.ObjectId(movieId )
     
     console.log("movie id",movieObjId) //todo remove
