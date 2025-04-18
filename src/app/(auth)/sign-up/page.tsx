@@ -1,6 +1,6 @@
 "use client"
-
-import React, { useState } from 'react'
+export const dynamic = "force-dynamic";
+import React, { useState,useEffect } from 'react'
 import { Button } from "@/components/ui/button"
 import {
   Form,
@@ -13,7 +13,7 @@ import {
 import { Input } from "@/components/ui/input"
 import { useForm } from "react-hook-form"
 import { zodResolver } from '@hookform/resolvers/zod'
-import { useRouter, useSearchParams } from 'next/navigation'
+import { useRouter} from 'next/navigation'
 import { z } from 'zod'
 import { SignupSchemaValidation } from "@/app/schema/signupvalidation"
 import Link from 'next/link'
@@ -25,10 +25,15 @@ const SignupPage = () => {
   const router = useRouter()
   const [isSubmit, setIsSubmit] = useState<boolean>(false)
   const [responseMessage, setResponseMessage] = useState<string>("")
-  const params = useSearchParams()
+  const [role, setrole] = useState("user")
+
   
   // Default role is 'user', can be overridden by query param
-  const role = params?.get('role') || 'user'
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const role_of_user = params.get("role");
+    if (role_of_user) setrole(role_of_user);
+  }, []);
 
   const form = useForm<z.infer<typeof SignupSchemaValidation>>({
     resolver: zodResolver(SignupSchemaValidation),
