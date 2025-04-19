@@ -4,7 +4,6 @@ import { Button } from "@/components/ui/button";
 import { useState } from "react";
 import Theaterhall from "./Theaterhall";
 import { GetTheater } from "@/lib/hooks/getTheaterDeatils";
-import { Theater } from "lucide-react";
 type TheaterID = {
   _id: string;
   name: string;

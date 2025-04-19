@@ -30,7 +30,7 @@ const Checkoutform = ({ amount }: { amount: number }) => {
         const result = await stripe.confirmPayment({
             elements,
             confirmParams: {
-                return_url: "http://localhost:3000/success-payment",
+                return_url: "https://filmfusion-xpxp.onrender.com/success-payment",
             },
             redirect:"if_required"
         })
