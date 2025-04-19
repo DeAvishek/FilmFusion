@@ -38,7 +38,10 @@ const Page = () => {
         >
           {/* Success Image Section */}
           <div className="bg-green-500 text-white flex justify-center items-center p-4 w-1/3">
-            <Image src="/FilmFusion2.jpg" alt="Success" className="w-full h-full object-cover rounded-l-lg" />
+            <Image src="/FilmFusion2.jpg" alt="Success" className="w-full h-full object-cover rounded-l-lg"
+            width={20}
+            height={30} 
+            />
           </div>
 
           {/* Ticket Details Section */}

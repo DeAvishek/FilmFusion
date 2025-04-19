@@ -14,7 +14,7 @@ const [responseMessage,setresponseMessage]=useState('')
 const {price} =PriceStore()
 const data={
   amount:price,
-  currency:'INR'
+  currency:'inr'
 }
 useEffect( () => {
   async function getclientsecret(){

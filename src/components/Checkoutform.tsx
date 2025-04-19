@@ -43,6 +43,7 @@ const Checkoutform = ({ amount }: { amount: number }) => {
                 try {
                     //handle seat status update and make booking
                     await handle_Seat_status_post(theaterData , price,result.paymentIntent.id,result.paymentIntent.status)
+                    console.log(`payment id ${result.paymentIntent.id} and curreny ${result.paymentIntent.currency} amount ${result.paymentIntent.amount}`)
                     router.push('/success-payment')
                 } catch (error) {
                     console.error("❌ Failed to update seat status:", error);
