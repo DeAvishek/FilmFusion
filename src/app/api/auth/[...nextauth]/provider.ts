@@ -72,8 +72,6 @@ export const AuthOptions: NextAuthOptions = {
                     token.role=user.role
                     token.username=user.username
                 }
-            }else{
-                console.warn("⚠️ No email returned from provider. Cannot sync user.");
             }
             return token
         },
