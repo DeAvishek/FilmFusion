@@ -43,7 +43,6 @@ const Page = () => {
   return (
     <div className='flex justify-center'>
       {error && <p>{error.message}</p>}
-
       {loading ?(<p>Loading to get theaters...</p>):(<div>
         {data?.showtime?.theaters.map((item: itemprop) => {
           return (
