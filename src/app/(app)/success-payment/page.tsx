@@ -22,7 +22,7 @@ const Page = () => {
   
   return (
     <>
-      <div className="flex flex-col items-center justify-center min-h-screen bg-gray-200 p-4">
+      <div className="flex flex-col items-center justify-center p-4">
         {/* Payment Success Message */}
         <div className="text-center mb-8">
           <h1 className="text-4xl font-bold text-green-600">🎉 Payment Successful!</h1>

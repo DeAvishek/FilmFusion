@@ -40,7 +40,7 @@ const AccountSidebar = () => {
             {/* Sign Out Button */}
             <div className="pt-8 border-t border-gray-700">
                 <button
-                    onClick={() => signOut()}
+                    onClick={() => signOut({callbackUrl:'https://filmfusion-xpxp.onrender.com/'})}
                     className="flex items-center gap-2 text-red-500 hover:text-red-400 transition"
                 >
                     <LogOut className="w-4 h-4" />
