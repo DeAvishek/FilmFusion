@@ -6,9 +6,8 @@ import { gql } from "graphql-tag";
 import { NextApiRequest } from "next";
 import { startServerAndCreateNextHandler } from "@as-integrations/next";
 import UserModel from "@/app/Model/user";
-import TheaterModel from "@/app/Model/theater";
 import ShowtimeModel from "@/app/Model/showtime";
-
+import TheaterModel from "@/app/Model/theater";
 interface InteractionofUser {
   movieId: string;
   rating: number;
@@ -63,8 +62,8 @@ const typeDefs = gql`
     movies: [Movie]
     users: [User]
     interactionsofuser: [Interactionofuser]
-    showtimeTheater(search: ShowtimeSearch): [Theater]
-    theaters(search:TheaterSearch):Theater
+    showtime(search: ShowtimeSearch): Showtime!
+    theater(search:TheaterSearch):Theater!
     interaction_Of_One_User(search:UserIdSearch):[Interactionofuser]
   }
 `;
@@ -90,11 +89,11 @@ const resolvers = {
         throw new Error("Failed to fetch users");
       }
     },
-    showtimeTheater: async (_: unknown, { search }: { search: { _id: string } }) => {
+    showtime: async (_: unknown, { search }: { search: { _id: string } }) => {
       try {
         await dbConnect();
-        const showtimeTheater = await ShowtimeModel.findById(search._id).populate('theaters');
-        return showtimeTheater?.theaters
+        const showtime = await ShowtimeModel.findById(search._id).populate('theaters');
+        return showtime
       } catch (error) {
         console.error("Error fetching showtimes:", error);
         throw new Error("Failed to fetch showtimes");
