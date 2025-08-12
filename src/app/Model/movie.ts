@@ -40,7 +40,7 @@ export const MovieSchema:Schema<IMovie>=new Schema({
         required:true
     },
     showtimes:{
-        type:[{type:Schema.Types.ObjectId,ref:'Showtime'}],
+        type:[{type:mongoose.Schema.Types.ObjectId,ref:'Showtime'}],
         default:[]
         
     },

@@ -21,7 +21,7 @@ export const ShowtimeSchema: Schema<IShowtime> = new Schema({
         required: true
     },
     theaters: {
-        type: [{type:Schema.Types.ObjectId ,ref:'Theater'}],
+        type: [{type:mongoose.Schema.Types.ObjectId ,ref:'Theater'}],
         default: []
     }
 })
