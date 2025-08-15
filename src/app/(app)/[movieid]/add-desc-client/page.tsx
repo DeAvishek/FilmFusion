@@ -55,7 +55,7 @@ const Page = () => {
     }
 
     return (
-        <div className="flex justify-center items-center min-h-screen bg-gradient-to-r from-blue-500 to-purple-600 p-6">
+        <div className="flex justify-center items-center min-h-screen p-6">
             <div className="w-full max-w-lg p-8 bg-white/30 backdrop-blur-lg rounded-2xl shadow-lg">
                 {responseMessage.includes("error")&& <h2>{responseMessage}</h2>}
                 <h1 className="text-2xl font-bold text-center text-gray-800">Add Description for {movieid}</h1>
@@ -86,7 +86,7 @@ const Page = () => {
                                 <Button
                                     type="button"
                                     onClick={() => castRemove(index)}
-                                    className="bg-red-500 text-white px-2 py-1 rounded-md hover:bg-red-600"
+                                    className="bg-red-500 text-black px-2 py-1 rounded-md hover:bg-red-600"
                                 >
                                     ✖
                                 </Button>
@@ -95,7 +95,7 @@ const Page = () => {
                         <Button
                             type="button"
                             onClick={() => castAppend({name:""})}
-                            className="mt-2 px-4 py-2 text-white bg-blue-600 rounded-md hover:bg-blue-700"
+                            className="mt-2 px-4 py-2 text-black bg-blue-600 rounded-md hover:bg-blue-700"
                         >
                             Add Cast Member
                         </Button>
@@ -115,7 +115,7 @@ const Page = () => {
                                 <Button
                                     type="button"
                                     onClick={() => removeGenre(index)}
-                                    className="bg-red-500 text-white px-2 py-1 rounded-md hover:bg-red-600"
+                                    className="bg-red-500 text-black px-2 py-1 rounded-md hover:bg-red-600"
                                 >
                                     ✖
                                 </Button>
@@ -124,7 +124,7 @@ const Page = () => {
                         <Button
                             type="button"
                             onClick={() => appendGenre({name:""})}
-                            className="mt-2 px-4 py-2 text-white bg-blue-600 rounded-md hover:bg-blue-700"
+                            className="mt-2 px-4 py-2 text-black bg-blue-600 rounded-md hover:bg-blue-700"
                         >
                             Add Genre
                         </Button>
@@ -134,7 +134,7 @@ const Page = () => {
                     <Button
                         type="submit"
                         disabled={loading}
-                        className="w-full py-3 mt-4 font-semibold text-lg text-white bg-gradient-to-r from-green-400 to-blue-500 rounded-lg hover:from-green-500 hover:to-blue-600 transition-all duration-300 disabled:opacity-50"
+                        className="w-full py-3 mt-4 font-semibold text-lg text-black bg-gradient-to-r from-green-400 to-blue-500 rounded-lg hover:from-green-500 hover:to-blue-600 transition-all duration-300 disabled:opacity-50"
                     >
                         Add Description
                     </Button>

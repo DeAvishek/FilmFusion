@@ -9,9 +9,9 @@ import axios from "axios";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import Toastalert from "./Toastalert";
-import {UserCircle} from "lucide-react"
 import AccountSidebar from "./Accountsidebar";
 import { useRef } from "react";
+import Image from "next/image";
 // import Admin_setting_store from "@/app/store/admin_settings_Store";
 const GET_MOVIES = gql`
 query GetMovies{
@@ -31,7 +31,7 @@ const Navbar = () => {
     const [accountSidebar, setaccountSidebar] = useState<boolean>(false)
     const sidebarRef = useRef(null);
     // const siteLogoUrl = Admin_setting_store(state=>state.siteLogoUrl) 
-    
+
     useEffect(() => {
         if (data && data?.movies) {
             setMoviesName(data.movies.map((movie: { title: string }) => movie.title));
@@ -53,7 +53,7 @@ const Navbar = () => {
 
     const handleInput = async () => {
         try {
-            
+
             const response = await axios.get(`/api/movie/search-movie?search=${inputSearch}`);
             if (response.status === 200) {
                 router.push(`/${response.data.content._id}/description`);
@@ -73,13 +73,13 @@ const Navbar = () => {
 
     return (
         <>
-            <nav className="flex items-center justify-between px-6 py-4 bg-gray-300 text-black relative" style={{height:'60px'}}>
+            <nav className="flex items-center justify-between px-6 py-4 bg-gray-300 text-black relative" style={{ height: '60px' }}>
                 {!session?.user && <Toastalert alert_message="Sign out Successfully" />}
-                
-                 {/* <div>
+
+                {/* <div>
                 {siteLogoUrl && <Image src={siteLogoUrl} alt="logo" className="object-contain" />}
                 </div>  */}
-             
+
                 <div className="flex items-center flex-row rounded-lg px-3 py-1 relative w-full max-w-md">
                     <form className="flex flex-row gap-2 w-full" onSubmit={handleSubmit(handleInput)}>
                         <Input className="text-black w-full" placeholder="Search movies..." {...register("search")} value={inputSearch!} onChange={handleOnChange} />
@@ -98,19 +98,26 @@ const Navbar = () => {
 
                 <div>
                     {session?.user ? (
-                        <UserCircle onClick={()=>setaccountSidebar(prev=>!prev)}size={30} className="hover:cursor-pointer"/>
+                        <Image
+                            src="https://cdn-icons-png.freepik.com/512/1053/1053244.png"
+                            alt="student-avtar"
+                            height={40}
+                            width={40}
+                            onClick={() => setaccountSidebar(prev => !prev)}
+                            className="hover:cursor-pointer"
+                        />
                     ) : (
                         <Button onClick={() => signIn()} className="bg-blue-500 hover:bg-blue-600">Sign In</Button>
                     )}
                 </div>
                 {accountSidebar && (
-                <div
-                    className="fixed top-16 right-4 z-50"
-                    ref={sidebarRef}
-                >
-                    <AccountSidebar />
-                </div>
-            )}
+                    <div
+                        className="fixed top-16 right-4 z-50"
+                        ref={sidebarRef}
+                    >
+                        <AccountSidebar />
+                    </div>
+                )}
             </nav>
         </>
     );

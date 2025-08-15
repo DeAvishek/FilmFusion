@@ -49,9 +49,9 @@ const Page = () => {
     };
 
     return (
-        <div className="flex justify-center items-center min-h-screen bg-gradient-to-r from-blue-500 to-purple-600 p-6">
+        <div className="flex justify-center items-center min-h-screen text-black p-6">
             <div className="w-full max-w-lg p-8 bg-white/30 backdrop-blur-lg rounded-2xl shadow-lg">
-                <h1 className="text-3xl font-extrabold text-center text-white mb-6">🎬 Add Movie</h1>
+                <h1 className="text-3xl font-extrabold text-center text-black mb-6">🎬 Add Movie</h1>
 
                 {responseMessage && (
                     <p className="text-center text-red-500">{responseMessage}</p>
@@ -60,11 +60,11 @@ const Page = () => {
                 <form onSubmit={handleSubmit(handleAddMovie)} className="space-y-5">
                     {/* Title */}
                     <div>
-                        <label className="block text-sm font-semibold text-white">Title</label>
+                        <label className="block text-sm font-semibold text-black">Title</label>
                         <input
                             type="text"
                             {...register("title", { required: "Title is required" })}
-                            className="w-full p-3 mt-1 border border-white/30 bg-white/20 text-white placeholder-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-white"
+                            className="w-full p-3 mt-1 border border-white/30 bg-white/20 text-black placeholder-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-white"
                             placeholder="Enter movie title"
                         />
                         {errors.title && <p className="text-red-300 text-sm">{errors.title.message}</p>}
@@ -72,11 +72,11 @@ const Page = () => {
 
                     {/* Duration */}
                     <div>
-                        <label className="block text-sm font-semibold text-white">Duration (minutes)</label>
+                        <label className="block text-sm font-semibold text-black">Duration (minutes)</label>
                         <input
                             type="number"
                             {...register("duration", { required: "Duration is required" })}
-                            className="w-full p-3 mt-1 border border-white/30 bg-white/20 text-white placeholder-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-white"
+                            className="w-full p-3 mt-1 border border-white/30 bg-white/20 text-black placeholder-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-white"
                             placeholder="Enter duration"
                         />
                         {errors.duration && <p className="text-red-300 text-sm">{errors.duration.message}</p>}
@@ -84,11 +84,11 @@ const Page = () => {
 
                     {/* Language */}
                     <div>
-                        <label className="block text-sm font-semibold text-white">Language</label>
+                        <label className="block text-sm font-semibold text-black">Language</label>
                         <input
                             type="text"
                             {...register("language", { required: "Language is required" })}
-                            className="w-full p-3 mt-1 border border-white/30 bg-white/20 text-white placeholder-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-white"
+                            className="w-full p-3 mt-1 border border-white/30 bg-white/20 text-black placeholder-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-white"
                             placeholder="Enter language"
                         />
                         {errors.language && <p className="text-red-300 text-sm">{errors.language.message}</p>}
@@ -96,11 +96,11 @@ const Page = () => {
 
                     {/* Poster URL */}
                     <div>
-                        <label className="block text-sm font-semibold text-white">Poster URL</label>
+                        <label className="block text-sm font-semibold text-black">Poster URL</label>
                         <input
                             type="text"
                             {...register("posterUrl", { required: "Poster URL is required" })}
-                            className="w-full p-3 mt-1 border border-white/30 bg-white/20 text-white placeholder-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-white"
+                            className="w-full p-3 mt-1 border border-white/30 bg-white/20 text-black placeholder-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-white"
                             placeholder="Enter poster URL"
                         />
                         {errors.posterUrl && <p className="text-red-300 text-sm">{errors.posterUrl.message}</p>}
@@ -108,29 +108,29 @@ const Page = () => {
 
                     {/* Trailer URL */}
                     <div>
-                        <label className="block text-sm font-semibold text-white">Trailer URL</label>
+                        <label className="block text-sm font-semibold text-black">Trailer URL</label>
                         <input
                             type="text"
                             {...register("trailerUrl")}
-                            className="w-full p-3 mt-1 border border-white/30 bg-white/20 text-white placeholder-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-white"
+                            className="w-full p-3 mt-1 border border-white/30 bg-white/20 text-black placeholder-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-white"
                             placeholder="Enter trailer URL (optional)"
                         />
                     </div>
 
                     {/* Release Date */}
                     <div>
-                        <label className="block text-sm font-semibold text-white">Release Date</label>
+                        <label className="block text-sm font-semibold text-black">Release Date</label>
                         <input
                             type="date"
                             {...register("releaseDate")}
-                            className="w-full p-3 mt-1 border border-white/30 bg-white/20 text-white placeholder-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-white"
+                            className="w-full p-3 mt-1 border border-white/30 bg-white/20 text-black placeholder-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-white"
                         />
                     </div>
 
                     {/* Submit Button */}
                     <button
                         type="submit"
-                        className="w-full py-3 mt-4 font-semibold text-lg text-white bg-gradient-to-r from-green-400 to-blue-500 rounded-lg hover:from-green-500 hover:to-blue-600 transition-all duration-300 disabled:opacity-50"
+                        className="w-full py-3 mt-4 font-semibold text-lg text-black bg-gradient-to-r from-green-400 to-blue-500 rounded-lg hover:from-green-500 hover:to-blue-600 transition-all duration-300 disabled:opacity-50"
                         disabled={isSubmit}
                     >
                         {isSubmit ? "Submitting..." : "Submit 🎥"}
